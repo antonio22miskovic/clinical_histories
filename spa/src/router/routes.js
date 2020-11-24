@@ -25,7 +25,12 @@ export default [
 {
     path: '/home',
     name: 'home',
-    components: { default: page('Home.vue'), header: comp('core/AppBar.vue')},
+    components: {
+                  default: page('Home.vue'),
+                  header: comp('core/AppBar.vue'),
+                  sidebar: comp('core/SideBar.vue'),
+                  footer: comp('core/Footer.vue')
+                },
 },
 
 /* Errors */

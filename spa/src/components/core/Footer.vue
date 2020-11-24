@@ -1,7 +1,13 @@
 <template>
-    <div>
-        Footer
-    </div>
+    <v-footer padless>
+        <v-col
+        class="text-center"
+        cols="12"
+        color="red"
+        >
+            {{ new Date().getFullYear() }} — <strong>DR. TULIO PINEDA</strong>
+        </v-col>
+    </v-footer>
 </template>
 
 <script>

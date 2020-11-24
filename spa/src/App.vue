@@ -1,19 +1,19 @@
 <template>
-  <v-app>
-    <router-view name="header" />
-      <div>
-        <v-overlay :value="overlay">
-          <v-progress-circular
-            indeterminate
-            size="64"
-          />
-        </v-overlay>
-        <router-view />
-      </div>
-    <router-view name="footer" />
-  </v-app>
+    <v-app>
+        <router-view name="header" />
+        <router-view name="sidebar" />
+        <div>
+            <v-overlay :value="overlay">
+                <v-progress-circular
+                    indeterminate
+                    size="64"
+                />
+            </v-overlay>
+            <router-view/>
+        </div>
+        <router-view name="footer" />
+    </v-app>
 </template>
-
 <script>
   import { mapGetters } from 'vuex'
   export default {
