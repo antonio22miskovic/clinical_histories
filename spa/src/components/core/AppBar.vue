@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-app-bar
-            color="red darken-1"
+            color="deep-orange darken-1"
             dense
             dark
         >
@@ -33,7 +33,7 @@
                         <v-list-item-title> <v-icon>mdi-account</v-icon> perfil</v-list-item-title>
                     </v-list-item>
                     <v-list-item>
-                        <v-list-item-title> <v-icon>mdi-power-standby</v-icon> cerrar sesion</v-list-item-title>
+                        <v-list-item-title @click="logout_on"> <v-icon>mdi-power-standby</v-icon> cerrar sesion</v-list-item-title>
                     </v-list-item>
                 </v-list>
             </v-menu>
@@ -48,8 +48,23 @@
     methods:{
 
         ...mapActions({
-            drawerOn: 'setDrawer'
+            drawerOn: 'setDrawer',
+            logout: 'logout'
         }),
+
+        async logout_on(){
+            try {
+                const res = await this.logout()
+                this.$router.push({name:'auth-login'})
+            } catch(e) {
+                    console.log(e)
+            }
+
+
+
+
+        },
+
         Drawer_on(){
 
             if (this.drawer === false) {

@@ -1,13 +1,13 @@
 <template>
-	<v-app id="login">
+	<v-app>
 	    <v-main>
 	      	<v-container fluid fill-height>
-	        	<v-layout align-center pa-15 justify->
+	        	<v-layout align-center pa-15 justify-center>
 	          		<v-flex xs12 sm8 md4 lg4>
 	            		<v-card class="elevation-70 pa-3" width="400" shaped outlined>
 	              			<div class="layout column align-center">
-	                			<img src="/logos/tulio1.jpg" alt="Vue Material Admin" width="180" height="180">
-	                			<h1 class="primary--text text-center"> DR. TULIO PINEDA </h1>
+	                			<img src="/logos/bicentenario.jpg" alt="DR. tulio pineda" width="180" height="180">
+	                			<h1 class=" text-center font-italic"> DR. TULIO PINEDA </h1>
 	              			</div>
 	              			<v-container style="min-height:320px">
 							    <div>
@@ -35,7 +35,7 @@
 											/>
 
 								            <v-card-actions>
-								          		<v-btn block color="primary" @click="login">Login</v-btn>
+								          		<v-btn block color="deep-orange darken-2" @click="login">Login</v-btn>
 								          		<br>
 								   			</v-card-actions>
 								        </v-form>
@@ -45,8 +45,8 @@
 								    </div>
 								</div>
 	              			</v-container>
-	                		<div class="text-center">
-	                  			<strong> Centro Diagnostico Integral Tulio Pineda-2020 </strong>
+	                		<div class="text-center font-italic">
+	                  			<strong> Ministerio del Poder Popular para la Salud</strong>
 	                		</div>
 	            		</v-card>
 	          		</v-flex>
@@ -77,38 +77,30 @@ export default {
     }
   },
   methods: {
-    async login () {
-      	this.setOverlay(true)
-		// try {
-		// const resp = await this.$store.dispatch('login', this.form)
-		// this.setOverlay(false)
-		// this.$router.push({ name: 'home' })
-		// } catch (error) {
-		// this.setOverlay(false)
-		// 	this.$swal({
-		//    icon: 'error',
-		//    title: '¡Disculpe!',
-		//    text: error,
-		//    confirmButtonColor: '#3085d6',
-		//  })
-		// }
-    },
+  	async login () {
+  		this.setOverlay(true)
+  		try {
+  			const resp = await this.$store.dispatch('login', this.form)
+  			this.setOverlay(false)
+  			this.$router.push({ name: 'home' })
+  		} catch (error) {
+  			this.setOverlay(false)
+  			this.$swal({
+  				icon: 'error',
+  				title: '¡Credenciales no Validas!',
+  				text: error,
+  				confirmButtonColor: '#3085d6',
+  			})
+  		}
+  	},
     ...mapActions({
-      setOverlay: 'setOverlay'
+      	setOverlay: 'setOverlay'
     })
   },
 }
 </script>
 <style scoped lang="css">
 	#login {
-	    height: 100%;
-	    width: 100%;
-	    position:absolute;
-	    top: 0;
-	    left: 0;
-	    content: "";
-	    z-index: 0;
-	    background-image:url(/logos/login3.jpg);
-	    display:cover;
+	    background-image:url(/logos/bicentenario.jpg);
 	}
 </style>

@@ -1,2 +1,3 @@
-import "./axios";
+import Vue from 'vue'
+import "./axios"
 import "./sweetalert";
