@@ -1,17 +1,23 @@
 <template>
     <v-app>
-        <router-view name="header" />
-        <router-view name="sidebar" />
-        <div>
-            <v-overlay :value="overlay">
-                <v-progress-circular
-                    indeterminate
-                    size="64"
-                />
-            </v-overlay>
-            <router-view/>
-        </div>
-        <router-view name="footer" />
+        <router-view name="header"/>
+        <v-row>
+            <v-col cols="3">
+                <router-view name="sidebar"/>
+            </v-col>
+            <v-col>
+                <router-view/>
+            </v-col>
+            <div>
+                <v-overlay :value="overlay">
+                    <v-progress-circular
+                        indeterminate
+                        size="64"
+                    />
+                </v-overlay>
+            </div>
+        </v-row>
+        <router-view name="footer"/>
     </v-app>
 </template>
 <script>
