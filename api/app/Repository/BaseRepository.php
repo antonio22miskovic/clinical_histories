@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Repository\BaseRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
