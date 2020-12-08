@@ -1,6 +1,7 @@
 <template>
 	<v-app>
-	    <v-main>
+	    <v-main
+	    	gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)">
 	      	<v-container fluid fill-height>
 	        	<v-layout align-center pa-15 justify-center>
 	          		<v-flex xs12 sm8 md4 lg4>

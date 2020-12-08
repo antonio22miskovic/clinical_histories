@@ -1,9 +1,9 @@
 <template>
     <v-app>
         <v-navigation-drawer
-            floating
+            app
             v-model="drawer"
-            color="deep-orange darken-1"
+            color="blue accent-3"
         >
             <v-list-item two-line>
                 <v-list-item-avatar class="ml-4">
@@ -55,8 +55,6 @@
         name:'SideBar',
 
         mounted(){
-            console.log('dentro del mmounted')
-            console.log(this.userAuth)
         },
 
         data:() => ({

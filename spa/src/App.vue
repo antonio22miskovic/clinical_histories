@@ -1,22 +1,24 @@
 <template>
     <v-app>
+        <div>
+            <v-overlay :value="overlay">
+                <v-progress-circular
+                indeterminate
+                size="64"
+                />
+            </v-overlay>
+        </div>
         <router-view name="header"/>
-        <v-row>
-            <v-col cols="3">
-                <router-view name="sidebar"/>
-            </v-col>
-            <v-col>
+        <v-main>
+            <v-container
+            class="py-8 px-6"
+            fluid
+            >
                 <router-view/>
-            </v-col>
-            <div>
-                <v-overlay :value="overlay">
-                    <v-progress-circular
-                        indeterminate
-                        size="64"
-                    />
-                </v-overlay>
-            </div>
-        </v-row>
+            </v-container>
+        </v-main>
+        </v-container>
+        <router-view name="sidebar"/>
         <router-view name="footer"/>
     </v-app>
 </template>

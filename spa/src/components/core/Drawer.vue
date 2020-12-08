@@ -1,9 +1,7 @@
 <template>
     <v-navigation-drawer
       v-model="drawer"
-      absolute
-      bottom
-      temporary
+      app
     >
       <v-list
         nav
@@ -39,7 +37,7 @@
     name: 'CoreDrawer',
     data () {
       return {
-        
+
       }
     },
     computed: {

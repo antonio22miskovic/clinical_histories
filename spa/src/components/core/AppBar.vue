@@ -1,9 +1,9 @@
 <template>
     <div>
         <v-app-bar
-            color="deep-orange darken-1"
+            color="blue accent-3"
+            app
             dense
-            dark
         >
             <v-app-bar-nav-icon @click="Drawer_on()"></v-app-bar-nav-icon>
 
