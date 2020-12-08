@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-app-bar
-            color="blue accent-3"
+            color="#EF5350"
             app
             dense
         >

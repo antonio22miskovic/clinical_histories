@@ -1,5 +1,6 @@
 <template>
-    <v-app>
+    <v-app
+    >
         <div>
             <v-overlay :value="overlay">
                 <v-progress-circular
@@ -26,11 +27,20 @@
   import { mapGetters } from 'vuex'
   export default {
     name: 'App',
+    created(){
+        console.log(this.state)
+    },
     data () {
       return{
       }
     },
       computed: {
+        state(){
+            if (this.$router.options.base === '/'){
+                 return true
+            }
+                return false
+        },
       ...mapGetters({
         overlay: 'overlay',
       }),

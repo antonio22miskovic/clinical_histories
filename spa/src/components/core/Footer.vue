@@ -5,7 +5,7 @@
         <v-col
         class="text-center"
         cols="12"
-        color="red"
+        color="deep-purple lighten-2"
         >
             {{ new Date().getFullYear() }} — <strong>DR. TULIO PINEDA</strong>
         </v-col>
