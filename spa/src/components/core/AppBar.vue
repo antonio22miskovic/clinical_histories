@@ -49,13 +49,15 @@
 
         ...mapActions({
             drawerOn: 'setDrawer',
-            logout: 'logout'
+            logout: 'logout',
+            setfondo: 'setfondo'
         }),
 
         async logout_on(){
             try {
                 const res = await this.logout()
                 this.$router.push({name:'auth-login'})
+                this.setfondo('background-color:#B0BEC5')
             } catch(e) {
                     console.log(e)
             }

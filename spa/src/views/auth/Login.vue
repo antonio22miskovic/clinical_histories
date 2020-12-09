@@ -1,18 +1,21 @@
 <template>
-	<v-container>
-        <v-row>
+	<v-container >
+        <v-row  no-gutters>
             <v-col cols="6">
                 <template>
-                    <v-carousel>
-                        <v-carousel-item
-                            v-for="(item,i) in items"
-                            :key="i"
-                            :src="item.src"
-                            reverse-transition="fade-transition"
-                            transition="fade-transition"
-                        ></v-carousel-item>
-                    </v-carousel>
-                </template>
+					<v-carousel
+						cycle
+						hide-delimiter-background
+						show-arrows-on-hover
+					>
+						<v-carousel-item
+							v-for="(item, i) in items"
+							:key="i"
+							:src="item.src"
+						>
+						</v-carousel-item>
+					</v-carousel>
+				</template>
             </v-col>
             <v-col cols="6">
                 <v-container>
@@ -20,7 +23,7 @@
                                 <img src="/logos/bicentenario.jpg" alt="DR. tulio pineda" width="100" height="100">
                                 <h1 class=" text-center font-italic"> DR. TULIO PINEDA </h1>
                             </div>
-                            <v-container style="min-height:310px">
+                            <v-container>
                                 <div>
                                         <v-form ref="login">
 
@@ -60,7 +63,6 @@
                 </v-container>
             </v-col>
         </v-row>
-
 	</v-container>
 </template>
 <script>
@@ -75,36 +77,43 @@ export default {
 	        password: ''
 	    },
 	    rulesUser: {
-        	required: value => !!value || 'E-mail Required.'
+        	required: value => !!value || 'Debe introducir un E-mail.'
       	},
       	rulesPassword: {
-        	required: value => !!value || 'Password Required.'
+        	required: value => !!value || 'Debe introducir Password'
       	},
       	hidePassword: true,
       	error: false,
         items: [
             {
-                src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+                src:'/logos/1.jpg',
             },
             {
-                src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
+                src:'/logos/2.jpg',
             },
             {
-                src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
+                src:'/logos/3.jpg',
             },
             {
-                src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
+                src:'/logos/4.jpg',
+            },
+            {
+                src:'/logos/5.png',
             },
         ],
     }
   },
   methods: {
   	async login () {
+  		if (!this.$refs.login.validate()) {
+  			return
+  		}
   		this.setOverlay(true)
   		try {
   			const resp = await this.$store.dispatch('login', this.form)
   			this.setOverlay(false)
   			this.$router.push({ name: 'home' })
+  			this.setfondo('background-color:#FFFFFF')//cambio el fondo a blanco
   		} catch (error) {
   			this.setOverlay(false)
   			this.$swal({
@@ -116,7 +125,8 @@ export default {
   		}
   	},
     ...mapActions({
-      	setOverlay: 'setOverlay'
+      	setOverlay: 'setOverlay',
+      	setfondo: 'setfondo'
     })
   },
 }

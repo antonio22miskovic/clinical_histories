@@ -2,14 +2,13 @@ export default {
 
     state: {
         overlay: false,
-        drawer:true
+        drawer:true,
     },
 
     mutations: {
         SET_OVERLAY (state, payload) {
             state.overlay = payload
-    },
-
+        },
         DRAWER (state, payload) {
             state.drawer = payload
         }
@@ -17,7 +16,7 @@ export default {
 
     getters: {
         overlay: state => state.overlay,
-        drawer:  state => state.drawer
+        drawer : state => state.drawer,
     },
 
     actions: {
@@ -28,7 +27,6 @@ export default {
 
         setDrawer({ commit }, state) {
             commit('DRAWER', state)
-        }
-
+        },
     }
 }

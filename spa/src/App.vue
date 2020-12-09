@@ -28,19 +28,12 @@
   export default {
     name: 'App',
     created(){
-        console.log(this.state)
     },
     data () {
       return{
       }
     },
       computed: {
-        state(){
-            if (this.$router.options.base === '/'){
-                 return true
-            }
-                return false
-        },
       ...mapGetters({
         overlay: 'overlay',
       }),

@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import {getlocaluser} from '@/conf/getUser'
 // esta funcion inyecta constatemente el token que esta en el estado
 export function axiosHeaders(store){
 

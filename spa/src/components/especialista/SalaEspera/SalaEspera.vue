@@ -10,7 +10,7 @@
             >
                 <v-card>
                     <v-card-title>
-                        Pacientes del dia
+                        Pacientes del dia: {{conut}}
 <!--                         <v-spacer /> -->
 <!--                         <v-btn  color="primary" large>Agregar Garantia</v-btn> -->
                     </v-card-title>
@@ -47,10 +47,11 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { mapGetters, mapActions } from 'vuex'
 export default {
     name: 'SalaEspera',
     data: () => ({
+        count:0,
         headers: [
         { text: 'nombre', align: 'start', value: 'balance.balance_amount' },
         { text: 'cedula', value: 'warrantable_type' },
@@ -75,15 +76,24 @@ warranties: { data: [
 search: ''
 }),
     created () {
-        // this.loadWarranties()
+        // this.loadQuota()
+    },
+    computd:{
+
     },
     methods: {
-
+        ...mapActions({
+            quotas: 'quotas'
+        }),
         async no_asistio (id) {
 
         },
 
         async atender (id) {
+
+        },
+
+        async loadQuota () {
 
         },
 
