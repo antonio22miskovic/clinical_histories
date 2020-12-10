@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 interface QuotaRepositoryInterface
 {
-	// public function GetUserQuotas() : Model;
+
 }

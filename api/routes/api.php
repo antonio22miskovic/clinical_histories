@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
     	Route::post('login', 'Auth\AuthController@login');
     	Route::post('logout', 'Auth\AuthController@logout');
         Route::post('refresh', 'Auth\AuthController@refresh');
-    	Route::post('get-auth-user', 'Auth\AuthController@getAuthUser');
+    	Route::post('me', 'Auth\AuthController@me');
 
 		});
 
@@ -24,5 +24,6 @@ use Illuminate\Support\Facades\Route;
 
 	 	Route::apiresource('quota', 'Api\Quota\QuotaController');
 	 	Route::apiresource('specialist', 'Api\Specialist\SpecialistController');
+        Route::get('specialist/auth/user', 'Api\Specialist\SpecialistController@AuthUserSpecialist');
 
 	});

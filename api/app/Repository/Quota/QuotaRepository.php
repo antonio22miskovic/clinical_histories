@@ -5,14 +5,15 @@ namespace App\Repository\Quota;
 use App\Models\Quota;
 use App\Repository\BaseRepository;
 use App\Repository\Quota\QuotaRepositoryInterface;
-use Tymon\JWTAuth\JWT;
+use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class QuotaRepository extends BaseRepository implements QuotaRepositoryInterface
 {
     protected $model = Quota::class;
-    // protected $user =  Auth::user();
 
-    // public function GetUserQuotas(){
-    // 	return response()->json($this->user);
-    // }
+    public function GetUserQuotas($id){
+        $user = User::find($id)->specialists;
+    	return response()->json($user);
+    }
 }

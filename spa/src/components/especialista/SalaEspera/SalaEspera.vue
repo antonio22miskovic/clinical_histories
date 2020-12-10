@@ -10,7 +10,7 @@
             >
                 <v-card>
                     <v-card-title>
-                        Pacientes del dia: {{conut}}
+                        Pacientes del dia: 
 <!--                         <v-spacer /> -->
 <!--                         <v-btn  color="primary" large>Agregar Garantia</v-btn> -->
                     </v-card-title>
@@ -51,7 +51,6 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
     name: 'SalaEspera',
     data: () => ({
-        count:0,
         headers: [
         { text: 'nombre', align: 'start', value: 'balance.balance_amount' },
         { text: 'cedula', value: 'warrantable_type' },

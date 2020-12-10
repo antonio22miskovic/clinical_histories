@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Specialist;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
@@ -31,7 +32,8 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => Hash::make(1234), // password
             'remember_token' => Str::random(10),
-            'rol_id' => 2
+            'rol_id' => 2,
+            'specialist_id' => Specialist::all()->random()->id,
 
         ];
     }

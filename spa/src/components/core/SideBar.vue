@@ -11,7 +11,7 @@
                 </v-list-item-avatar>
 
             <v-list-item-content>
-                <v-list-item-title class="text-center"> Especialista </v-list-item-title>
+                <v-list-item-title class="text-center"> {{specialistAuth}} </v-list-item-title>
                 <v-list-item-subtitle class="text-center">{{userAuth.name}}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
@@ -54,9 +54,10 @@
 
         name:'SideBar',
 
-        mounted(){
+        created(){
+            this.specialistSet()
+            console.log(this.specialistAuth)
         },
-
         data:() => ({
             group: null,
             mini: true,
@@ -64,7 +65,8 @@
 
         methods:{
             ...mapActions({
-                setDrawer: 'setDrawer'
+                setDrawer: 'setDrawer',
+                specialistSet:'specialistSet'
             }),
         },
 
@@ -72,7 +74,8 @@
 
         ...mapGetters({
             drawerOn: 'drawer',
-            userAuth    : 'userAuth'
+            userAuth:'userAuth',
+            specialistAuth:'specialistAuth'
         }),
 
         drawer:{

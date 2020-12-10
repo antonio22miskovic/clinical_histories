@@ -13,3 +13,11 @@ export function getToken() {
 	else
 		return JSON.parse(token)
 }
+
+export function getSpecialist() {
+	const specialist = localStorage.getItem('specialist')
+	if (!specialist)
+		return null
+	else
+		return JSON.parse(specialist)
+}

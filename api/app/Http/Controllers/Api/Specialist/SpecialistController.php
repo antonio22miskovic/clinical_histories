@@ -3,18 +3,22 @@
 namespace App\Http\Controllers\Api\Specialist;
 
 use App\Http\Controllers\Controller;
-use App\Repository\Specialist\SpecialistRepository;
 use App\Http\Resources\Specialist as SpecialistResource;
 use App\Http\Resources\SpecialistCollection;
+use App\Repository\Specialist\SpecialistRepository;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class SpecialistController extends Controller
 {
 	private $repository;
+    private $user;
 
     public function __construct(SpecialistRepository $repository)
     {
         $this->repository = $repository;
+        $this->user = JWTAuth::parseToken()->authenticate();
+        $this->middleware(['jwt.specialist']);
     }
 
     public function index()
@@ -78,6 +82,14 @@ class SpecialistController extends Controller
             [
                 'message' => 'la quota fue eliminado correctamente'],
                 200
+        );
+    }
+
+    public function AuthUserSpecialist(){ // return especialidad del usuario logueado
+
+        return response()->json(
+            new SpecialistResource($this->user->specialist),
+            200 // state HTTP
         );
     }
 }

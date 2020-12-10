@@ -7,14 +7,16 @@ use App\Http\Resources\Quota as QuotaResource;
 use App\Http\Resources\QuotaCollection;
 use App\Repository\Quota\QuotaRepositoryInterface;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class QuotaController extends Controller
 {
 	private $repository;
-
+    
     public function __construct(QuotaRepositoryInterface $repository)
     {
         $this->repository = $repository;
+        $this->middleware(['jwt.specialist']);
     }
 
     public function index()

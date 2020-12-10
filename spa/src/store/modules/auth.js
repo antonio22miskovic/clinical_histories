@@ -7,7 +7,7 @@ export default {
 
     state: {
         access_token: token,
-        user: user
+        user: user,
     },
     mutations: {
 
@@ -60,6 +60,6 @@ export default {
             } catch (error) {
                 commit('SET_USER', null)
             }
-        }
+        },
     }
 }

@@ -24,7 +24,8 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make(1234), // password
             'remember_token' => Str::random(10),
-            'rol_id' => 2
+            'rol_id' => 2,
+            'specialist_id' => 2
     	]);
     	User::create([
     		'name' => 'Antonio Miskovic',
@@ -33,7 +34,8 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make(1234), // password
             'remember_token' => Str::random(10),
-            'rol_id' => 1
+            'rol_id' => 1,
+            'specialist_id' => 1
     	]);
     }
 }

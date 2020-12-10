@@ -22,7 +22,8 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'avatar',
         'password',
-        'rol_id'
+        'rol_id',
+        'specialist_id'
     ];
 
     /**
@@ -64,8 +65,8 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany('App\Models\Medical_consultation');
     }
 
-    public function specialists()
+    public function specialist()
     {
-        return $this->belongsToMany('App\Models\Specialist');
+        return $this->belongsTo('App\Models\Specialist');
     }
 }

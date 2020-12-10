@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Specialist as SpecialistResource;
 use App\Http\Resources\User as UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -35,20 +36,21 @@ class AuthController extends Controller
     public function logout()
     {// destruir session
         try {
-
 	        JWTAuth::parseToken()->invalidate();
 	        return response()->json(['mensaje' => 'session it is over ','confirmation' => true],200);
 
         } catch (JWTException $e) {
-
         	return  response()->json(['mensaje' => $e, 'status' => 500],500);
-
         }
     }
 
-    public function me(){
-
-        return response()->json(Auth::user());
+    public function me(){   
+        $user = Auth::user();
+        $specialist = $user->specialist;
+        return response()->json([
+            'user' => new UserResource($user),
+            'specialist' => new SpecialistResource($specialist),
+        ]);
     }
 
     public function refresh(){
