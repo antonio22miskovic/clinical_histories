@@ -11,7 +11,7 @@
                 </v-list-item-avatar>
 
             <v-list-item-content>
-                <v-list-item-title class="text-center"> {{specialistAuth}} </v-list-item-title>
+                <v-list-item-title class="text-center"> {{specialistAuth.name}} </v-list-item-title>
                 <v-list-item-subtitle class="text-center">{{userAuth.name}}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
@@ -22,11 +22,11 @@
                     v-model="group"
                     active-class="deep-red--text text--accent-4"
                 >
-                    <v-list-item>
+                    <v-list-item  :to="{name:'home'}">
                         <v-list-item-icon>
                             <v-icon>mdi-account-details</v-icon>
                         </v-list-item-icon>
-                        <v-list-item-title :to="{name:'home'}">Sala de Espera</v-list-item-title>
+                        <v-list-item-title>Sala de Espera</v-list-item-title>
                     </v-list-item>
 
                     <v-list-item>
@@ -42,6 +42,14 @@
                         </v-list-item-icon>
                         <v-list-item-title>Pacientes</v-list-item-title>
                     </v-list-item>
+
+                    <v-list-item :to="{name:'profile'}">
+                        <v-list-item-icon>
+                            <v-icon>mdi-account</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title>Perfil</v-list-item-title>
+                    </v-list-item>
+
             </v-list-item-group>
         </v-list>
     </v-navigation-drawer>
@@ -56,7 +64,6 @@
 
         created(){
             this.specialistSet()
-            console.log(this.specialistAuth)
         },
         data:() => ({
             group: null,

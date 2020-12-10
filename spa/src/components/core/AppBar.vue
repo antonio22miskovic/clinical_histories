@@ -30,7 +30,7 @@
 
                 <v-list>
                     <v-list-item>
-                        <v-list-item-title> <v-icon>mdi-account</v-icon> perfil</v-list-item-title>
+                        <v-list-item-title :to="{name:'profile'}"> <v-icon>mdi-account</v-icon>perfil</v-list-item-title>
                     </v-list-item>
                     <v-list-item>
                         <v-list-item-title @click="logout_on"> <v-icon>mdi-power-standby</v-icon> cerrar sesion</v-list-item-title>
