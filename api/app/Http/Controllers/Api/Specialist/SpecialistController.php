@@ -8,6 +8,7 @@ use App\Http\Resources\SpecialistCollection;
 use App\Repository\Specialist\SpecialistRepository;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Auth;
 
 class SpecialistController extends Controller
 {
@@ -17,8 +18,8 @@ class SpecialistController extends Controller
     public function __construct(SpecialistRepository $repository)
     {
         $this->repository = $repository;
-        $this->user = JWTAuth::parseToken()->authenticate();
         $this->middleware(['jwt.specialist']);
+        $this->user = Auth::guard('api')->user();
     }
 
     public function index()
