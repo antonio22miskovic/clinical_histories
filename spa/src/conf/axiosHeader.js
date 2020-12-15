@@ -9,7 +9,6 @@ export function axiosHeaders(store){
   		}
 
 }
-
 // funcion de manejo de cabezera para manipular el token
 export function setAuthorization(token){
 	axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
