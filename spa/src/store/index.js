@@ -4,6 +4,7 @@ import config from './modules/config'
 import auth from './modules/auth'
 import user from './modules/user'
 import specialist from './modules/specialist'
+import waiting_list from './modules/waiting_list'
 
 Vue.use(Vuex)
 
@@ -16,6 +17,6 @@ export default new Vuex.Store({
   	config,
   	auth,
     user,
-    specialist
+    waiting_list
   }
 })

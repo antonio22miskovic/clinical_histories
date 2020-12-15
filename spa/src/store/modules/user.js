@@ -4,19 +4,26 @@ export default {
         specialist:{
             id:null,
             name: null,
-            description:null
+            description:null,
+        },
+        quota:{
+            quota:null,
+            date: null,
         }
     },
 
     mutations: {
         SET_SPECIALIST(state, payload){
-           state.specialist.id = payload.id
-           state.specialist.name = payload.name
-           state.specialist.description = payload.description
+           state.specialist.id = payload.specialist.id
+           state.specialist.name = payload.specialist.name
+           state.specialist.description = payload.specialist.description
+           state.quota.quota = payload.quota.quota
+           state.quota.date = payload.quota.date
         }
     },
     getters: {
-        specialistAuth: (state) => state.specialist
+        specialistAuth: state => state.specialist,
+        getquotas:      state => state.quota
     },
 
     actions: {

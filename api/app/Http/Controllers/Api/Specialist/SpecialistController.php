@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Api\Specialist;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Quota as QuotaResource;
 use App\Http\Resources\Specialist as SpecialistResource;
 use App\Http\Resources\SpecialistCollection;
+use App\Http\Resources\Waiting_listCollection;
+use App\Models\Quota;
 use App\Repository\Specialist\SpecialistRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -86,9 +90,14 @@ class SpecialistController extends Controller
     }
 
     public function AuthUserSpecialist(){ // return especialidad del usuario logueado
-
+        $quotaToday = Quota::where('specialist_id',$this->user->specialist->id)
+                            ->where('date', Carbon::now()->toDateString())
+                            ->first();
         return response()->json(
-            new SpecialistResource($this->user->specialist),
+            [
+                'specialist'   => new SpecialistResource($this->user->specialist),
+                'quota'        => new QuotaResource($quotaToday)
+            ],
             200 // state HTTP
         );
     }

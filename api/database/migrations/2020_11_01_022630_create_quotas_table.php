@@ -22,7 +22,7 @@ class CreateQuotasTable extends Migration
                   ->constrained()
                   ->onDelete('set null');
 
-            $table->datetime('date');
+            $table->date('date');
             $table->timestamps();
         });
     }

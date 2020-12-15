@@ -10,15 +10,15 @@
             >
                 <v-card>
                     <v-card-title>
-                        Pacientes del dia: 
-<!--                         <v-spacer /> -->
-<!--                         <v-btn  color="primary" large>Agregar Garantia</v-btn> -->
+                        Pacientes del dia:{{getquotas.quota}}
+                        <v-spacer />
+                        {{getquotas.date}}
                     </v-card-title>
                     <v-data-table
                         :headers="headers"
-                        :items="warranties.data"
+                        :items="paginate"
                         :sort-by="['attributes.date']"
-                        class="elevation-1"
+                        class="elevation-3"
                         locale="es-CL"
                     >
                         <template v-slot:item.actions="{ item }">
@@ -47,43 +47,34 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions} from 'vuex'
+import axios from 'axios'
 export default {
     name: 'SalaEspera',
     data: () => ({
+
         headers: [
-        { text: 'nombre', align: 'start', value: 'balance.balance_amount' },
-        { text: 'cedula', value: 'warrantable_type' },
-        // { text: 'Nombre', value: 'warrantable.name' },
-        // { text: 'Fecha de garantia', value: 'created_at' },
-        // { text: 'Estatus', value: 'warranty_statu.status' },
-        { text: 'atender', value: 'actions', sortable: false },
-        { text: 'no aisitio', value: 'no_asistio', sortable: false },
+            { text: 'N° ', align: 'start', value: '' },
+            { text: 'Cedula', value: 'cedula' },
+            { text: 'Atender', value: 'actions', sortable: false },
+            { text: 'No atendido', value: 'no_asistio', sortable: false },
         ],
-
-// warranties
-warranties: { data: [
-{
-  monto: '2000',
-  tipo_venta:'venta',
-  nombre: 'carro de lujo',
-  fecha: '22/06/2020',
-  estado: 'activo',
-  acciones: 'acción' ,
-},
-], links: {}, meta: {} },
-search: ''
+        paginate:[],
+        
 }),
-    created () {
-        // this.loadQuota()
+    mounted () {
+        this.loadQuota(1)
     },
-    computd:{
-
+    computed:{
+        ...mapGetters({
+            getquotas:'getquotas',
+        })
     },
     methods: {
         ...mapActions({
-            quotas: 'quotas'
+            quotas: 'quotas',
         }),
+
         async no_asistio (id) {
 
         },
@@ -92,7 +83,15 @@ search: ''
 
         },
 
-        async loadQuota () {
+        async loadQuota (page) {
+            console.log('estoy dentro')
+            try{
+                const {data} = await axios.get(`/api/doctor/waiting_list?page=${page}`)
+                this.paginate = data.data
+                console.log('el resultado de la busqueda:', this.paginate)
+            }catch(err){
+                return console.log(err)
+            }
 
         },
 
@@ -123,24 +122,8 @@ search: ''
                 this.warranties = data;
             } catch (e) {
 //
-}
-},
-transform_date (datetime) {
-    let date = new Date(datetime);
-    date = `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`;
-    return date;
-},
-transform_type (type) {
-    if(type == 'App\\Models\\Auction'){
-        return "Remate";
-    }else if(type == 'App\\Models\\Product'){
-        return "Venta Directa";
+            }
+        },
     }
 }
-},
-}
 </script>
-
-<style>
-
-</style>
