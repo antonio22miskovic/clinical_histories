@@ -100,7 +100,7 @@ class SpecialistController extends Controller
                 'quota'        => new QuotaResource($quotaToday)
             ],
             200
-        )
+        );
 
     }
 }

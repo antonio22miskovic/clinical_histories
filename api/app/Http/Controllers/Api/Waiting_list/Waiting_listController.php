@@ -7,6 +7,7 @@ use App\Http\Resources\Waiting_list as Waiting_listResource;
 use App\Http\Resources\Waiting_listCollection;
 use App\Repository\Waiting_list\Waiting_listRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class Waiting_listController extends Controller
