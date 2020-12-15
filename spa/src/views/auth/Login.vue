@@ -40,7 +40,7 @@
                                                 :type="hidePassword ? 'password' : 'text'"
                                                 :append-icon="hidePassword ? 'mdi-eye' : 'mdi-eye-off'"
                                                 name="password"
-                                                label="Password"
+                                                label="Contraseña"
                                                 id="password"
                                                 :rules="[rulesPassword.required]"
                                                 v-model="form.password"
@@ -48,7 +48,7 @@
                                             />
 
                                             <v-card-actions>
-                                                <v-btn block color="deep-orange darken-2" @click="login">Login</v-btn>
+                                                <v-btn block color="blue darken-2" @click="login">Login</v-btn>
                                                 <br>
                                             </v-card-actions>
                                         </v-form>
@@ -80,7 +80,7 @@ export default {
         	required: value => !!value || 'Debe introducir un E-mail.'
       	},
       	rulesPassword: {
-        	required: value => !!value || 'Debe introducir Password'
+        	required: value => !!value || 'Por favor Introduzca su Contrseña'
       	},
       	hidePassword: true,
       	error: false,

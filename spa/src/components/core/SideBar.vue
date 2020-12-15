@@ -3,7 +3,7 @@
         <v-navigation-drawer
             app
             v-model="drawer"
-            color="#EF5350"
+            color="blue darken-2"
         >
             <v-list-item two-line>
                 <v-list-item-avatar class="ml-4">
