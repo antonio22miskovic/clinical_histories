@@ -11,7 +11,7 @@ use App\Models\Quota;
 use App\Repository\Specialist\SpecialistRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Auth;
 
 class SpecialistController extends Controller
 {
@@ -21,8 +21,8 @@ class SpecialistController extends Controller
     public function __construct(SpecialistRepository $repository)
     {
         $this->repository = $repository;
-        $this->user = JWTAuth::parseToken()->authenticate();
         $this->middleware(['jwt.specialist']);
+        $this->user = Auth::guard('api')->user();
     }
 
     public function index()
@@ -90,6 +90,7 @@ class SpecialistController extends Controller
     }
 
     public function AuthUserSpecialist(){ // return especialidad del usuario logueado
+
         $quotaToday = Quota::where('specialist_id',$this->user->specialist->id)
                             ->where('date', Carbon::now()->toDateString())
                             ->first();
@@ -98,7 +99,8 @@ class SpecialistController extends Controller
                 'specialist'   => new SpecialistResource($this->user->specialist),
                 'quota'        => new QuotaResource($quotaToday)
             ],
-            200 // state HTTP
-        );
+            200
+        )
+
     }
 }

@@ -12,11 +12,13 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class QuotaController extends Controller
 {
 	private $repository;
-    
+    private $user;
+
     public function __construct(QuotaRepositoryInterface $repository)
     {
         $this->repository = $repository;
         $this->middleware(['jwt.specialist']);
+        $this->user = Auth::guard('api')->user();
     }
 
     public function index()

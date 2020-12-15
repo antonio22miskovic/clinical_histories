@@ -17,8 +17,8 @@ class Waiting_listController extends Controller
     public function __construct(Waiting_listRepository $repository)
     {
         $this->repository = $repository;
-        $this->user = JWTAuth::parseToken()->authenticate();
         $this->middleware(['jwt.specialist']);
+        $this->user = Auth::guard('api')->user();
     }
 
     public function index()
