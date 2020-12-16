@@ -26,6 +26,8 @@ use Illuminate\Support\Facades\Route;
 
         Route::apiresource('waiting_list', 'Api\Waiting_list\Waiting_listController');
 
+        Route::apiresource('patient', 'Api\Patient\PatientController');
+
 	 	Route::apiresource('specialist', 'Api\Specialist\SpecialistController');
         Route::get('specialist/auth/user', 'Api\Specialist\SpecialistController@AuthUserSpecialist');
         Route::get('specialist/auth/user', 'Api\Specialist\SpecialistController@AuthUserSpecialist');

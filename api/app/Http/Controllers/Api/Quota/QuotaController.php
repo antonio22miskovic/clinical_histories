@@ -7,6 +7,7 @@ use App\Http\Resources\Quota as QuotaResource;
 use App\Http\Resources\QuotaCollection;
 use App\Repository\Quota\QuotaRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class QuotaController extends Controller

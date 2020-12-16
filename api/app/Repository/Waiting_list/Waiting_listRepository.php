@@ -22,7 +22,7 @@ class Waiting_listRepository extends BaseRepository implements Waiting_listRepos
 
         return $this->model::where('quota_id',$quotaToday->id)
                     ->paginate(
-                        $this->request->query('per_page', 12)
+                        $this->request->query('per_page', 10)
                     );
     }
 }

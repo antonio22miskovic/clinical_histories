@@ -15,7 +15,9 @@
             class="py-8 px-6"
             fluid
             >
-                <router-view/>
+                <transition name="slide" mode="out-in">
+                    <router-view/>
+                </transition>
             </v-container>
         </v-main>
         </v-container>
@@ -40,3 +42,14 @@
     },
   }
 </script>
+<style>
+   .slide-enter-active,
+   .slide-leave-active{
+        transition: opacity 1s, transform 1s;
+   }
+   .slide-enter,
+   .slide-leave-to {
+    opacity: 0;
+    transform: translateX(-30%);
+   }
+</style>

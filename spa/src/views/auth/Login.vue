@@ -67,6 +67,7 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
+import {setAuthorization} from '@/conf/axiosHeader'
 import axios from 'axios'
 export default {
   name: 'Login',
@@ -113,7 +114,7 @@ export default {
   			const resp = await this.$store.dispatch('login', this.form)
   			this.setOverlay(false)
   			this.$router.push({ name: 'home' })
-  			this.setfondo('background-color:#FFFFFF')//cambio el fondo a blanco
+            setAuthorization(resp.access_token) // añadir el token por defecto
   		} catch (error) {
   			this.setOverlay(false)
   			this.$swal({

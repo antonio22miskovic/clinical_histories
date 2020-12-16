@@ -4,7 +4,6 @@ import {getlocaluser} from '@/conf/getUser'
 export function axiosHeaders(store){
 
 		if (store.state.auth.access_token) {
-			console.log(store.state.auth.access_token)
       		setAuthorization(store.state.auth.access_token)
   		}
 

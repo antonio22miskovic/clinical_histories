@@ -17,6 +17,7 @@ export default new Vuex.Store({
   	config,
   	auth,
     user,
+    specialist,
     waiting_list
   }
 })

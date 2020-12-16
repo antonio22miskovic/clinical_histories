@@ -15,12 +15,19 @@
                         {{getquotas.date}}
                     </v-card-title>
                     <v-data-table
+                        :page="page"
+                        :pageCount="numberOfPages"
+                        :server-items-length="total"
+                        :loading="loading"
                         :headers="headers"
-                        :items="paginate"
-                        :sort-by="['attributes.date']"
+                        :items="getDateItems"
+                        :options.sync="option"
                         class="elevation-3"
                         locale="es-CL"
                     >
+                        <template v-slot:item.index="{ item }">
+                           <td>{{item.index}}</td>
+                        </template>
                         <template v-slot:item.actions="{ item }">
                             <v-btn
                             color="primary"
@@ -50,29 +57,74 @@
 import { mapGetters, mapActions} from 'vuex'
 import axios from 'axios'
 export default {
+
     name: 'SalaEspera',
+
     data: () => ({
 
         headers: [
-            { text: 'N° ', align: 'start', value: '' },
+            { text: 'N° ', value: 'index' },
             { text: 'Cedula', value: 'cedula' },
             { text: 'Atender', value: 'actions', sortable: false },
             { text: 'No atendido', value: 'no_asistio', sortable: false },
-        ],
-        paginate:[],
-        
-}),
-    mounted () {
-        this.loadQuota(1)
+        ],   
+        numberOfPages: 0,
+        options:{},
+        page:1 
+    }),
+    watch: {
+        options: {
+            handler() {
+                this.loadQuota();
+            },
+        }
     },
+
+    mounted () {
+        this.loadQuota()
+    },
+
     computed:{
+
         ...mapGetters({
             getquotas:'getquotas',
-        })
+            getDateItems:'getDateItems',
+            total:'total',
+            isloading:'isloading'
+
+        }),
+
+        paginate:{
+            set(value){
+                this.GetData(value)
+            },
+            get(){
+                return this.getDateItems
+            }
+        },
+        option:{
+            set(value){
+                this.GetData(value)
+            },
+            get(){
+                return this.options
+            }   
+        },
+        loading:{
+            set(value){ 
+                this.Setloading(value)
+            },
+            get(){
+                return this.isloading
+            }
+        }
     },
+
     methods: {
         ...mapActions({
             quotas: 'quotas',
+            GetData: 'GetData',
+            Setloading:'Setloading'
         }),
 
         async no_asistio (id) {
@@ -81,49 +133,23 @@ export default {
 
         async atender (id) {
 
-        },
-
-        async loadQuota (page) {
-            console.log('estoy dentro')
-            try{
-                const {data} = await axios.get(`/api/doctor/waiting_list?page=${page}`)
-                this.paginate = data.data
-                console.log('el resultado de la busqueda:', this.paginate)
-            }catch(err){
-                return console.log(err)
-            }
+            this.$router.push({name:'consulta', params:{id: id}})
 
         },
 
-        async reintegro (id) {
-            try {
-                const { data } = await axios.patch(`api/warranty_statu_refund_requested`,{"id":id})
-                this.$swal({
-                    icon: 'success',
-                    title: 'Excelente',
-                    text: data.message,
-                    showConfirmButton: false,
-                    timer: 2000,
-                    onClose: () => {},
-                })
-            } catch (e) {
-                console.log(e)
-            }
-        },
-        async loadWarranties () {
-            try {
-                const { data } = await axios.get(`/api/warranties/${this.$store.state.auth.user.id}`)
-                data.data.forEach(
-                    item => {
-                        item.warrantable_type = this.transform_type(item.warrantable_type)
-                        item.created_at = this.transform_date(data.data[0].created_at)
-                        item.balance.balance_amount = `$${new Intl.NumberFormat("de-DE").format(item.balance.balance_amount)}`
-                    });
-                this.warranties = data;
-            } catch (e) {
-//
-            }
+        async loadQuota () {
+           try{
+                this.loading = true
+                const { page, itemsPerPage } = this.options;
+                let pageNumber = page - 1;
+                this.GetData(pageNumber)
+                this.loading = false
+           }catch(err){
+                this.loading = false
+                console.log(err)
+           }
         },
     }
+
 }
 </script>

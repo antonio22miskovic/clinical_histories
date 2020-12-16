@@ -1,7 +1,6 @@
+import axios from 'axios'
 import {axiosHeaders} from '@/conf/axiosHeader'
-import router from "@/router"
-import store from "@/store"
-
+import Swal from 'sweetalert2'
 export function handler(store, router){
 
 	axios.interceptors.response.use(null, (error) =>{
@@ -9,12 +8,20 @@ export function handler(store, router){
 		switch (error.response.status){
 
 			case 401:
+                    localStorage.removeItem('user')
+                    localStorage.removeItem('key')
 				router.push('/')
 			break
 
 			case 500:
 				console.log('ah ocurrido un problema en el servidor')
-				return Promise.reject(error)
+                Swal.fire({
+                    position:'top-end',
+                    icon: 'error',
+                    title: 'Disculpe ah ocurrido un error interno.. Intente mas tarde',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
 			break
 
 			default:

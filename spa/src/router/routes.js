@@ -37,6 +37,21 @@ export default [
     },
 
     {
+        path: '/consulta/:id',
+        props: true,
+        name: 'consulta',
+        components: {
+                        default: page('Consulta.vue'),
+                        header:  comp('core/AppBar.vue'),
+                        sidebar: comp('core/SideBar.vue'),
+                        footer:  comp('core/Footer.vue')
+                    },
+        meta: {
+            middleware: [middlewares.auth],
+        },
+    },
+
+    {
         path: '/profile',
         name: 'profile',
         components: {

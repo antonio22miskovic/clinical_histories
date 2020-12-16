@@ -15,7 +15,7 @@ class Waiting_list extends JsonResource
     public function toArray($request)
     {
         return [
-
+            'id' => $this->id,
             'cedula' => $this->identification_card,
 
         ];
