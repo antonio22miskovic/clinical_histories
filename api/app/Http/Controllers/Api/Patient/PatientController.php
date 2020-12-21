@@ -32,68 +32,71 @@ class PatientController extends Controller
     public function store(Request $request)
     {
         try {
-
-                // $request->validate([
-            //     'sex' => "required",
-            //     'first_name' => "required",
-            //     'last_name' => "required",
-            //     'ci' => "required",
-            //     'civil_status' => "required",
-            //     'birthdate' => "required",
-            //     'weight' => "required"
-            // ],[
-            //     'sex.required' => 'Debe introducir un genero',
-            //     'first_name.required' => 'Por Favor Introduzca el Nombre',
-            //     'last_name.required' => 'Por Favor Introduzca el Apellido',
-            //     'ci.required' => 'Por Favor Introduzca el numero de Cedula' ,
-            //     'civil_status.required' => 'Debe Introducir el estado civil',
-            //     'birthdate.required' => 'Introduzca la fecha de nacimiento',
-            //     'weight.required' => 'introduzca el peso del paciente'
-            // ]);
-            $patient = $this->repository->createOrUpdateFromRequest();
-            return response()->json(
-                [
-                    'message' => 'patient registrada exitosamente',
-                    'data' => new PatientResource($patient)
-                ],
-                 200 // state HTTP
+                $request->validate([
+                    'sex' => "required",
+                    'first_name' => "required",
+                    'last_name' => "required",
+                    'ci' => "required",
+                    'civil_status' => "required",
+                    'birthdate' => "required",
+                    'weight' => "required"
+                ],[
+                    'sex.required' => 'Debe introducir un genero',
+                    'first_name.required' => 'Por Favor Introduzca el Nombre',
+                    'last_name.required' => 'Por Favor Introduzca el Apellido',
+                    'ci.required' => 'Por Favor Introduzca el numero de Cedula' ,
+                    'civil_status.required' => 'Debe Introducir el estado civil',
+                    'birthdate.required' => 'Introduzca la fecha de nacimiento',
+                    'weight.required' => 'introduzca el peso del paciente'
+                ]);
+                $patient = $this->repository->createOrUpdateFromRequest();
+                return response()->json(
+                    [
+                        'message' => 'patient registrada exitosamente',
+                        'data' => new PatientResource($patient)
+                    ],
+                    200 // state HTTP
              );
-            
+
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()]);
         }
-        
+
 
     }
 
     public function update(Request $request, int $id)
     {
+        try{
+                $request->validate([
+                    'sex' => "required",
+                    'first_name' => "required",
+                    'last_name' => "required",
+                    'ci' => "required",
+                    'civil_status' => "required",
+                    'birthdate' => "required",
+                    'weight' => "required"
+                ],[
+                    'sex.required' => 'Debe introducir un genero',
+                    'first_name.required' => 'Por Favor Introduzca el Nombre',
+                    'last_name.required' => 'Por Favor Introduzca el Apellido',
+                    'ci.required' => 'Por Favor Introduzca el numero de Cedula' ,
+                    'civil_status.required' => 'Debe Introducir el estado civil',
+                    'birthdate.required' => 'Introduzca la fecha de nacimiento',
+                    'weight.required' => 'introduzca el peso del paciente'
+                ]);
 
-        // $request->validate([
-        //     'sex' => "required",
-        //     'first_name' => "required",
-        //     'last_name' => "required",
-        //     'ci' => "required",
-        //     'civil_status' => "required",
-        //     'birthdate' => "required",
-        //     'weight' => "required"
-        // ],[
-        //     'sex.required' => 'Debe introducir un genero',
-        //     'first_name.required' => 'Por Favor Introduzca el Nombre',
-        //     'last_name.required' => 'Por Favor Introduzca el Apellido',
-        //     'ci.required' => 'Por Favor Introduzca el numero de Cedula' ,
-        //     'civil_status.required' => 'Debe Introducir el estado civil',
-        //     'birthdate.required' => 'Introduzca la fecha de nacimiento',
-        //     'weight.required' => 'introduzca el peso del paciente'
-        // ]);
-        $patient = $this->repository->createOrUpdateFromRequest($id);
-        return response()->json(
-            [
-                'message' => 'Los datos del paciente han sido actualizados correctamente',
-                'data' => new PatientResource($patient)
-            ],
-            200 // state HTTP
-        );
+                $patient = $this->repository->createOrUpdateFromRequest($id);
+                return response()->json(
+                    [
+                        'message' => 'Los datos del paciente han sido actualizados correctamente',
+                        'data' => new PatientResource($patient)
+                    ],
+                    200 // state HTTP
+                );
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()]);
+        }
     }
 
     public function show($id)
