@@ -3,6 +3,7 @@
 namespace App\Repository\Waiting_list;
 
 use App\Http\Resources\Waiting_listCollection;
+use App\Models\Patient;
 use App\Models\Quota;
 use App\Models\Waiting_list;
 use App\Repository\BaseRepository;
@@ -25,4 +26,9 @@ class Waiting_listRepository extends BaseRepository implements Waiting_listRepos
                         $this->request->query('per_page', 10)
                     );
     }
+
+    public function filterPatient($ci)
+    {
+       return Patient::where('ci', $ci)->first();
+    }   
 }

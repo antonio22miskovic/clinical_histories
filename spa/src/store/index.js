@@ -5,6 +5,7 @@ import auth from './modules/auth'
 import user from './modules/user'
 import specialist from './modules/specialist'
 import waiting_list from './modules/waiting_list'
+import Patient from './modules/Patient'
 
 Vue.use(Vuex)
 
@@ -18,6 +19,7 @@ export default new Vuex.Store({
   	auth,
     user,
     specialist,
-    waiting_list
+    waiting_list,
+    Patient
   }
 })

@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 	 	Route::apiresource('quota', 'Api\Quota\QuotaController');
 
         Route::apiresource('waiting_list', 'Api\Waiting_list\Waiting_listController');
+        Route::get('waiting_list/detect/{ci}', 'Api\Waiting_list\Waiting_listController@detectPatient');
 
         Route::apiresource('patient', 'Api\Patient\PatientController');
 

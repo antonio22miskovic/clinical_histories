@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Waiting_list;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Patient as PatientResource;
 use App\Http\Resources\Waiting_list as Waiting_listResource;
 use App\Http\Resources\Waiting_listCollection;
 use App\Repository\Waiting_list\Waiting_listRepository;
@@ -82,4 +83,17 @@ class Waiting_listController extends Controller
             200
         );
     }
+
+    public function detectPatient($ci)
+    {   
+        $validate = $this->repository->filterPatient($ci);
+        if (is_null($validate)) {
+            return response()->json(null,200);
+        }
+        return response()->json(
+            new PatientResource($validate),
+            200
+        );
+    }
+
 }
