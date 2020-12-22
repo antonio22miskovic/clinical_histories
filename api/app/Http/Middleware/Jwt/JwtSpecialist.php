@@ -3,6 +3,7 @@
 namespace App\Http\Middleware\Jwt;
 use Closure;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -35,10 +36,12 @@ class JwtSpecialist
                 return response()->json(['mensaje' => 'token no valido','status' => 401],401);
 
 
+            }else if($e instanceof TokenBlacklistedException) {
+
+                return response()->json(['mensaje' => 'token black list','status' => 401],401);
+
             }else{
-
                 return response()->json(['mensaje' => 'token no found','status' => 401],401);
-
             }
 
         }

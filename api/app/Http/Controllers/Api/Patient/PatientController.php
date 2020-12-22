@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api\Patient;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\PatientCollection;
+use App\Http\Requests\PatientRequest;
+use App\Http\Resources\Medical_record as Medical_recordResource;
 use App\Http\Resources\Patient as PatientResource;
+use App\Http\Resources\PatientCollection;
+use App\Models\Medical_record;
 use App\Repository\Patient\PatientRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,31 +32,19 @@ class PatientController extends Controller
         );
     }
 
-    public function store(Request $request)
+    public function store(PatientRequest $request)
     {
         try {
-                $request->validate([
-                    'sex' => "required",
-                    'first_name' => "required",
-                    'last_name' => "required",
-                    'ci' => "required",
-                    'civil_status' => "required",
-                    'birthdate' => "required",
-                    'weight' => "required"
-                ],[
-                    'sex.required' => 'Debe introducir un genero',
-                    'first_name.required' => 'Por Favor Introduzca el Nombre',
-                    'last_name.required' => 'Por Favor Introduzca el Apellido',
-                    'ci.required' => 'Por Favor Introduzca el numero de Cedula' ,
-                    'civil_status.required' => 'Debe Introducir el estado civil',
-                    'birthdate.required' => 'Introduzca la fecha de nacimiento',
-                    'weight.required' => 'introduzca el peso del paciente'
-                ]);
+
                 $patient = $this->repository->createOrUpdateFromRequest();
+                $medical_record = Medical_record::create([// generacion de la historia clinica de ese paciente
+                    'patient_id' => $patient->id
+                ]);
                 return response()->json(
-                    [
+                    [   
                         'message' => 'patient registrada exitosamente',
-                        'data' => new PatientResource($patient)
+                        'data' => new PatientResource($patient),
+                        'historia_clinica' => new Medical_recordResource($medical_record)
                     ],
                     200 // state HTTP
              );
@@ -62,30 +53,11 @@ class PatientController extends Controller
             return response()->json(['message' => $e->getMessage()]);
         }
 
-
     }
 
-    public function update(Request $request, int $id)
+    public function update(PatientRequest $request, int $id)
     {
         try{
-                $request->validate([
-                    'sex' => "required",
-                    'first_name' => "required",
-                    'last_name' => "required",
-                    'ci' => "required",
-                    'civil_status' => "required",
-                    'birthdate' => "required",
-                    'weight' => "required"
-                ],[
-                    'sex.required' => 'Debe introducir un genero',
-                    'first_name.required' => 'Por Favor Introduzca el Nombre',
-                    'last_name.required' => 'Por Favor Introduzca el Apellido',
-                    'ci.required' => 'Por Favor Introduzca el numero de Cedula' ,
-                    'civil_status.required' => 'Debe Introducir el estado civil',
-                    'birthdate.required' => 'Introduzca la fecha de nacimiento',
-                    'weight.required' => 'introduzca el peso del paciente'
-                ]);
-
                 $patient = $this->repository->createOrUpdateFromRequest($id);
                 return response()->json(
                     [

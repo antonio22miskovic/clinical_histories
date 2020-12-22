@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Waiting_list;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Waiting_listRequest;
 use App\Http\Resources\Patient as PatientResource;
 use App\Http\Resources\Waiting_list as Waiting_listResource;
 use App\Http\Resources\Waiting_listCollection;
@@ -31,13 +32,9 @@ class Waiting_listController extends Controller
         );
     }
 
-    public function store(Request $request)
+    public function store(Waiting_listRequest $request)
     {
-        $request->validate([
-            'identification_card' => "required",
-        ],[
-            'identification_card.required' => ' debe introducir su numero de cedula'
-        ]);
+
         $waiting_list = $this->repository->createOrUpdateFromRequest();
         return response()->json(
             [
@@ -48,13 +45,9 @@ class Waiting_listController extends Controller
          );
     }
 
-    public function update(Request $request, int $id)
+    public function update(Waiting_listRequest $request, int $id)
     {
-        $request->validate([
-            'identification_card' => "required",
-        ],[
-            'identification_card.required' => ' debe introducir su numero de cedula'
-        ]);
+
         $waiting_list = $this->repository->createOrUpdateFromRequest($id);
         return response()->json(
             [

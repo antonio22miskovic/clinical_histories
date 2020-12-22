@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Specialist;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SpecialistRequest;
 use App\Http\Resources\Quota as QuotaResource;
 use App\Http\Resources\Specialist as SpecialistResource;
 use App\Http\Resources\SpecialistCollection;
@@ -33,15 +34,9 @@ class SpecialistController extends Controller
         );
     }
 
-    public function store(Request $request)
+    public function store(SpecialistRequest $request)
     {
-        $request->validate([
-            'quota' => "required",
-            'specialist_id' => "required",
-        ],[
-            'quota.required' => 'debe asignar una quota ',
-            'specialist_id.required' => 'se debe tener un especialista asignado'
-        ]);
+      
         $quota = $this->repository->createOrUpdateFromRequest();
         return response()->json(
             [
@@ -52,15 +47,9 @@ class SpecialistController extends Controller
          );
     }
 
-    public function update(Request $request, int $id)
+    public function update(SpecialistRequest $request, int $id)
     {
-        $request->validate([
-            'quota' => "required",
-            'specialist_id' => "required",
-        ],[
-            'quota.required' => 'debe asignar una quota ',
-            'specialist_id.required' => 'se debe tener un especialista asignado'
-        ]);
+ 
         $quota = $this->repository->createOrUpdateFromRequest($id);
         return response()->json(
             [

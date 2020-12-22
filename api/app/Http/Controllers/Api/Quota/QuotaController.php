@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\Quota;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\QuotaRequest;
 use App\Http\Resources\Quota as QuotaResource;
 use App\Http\Resources\QuotaCollection;
 use App\Repository\Quota\QuotaRepositoryInterface;
@@ -30,15 +31,8 @@ class QuotaController extends Controller
         );
     }
 
-    public function store(Request $request)
+    public function store(QuotaRequest $request)
     {
-        $request->validate([
-            'quota' => "required",
-            'specialist_id' => "required",
-        ],[
-            'quota.required' => 'debe asignar una quota ',
-            'specialist_id.required' => 'se debe tener un especialista asignado'
-        ]);
         $quota = $this->repository->createOrUpdateFromRequest();
         return response()->json(
             [
@@ -49,15 +43,9 @@ class QuotaController extends Controller
          );
     }
 
-    public function update(Request $request, int $id)
+    public function update(QuotaRequest $request, int $id)
     {
-        $request->validate([
-            'quota' => "required",
-            'specialist_id' => "required",
-        ],[
-            'quota.required' => 'debe asignar una quota ',
-            'specialist_id.required' => 'se debe tener un especialista asignado'
-        ]);
+
         $quota = $this->repository->createOrUpdateFromRequest($id);
         return response()->json(
             [
