@@ -41,7 +41,22 @@ export default [
         props: true,
         name: 'consulta',
         components: {
-                        default: page('Consulta.vue'),
+                        default: page('NewConsulta.vue'),
+                        header:  comp('core/AppBar.vue'),
+                        sidebar: comp('core/SideBar.vue'),
+                        footer:  comp('core/Footer.vue')
+                    },
+        meta: {
+            middleware: [middlewares.auth],
+        },
+    },
+
+    {
+        path: '/consulta/patient/:id',
+        props: true,
+        name: 'consultaPatient',
+        components: {
+                        default: page('ConsultaPatient.vue'),
                         header:  comp('core/AppBar.vue'),
                         sidebar: comp('core/SideBar.vue'),
                         footer:  comp('core/Footer.vue')

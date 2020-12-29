@@ -29,6 +29,14 @@ use Illuminate\Support\Facades\Route;
 
         Route::apiresource('patient', 'Api\Patient\PatientController');
 
+        Route::apiresource('medical/record', 'Api\Medical_record\Medical_recordController');
+
+        Route::apiresource('diagnosi', 'Api\Diagnosi\DiagnosiController');
+
+        Route::apiresource('disease', 'Api\Disease\DiseaseController');
+
+        Route::apiresource('medical/consultation', 'Api\Medical_consultation\Medical_consultationController');
+
 	 	Route::apiresource('specialist', 'Api\Specialist\SpecialistController');
         Route::get('specialist/auth/user', 'Api\Specialist\SpecialistController@AuthUserSpecialist');
         Route::get('specialist/auth/user', 'Api\Specialist\SpecialistController@AuthUserSpecialist');

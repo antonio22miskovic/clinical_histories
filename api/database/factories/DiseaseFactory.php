@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Disease;
+use App\Models\Patient;
 use App\Models\Specialist;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

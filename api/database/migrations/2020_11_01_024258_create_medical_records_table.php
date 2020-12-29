@@ -18,7 +18,8 @@ class CreateMedicalRecordsTable extends Migration
             $table->foreignId('patient_id')
                   ->nullable()
                   ->constrained()
-                  ->onDelete('set null');
+                  ->onDelete('set null')
+                  ->unique();
             $table->timestamps();
         });
     }

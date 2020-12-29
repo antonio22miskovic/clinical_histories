@@ -1,5 +1,6 @@
+import store from "@/store";
 export default function guest({next,router}){
-	if (localStorage.getItem('user')) {
+	if (store.state.auth.user) {
 		return router.push({'name':'home'})
 	}
 		return next()

@@ -32,7 +32,7 @@
                             <v-btn
                             color="primary"
                             small
-                            @click="atender(item.id)"
+                            @click="atender(item)"
                             >
                                 <v-icon>mdi-account-arrow-right</v-icon>
                             </v-btn>
@@ -67,10 +67,10 @@ export default {
             { text: 'Cedula', value: 'cedula' },
             { text: 'Atender', value: 'actions', sortable: false },
             { text: 'No atendido', value: 'no_asistio', sortable: false },
-        ],   
+        ],
         numberOfPages: 0,
         options:{},
-        page:1 
+        page:1
     }),
     watch: {
         options: {
@@ -90,13 +90,15 @@ export default {
             getquotas:'getquotas',
             getDateItems:'getDateItems',
             total:'total',
-            isloading:'isloading'
+            isloading:'isloading',
+            componet:'Getcomponet',
+            patient:'patient'
 
         }),
 
         paginate:{
             set(value){
-                this.GetData(value)
+                this.all_wl(value)
             },
             get(){
                 return this.getDateItems
@@ -104,14 +106,14 @@ export default {
         },
         option:{
             set(value){
-                this.GetData(value)
+                this.all_wl(value)
             },
             get(){
                 return this.options
-            }   
+            }
         },
         loading:{
-            set(value){ 
+            set(value){
                 this.Setloading(value)
             },
             get(){
@@ -121,19 +123,32 @@ export default {
     },
 
     methods: {
+
         ...mapActions({
             quotas: 'quotas',
-            GetData: 'GetData',
-            Setloading:'Setloading'
+            all_wl: 'all_wl',
+            Setloading:'loading_wl',
+            detectPatient:'detectPatient',
+            clearPatient: 'clearPatient'
         }),
 
         async no_asistio (id) {
 
         },
 
-        async atender (id) {
-
-            this.$router.push({name:'consulta', params:{id: id}})
+        async atender (item) {
+            this.clearPatient() // formatear datos de pacientes antereores
+            // let array = this.data.filter(item => item.id === id)
+            //     for (var i = 0; i <= array.length; i++) {
+            //         this.patient_shift = array[0]
+            //     }
+            this.detectPatient(item.cedula).then(res =>{
+                if (Object.keys(res).length === 0) {
+                    this.$router.push({name:'consulta', params:{id: item.id}})// montamos el componente de nuevo paciente
+                }else{
+                    this.$router.push({name:'consultaPatient',params:{id:res.id}})// montamos el componente del paciente ya registrado
+                }
+            })
 
         },
 
@@ -142,7 +157,7 @@ export default {
                 this.loading = true
                 const { page, itemsPerPage } = this.options;
                 let pageNumber = page - 1;
-                this.GetData(pageNumber)
+                this.all_wl(pageNumber)
                 this.loading = false
            }catch(err){
                 this.loading = false

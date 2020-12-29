@@ -36,7 +36,7 @@ class SpecialistController extends Controller
 
     public function store(SpecialistRequest $request)
     {
-      
+
         $quota = $this->repository->createOrUpdateFromRequest();
         return response()->json(
             [
@@ -49,7 +49,7 @@ class SpecialistController extends Controller
 
     public function update(SpecialistRequest $request, int $id)
     {
- 
+
         $quota = $this->repository->createOrUpdateFromRequest($id);
         return response()->json(
             [

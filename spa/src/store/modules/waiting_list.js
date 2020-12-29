@@ -13,21 +13,10 @@ export default {
         },
         componet:true,
         loading:false,
-        patient:{
-            id: 0,
-            sex:'',
-            first_name:'',
-            last_name:'',
-            phone:'',
-            ci:'',
-            civil_status:'',
-            birthdate:'',
-            weight:0
-        },
     },
 
     mutations: {
-        SET_DATA(state, payload){
+        ALL_WL(state, payload){
             state.data = payload.data // la data a paginar
             // datos de la paginacion
             state.paginate.total = payload.paginate.total
@@ -37,39 +26,35 @@ export default {
             state.paginate.to = payload.paginate.to
         },
 
-        SET_OPTIONS(state, payload){
+        SET_OPTIONS_WL(state, payload){
             // datos de la paginacion
             state.paginate.total = payload.total
             state.paginate.current_page = payload.current_page
             state.paginate.per_page = payload.per_page
             state.paginate.last_page = payload.last_page
             state.paginate.to = payload.to
-         
+
         },
 
-        LOADING(state, payload){
+        LOADING_WL(state, payload){
             state.payload
         },
 
-        SET_PATIENT(state, payload){
-            if (Object.keys(payload).length === 0) {
+        SHOW_WL(state,paylaod){
 
-                    state.componet = false // montamos el componente de nuevo paciente
-            }else{
+        },
 
-                state.patient.id = payload.id
-                state.patient.sex = payload.sex
-                state.patient.first_name = payload.first_name
-                state.patient.last_name = payload.last_name
-                state.patient.phone = payload.phone
-                state.patient.ci = payload.ci
-                state.patient.civil_status = payload.civil_status
-                state.patient.birthdate = payload.birthdate
-                state.patient.weight = payload.weight
+        STORE_WL(state,paylaod){
 
-                state.componet = true
-            }
-        }
+        },
+
+        UPDATE_WL(state,paylaod){
+
+        },
+
+        DESTROY_WL(state){
+
+        },
 
     },
     getters: {
@@ -77,33 +62,62 @@ export default {
         total:         (state) => state.paginate.total,
         getDateItems : (state) => state.data,
         options:       (state) => state.paginate,
-        getPatient:    (state) => state.patient,
-        Getcomponet:    (state) => state.componet,
     },
 
     actions: {
 
-        async GetData({commit},page){ // data de la paginación
+        async all_wl({commit},page){ // data de la paginación
             try{
                 const {data} = await axios.get(`/api/doctor/waiting_list?page=${page.page}`)
-                commit('SET_DATA',data)
+                commit('ALL_WL',data)
             }catch(err){
                 return console.log(err)
             }
         },
 
-        async Setloading({commit},value){
-            commit('LOADING',value)
+        async loading_wl({commit},value){
+            commit('LOADING_WL',value)
         },
 
-        async detectPatient({commit},ci){
+        async show_wl({commit},value){
             try{
-                const {data} = await axios.get(`/api/doctor/waiting_list/detect/${ci}`)
-                commit('SET_PATIENT',data)
+                const {data} = await axios.get(`/api/doctor/waiting_list/${value}`)
+                commit('SHOW_WL',data)
+                return data
             }catch(err){
-                console.log(err)
+                return console.log(err)
             }
-        }
+        },
+
+        async store_wl({commit},value){
+            try{
+                const data = await axios.put(`/api/doctor/waiting_list`,value)
+                commit('STORE_WL',data)
+                return data
+            }catch(err){
+                return console.log(err)
+            }
+        },
+
+        async update_wl({commit},value,id){
+            try{
+                const data = await axios.put(`/api/doctor/waiting_list/${id}`,value)
+                commit('UPDATE_WL',data)
+                return data
+            }catch(err){
+                return console.log(err)
+            }
+        },
+
+        async destroy_wl({commit},id){
+            try{
+                const data = await axios.put(`/api/doctor/waiting_list/${id}`)
+                commit('DESTROY_WL')
+                return data
+            }catch(err){
+                return console.log(err)
+            }
+        },
 
     }
 }

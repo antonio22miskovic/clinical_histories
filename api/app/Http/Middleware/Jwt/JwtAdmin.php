@@ -3,6 +3,7 @@
 namespace App\Http\Middleware\Jwt;
 use Closure;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -21,7 +22,7 @@ class JwtAdmin
         try {
 
             $user = JWTAuth::parseToken()->authenticate();
-            if ($user->rol_id > 1) {
+            if ($user->rol_id !== 1) {
                 // verifica que el usuario sea admin
                 return response()->json('usuario no autorizado',401);
             }
@@ -37,13 +38,16 @@ class JwtAdmin
                 return $response;
 
             }else if ($e instanceof TokenInvalidException) {
-                    // token invalido
-                return response()->json(['mensaje' => 'token no valido','status' => 401],401);
+                // token invalido
+                return response()->json(['mensaje' => 'token no valido'],$e->getStatusCode());
 
+            }else if($e instanceof TokenBlacklistedException) {
+
+                return response()->json(['mensaje' => 'token black list'],$e->getStatusCode());
 
             }else{
 
-                return response()->json(['mensaje' => 'token no found','status' => 401],401);
+                return response()->json(['mensaje' => 'token no found'],$e->getStatusCode());
 
             }
 

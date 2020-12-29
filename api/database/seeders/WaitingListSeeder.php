@@ -14,6 +14,6 @@ class WaitingListSeeder extends Seeder
      */
     public function run()
     {
-        Waiting_list::factory(500)->create();
+        Waiting_list::factory(200)->create();
     }
 }

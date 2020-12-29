@@ -44,7 +44,7 @@ class AuthController extends Controller
         }
     }
 
-    public function me(){   
+    public function me(){
         $user = Auth::user();
         $specialist = $user->specialist;
         return response()->json([

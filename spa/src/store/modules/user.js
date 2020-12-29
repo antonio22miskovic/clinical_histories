@@ -19,7 +19,24 @@ export default {
            state.specialist.description = payload.specialist.description
            state.quota.quota = payload.quota.quota
            state.quota.date = payload.quota.date
-        }
+        },
+
+        SET_SHOW_U(state,paylaod){
+
+        },
+
+        STORE_U(state,paylaod){
+
+        },
+
+        UPDATE_U(state,paylaod){
+
+        },
+
+        DESTROY_U(state){
+
+        },
+
     },
     getters: {
         specialistAuth: state => state.specialist,
@@ -35,6 +52,46 @@ export default {
             }catch(err){
                 return err
             }
-       }
+       },
+
+        // async show({commit},value){
+        //     try{
+        //         const data = await axios.get(`/api/doctor/waiting_list/${value}`)
+        //         commit('SHOW_U',data)
+        //         return data
+        //     }catch(err){
+        //         return console.log(err)
+        //     }
+        // },
+
+        // async store({commit},value){
+        //     try{
+        //         const data = await axios.put(`/api/doctor/waiting_list`,value)
+        //         commit('STORE_U',data)
+        //         return data
+        //     }catch(err){
+        //         return console.log(err)
+        //     }
+        // },
+
+        // async update({commit},value,id){
+        //     try{
+        //         const data = await axios.put(`/api/doctor/waiting_list/${id}`,value)
+        //         commit('UPDATE_U',data)
+        //         return data
+        //     }catch(err){
+        //         return console.log(err)
+        //     }
+        // },
+
+        // async destroy({commit},id){
+        //     try{
+        //         const data = await axios.put(`/api/doctor/waiting_list/${id}`)
+        //         commit('DESTROY_U')
+        //         return data
+        //     }catch(err){
+        //         return console.log(err)
+        //     }
+        // },
    }
 }

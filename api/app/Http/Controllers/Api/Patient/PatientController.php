@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api\Patient;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PatientRequest;
+use App\Http\Resources\Medical_consultation as Medical_consultationResource;
 use App\Http\Resources\Medical_record as Medical_recordResource;
 use App\Http\Resources\Patient as PatientResource;
 use App\Http\Resources\PatientCollection;
+use App\Models\Medical_consultation;
 use App\Models\Medical_record;
 use App\Repository\Patient\PatientRepositoryInterface;
 use Illuminate\Http\Request;
@@ -31,20 +33,15 @@ class PatientController extends Controller
             200 // state HTTP
         );
     }
-
     public function store(PatientRequest $request)
     {
         try {
 
-                $patient = $this->repository->createOrUpdateFromRequest();
-                $medical_record = Medical_record::create([// generacion de la historia clinica de ese paciente
-                    'patient_id' => $patient->id
-                ]);
+                $patient = $this->repository->createOrUpdateFromRequest();//creamos el pacient
                 return response()->json(
-                    [   
+                    [
                         'message' => 'patient registrada exitosamente',
-                        'data' => new PatientResource($patient),
-                        'historia_clinica' => new Medical_recordResource($medical_record)
+                        'data' => new PatientResource($patient)
                     ],
                     200 // state HTTP
              );
