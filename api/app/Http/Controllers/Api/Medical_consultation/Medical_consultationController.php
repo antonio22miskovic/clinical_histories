@@ -35,13 +35,13 @@ class Medical_consultationController extends Controller
     {
         try {
                 $values = [
-                    'user' => $this->user,
-                    'medical_record' =>  $request['medical_record']
+                    'user'           =>  $this->user->id,
+                    'medical_record' =>  $request['medical_record_id']
                 ];
 
-                $Medical_consultation = $this->repository->CreateConstultation($values);
+                $medical_consultation = $this->repository->CreateConstultation($values);
                 return response()->json(
-                    new Medical_consultationResource($Medical_consultation),
+                    new Medical_consultationResource($medical_consultation),
                     200 // state HTTP
              );
 

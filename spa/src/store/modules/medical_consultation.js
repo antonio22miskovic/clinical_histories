@@ -2,7 +2,10 @@ import axios from 'axios'
 export default {
 
     state: {
-
+        medical_consultation:{
+            id:null,
+            medical_record:null
+        }
     },
 
     mutations: {
@@ -19,15 +22,21 @@ export default {
 
         },
 
-        SHOW_MC(state,paylaod){
+        SHOW_MC(state,payload){
+
+            state.medical_consultation.id = payload.id
+            state.medical_consultation.medical_record = payload.medical_record
+            console.log('data de la consulta medica:',state.medical_consultation)
+        },
+
+        STORE_MC(state,payload){
+
+            state.medical_consultation.id = payload.id
+            state.medical_consultation.medical_record = payload.medical_record
 
         },
 
-        STORE_MC(state,paylaod){
-
-        },
-
-        UPDATE_MC(state,paylaod){
+        UPDATE_MC(state,payload){
 
         },
 
@@ -37,6 +46,8 @@ export default {
 
     },
     getters: {
+
+        getMedical_consultation : state => state.medical_consultation
 
     },
 
@@ -67,7 +78,7 @@ export default {
 
         async store_mc({commit},value){
             try{
-                const data = await axios.put(`/api/doctor/medical/consultation`,value)
+                const {data} = await axios.post(`/api/doctor/medical/consultation`,{medical_record_id:value})
                 commit('STORE_MC',data)
                 return data
             }catch(err){
@@ -94,6 +105,10 @@ export default {
                 return console.log(err)
             }
         },
+
+        async setvalue_mc({commit},value){
+            commit('SHOW_MC',value)
+        }
 
     }
 }

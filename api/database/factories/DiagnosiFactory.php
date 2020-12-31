@@ -24,7 +24,6 @@ class DiagnosiFactory extends Factory
     {
         return [
             'medical_consultation_id' => Medical_consultation::all()->random()->id,
-            'hospitalization' => $this->faker->randomElement([true,false]),
         ];
     }
 }

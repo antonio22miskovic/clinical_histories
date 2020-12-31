@@ -31,19 +31,19 @@ class DiseaseController extends Controller
         );
     }
 
-    public function store(DiseaseRequest $request)
+    public function store(Request $request)
     {
-        $disease = $this->repository->createOrUpdateFromRequest();
-        return response()->json(
-            [
-                'message' => 'diagnostico registrado correctamente',
-                'data' => new DiseaseResource($disease)
-            ],
-             200 // state HTTP
-         );
+        try {
+            $disease = $this->repository->createDisease($request,$this->user);
+            return response()->json(
+                    $disease
+             );
+        } catch (Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
-    public function update(DiseaseRequest $request, int $id)
+    public function update(Request $request, int $id)
     {
 
         $disease = $this->repository->createOrUpdateFromRequest($id);

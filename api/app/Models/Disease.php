@@ -13,17 +13,23 @@ class Disease extends Model
     	'name',
     	'description',
     	'specialist_id',
+        'diagnosi_id'
     ];
 
     //relaciones
-    public function diagnosis()
-    {
-    	return $this->belongsToMany('App\Models\Diagnosi');
-    }
+    // public function diagnosis()
+    // {
+    // 	return $this->belongsToMany('App\Models\Diagnosi');
+    // }
 
      public function specialist()
     {
     	return $this->belongsTo('App\Models\Specialist');
+    }
+
+         public function diagnosi()
+    {
+        return $this->belongsTo('App\Models\Diagnosi');
     }
 
     public function medical_treatments()

@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 interface DiseaseRepositoryInterface
 {
-
+	public function createDisease($request,$user);
 }

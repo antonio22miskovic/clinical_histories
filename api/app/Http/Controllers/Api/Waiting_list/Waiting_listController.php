@@ -26,7 +26,7 @@ class Waiting_listController extends Controller
 
     public function index()
     {
-        return response()->json( 
+        return response()->json(
             new Waiting_listCollection($this->repository->getAllModels($this->user)),
             200
         );
@@ -78,7 +78,7 @@ class Waiting_listController extends Controller
     }
 
     public function detectPatient($ci)
-    {   
+    {
         $validate = $this->repository->filterPatient($ci);
         if (is_null($validate)) {
             return response()->json(null,200);

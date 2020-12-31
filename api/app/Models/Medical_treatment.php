@@ -12,17 +12,10 @@ class Medical_treatment extends Model
 
     	'description',
     	'medicine',
-    	'diagnosi_id',
     	'disease_id',
 
     ];
 
-    // relaciones
-
-    public function diagnosi()
-    {
-    	return $this->belongsTo('App\Models\Diagnosi');
-    }
 
       public function disease()
     {

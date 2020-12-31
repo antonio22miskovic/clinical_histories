@@ -92,7 +92,7 @@ export default {
             total:'total',
             isloading:'isloading',
             componet:'Getcomponet',
-            patient:'patient'
+            patient:'Getpatient'
 
         }),
 
@@ -129,7 +129,9 @@ export default {
             all_wl: 'all_wl',
             Setloading:'loading_wl',
             detectPatient:'detectPatient',
-            clearPatient: 'clearPatient'
+            clearPatient: 'clearPatient',
+            store_mc:'store_mc',
+            setvalue_mr:'setvalue_mr'
         }),
 
         async no_asistio (id) {
@@ -146,7 +148,15 @@ export default {
                 if (Object.keys(res).length === 0) {
                     this.$router.push({name:'consulta', params:{id: item.id}})// montamos el componente de nuevo paciente
                 }else{
-                    this.$router.push({name:'consultaPatient',params:{id:res.id}})// montamos el componente del paciente ya registrado
+                    this.setvalue_mr(res.medical_record)
+                    this.store_mc(res.medical_record.id).then(response => {
+                        this.$router.push({name:'consultaPatient',params:{
+                                id:res.id,
+                                consulta:response.id
+                            }
+                        })// montamos el componente del paciente ya registrado
+                    })
+
                 }
             })
 

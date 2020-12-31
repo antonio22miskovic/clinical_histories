@@ -22,20 +22,21 @@ export default {
 
         },
 
-        SHOW_MR(state,paylaod){
+        SHOW_MR(state,payload){
 
             state.medical_record.id = payload.id,
             state.medical_record.patient = payload.patient
+            console.log('dentro del show del medical record:', state.medical_record)
         },
 
-        STORE_MR(state,paylaod){
+        STORE_MR(state,payload){
 
             state.medical_record.id = payload.id,
             state.medical_record.patient = payload.patient
 
         },
 
-        UPDATE_MR(state,paylaod){
+        UPDATE_MR(state,payload){
 
         },
 
@@ -45,6 +46,8 @@ export default {
 
     },
     getters: {
+
+        getMedical_record : state => state.medical_record
 
     },
 
@@ -75,7 +78,8 @@ export default {
 
         async store_mr({commit},value){
             try{
-                const data = await axios.put(`/api/doctor/medical/record`,value)
+                const data = await axios.post(`/api/doctor/medical/record`,{patient_id:value})
+                console.log(data)
                 commit('STORE_MR',data)
                 return data
             }catch(err){
@@ -102,6 +106,10 @@ export default {
                 return console.log(err)
             }
         },
+
+        async setvalue_mr({commit},value){
+            commit('SHOW_MR',value)
+        }
 
     }
 }

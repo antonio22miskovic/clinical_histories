@@ -25,7 +25,6 @@ class Medical_consultationRequest extends FormRequest
     {
         return [
 
-            'user_id'           => 'required',
             'medical_record_id' => 'required',
 
         ];
@@ -36,7 +35,6 @@ class Medical_consultationRequest extends FormRequest
 
         return [
 
-            'user_id.required'           => 'debe estar vinculado a un usuario especialista',
             'medical_record_id.required' => 'debe estar vinculado a una historia medica',
 
         ];

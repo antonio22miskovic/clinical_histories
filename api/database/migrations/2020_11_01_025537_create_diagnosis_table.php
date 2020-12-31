@@ -19,7 +19,6 @@ class CreateDiagnosisTable extends Migration
                   ->nullable()
                   ->constrained()
                   ->onDelete('set null');
-            $table->boolean('hospitalization');
             $table->timestamps();
         });
     }

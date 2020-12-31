@@ -27,7 +27,6 @@ class DiseaseRequest extends FormRequest
 
             'name'          => 'required',
             'description'   => 'required',
-            'specialist_id' => 'required',
 
         ];
     }
@@ -39,8 +38,6 @@ class DiseaseRequest extends FormRequest
 
             'name.required'          => 'instroduzca el nombre',
             'description.required'   => 'introduzca la descripcion',
-            'specialist_id.required' => 'debe estar vicnulado a una especialidad',
-
         ];
 
     }

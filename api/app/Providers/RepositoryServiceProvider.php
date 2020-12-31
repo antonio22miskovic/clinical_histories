@@ -11,6 +11,8 @@ use App\Repository\Medical_consultation\Medical_consultationRepository;
 use App\Repository\Medical_consultation\Medical_consultationRepositoryInterface;
 use App\Repository\Medical_record\Medical_recordRepository;
 use App\Repository\Medical_record\Medical_recordRepositoryInterface;
+use App\Repository\Medical_treatment\Medical_treatmentRepository;
+use App\Repository\Medical_treatment\Medical_treatmentRepositoryInterface;
 use App\Repository\Patient\PatientRepository;
 use App\Repository\Patient\PatientRepositoryInterface;
 use App\Repository\Quota\QuotaRepository;
@@ -47,5 +49,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(Medical_consultationRepositoryInterface::class, Medical_consultationRepository::class);
         $this->app->bind(DiagnosiRepositoryInterface::class, DiagnosiRepository::class);
         $this->app->bind(DiseaseRepositoryInterface::class, DiseaseRepository::class);
+        $this->app->bind(Medical_treatmentRepositoryInterface::class, Medical_treatmentRepository::class);
     }
 }

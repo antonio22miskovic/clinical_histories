@@ -17,10 +17,6 @@ class CreateMedicalTreatmentsTable extends Migration
             $table->id();
             $table->text('description');
             $table->text('medicine');
-            $table->foreignId('diagnosi_id')
-                ->nullable()
-                ->constrained()
-                ->onDelete('set null');
             $table->foreignId('disease_id')
                 ->nullable()
                 ->constrained()

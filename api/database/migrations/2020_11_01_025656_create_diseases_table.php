@@ -21,6 +21,10 @@ class CreateDiseasesTable extends Migration
                   ->nullable()
                   ->constrained()
                   ->onDelete('set null');
+            $table->foreignId('diagnosi_id')
+                  ->nullable()
+                  ->constrained()
+                  ->onDelete('set null');
             $table->timestamps();
         });
     }

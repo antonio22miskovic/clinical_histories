@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 interface Medical_recordRepositoryInterface
 {
-
+	public function showMedicalRecordPatient(int $id);
 }

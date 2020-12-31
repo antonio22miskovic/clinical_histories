@@ -25,11 +25,14 @@ use Illuminate\Support\Facades\Route;
 	 	Route::apiresource('quota', 'Api\Quota\QuotaController');
 
         Route::apiresource('waiting_list', 'Api\Waiting_list\Waiting_listController');
+
         Route::get('waiting_list/detect/{ci}', 'Api\Waiting_list\Waiting_listController@detectPatient');
 
         Route::apiresource('patient', 'Api\Patient\PatientController');
 
         Route::apiresource('medical/record', 'Api\Medical_record\Medical_recordController');
+
+        Route::apiresource('medical/treatment', 'Api\Medical_treatment\Medical_treatmentController');
 
         Route::apiresource('diagnosi', 'Api\Diagnosi\DiagnosiController');
 
@@ -38,7 +41,9 @@ use Illuminate\Support\Facades\Route;
         Route::apiresource('medical/consultation', 'Api\Medical_consultation\Medical_consultationController');
 
 	 	Route::apiresource('specialist', 'Api\Specialist\SpecialistController');
+
         Route::get('specialist/auth/user', 'Api\Specialist\SpecialistController@AuthUserSpecialist');
+
         Route::get('specialist/auth/user', 'Api\Specialist\SpecialistController@AuthUserSpecialist');
 
 	});

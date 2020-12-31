@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Diagnosi extends Model
 {
     use HasFactory;
-    protected $fillable = [ 'medical_consultation_id', 'hospitalization' ];
+    protected $fillable = ['medical_consultation_id'];
 
-    //relaciones
+    // relaciones
     public function diseases()
     {
-    	return $this->belongsToMany('App\Models\Disease');
+    	return $this->hasMany('App\Models\Disease');
     }
 
      public function medical_consultation()

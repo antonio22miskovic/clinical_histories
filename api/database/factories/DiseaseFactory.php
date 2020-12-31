@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Diagnosi;
 use App\Models\Disease;
 use App\Models\Patient;
 use App\Models\Specialist;
@@ -27,6 +28,7 @@ class DiseaseFactory extends Factory
             'name' => $this->faker->name,
             'description' => $this->faker->paragraph,
             'specialist_id' => Specialist::all()->random()->id,
+            'diagnosi_id' => Diagnosi::all()->random()->id,
         ];
     }
 }

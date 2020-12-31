@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\Medical_record;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Medical_recordRequest;
 use App\Http\Resources\Medical_record as Medical_recordResource;
 use App\Http\Resources\Medical_recordCollection;
 use App\Repository\Medical_record\Medical_recordRepositoryInterface;
@@ -64,7 +65,7 @@ class Medical_recordController extends Controller
     public function show($id)
     {
         return response()->json(
-            new Medical_recordResource($this->repository->findOneByPrimary($id)),
+            new Medical_recordResource($this->repository->showMedicalRecordPatient($id)),
             200 // state HTTP
         );
     }

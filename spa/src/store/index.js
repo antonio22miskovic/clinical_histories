@@ -8,6 +8,7 @@ import waiting_list from './modules/waiting_list'
 import Patient from './modules/Patient'
 import medical_consultation from './modules/medical_consultation'
 import medical_record from './modules/medical_record'
+import diagnosiDisease from './modules/diagnosiDisease'
 
 Vue.use(Vuex)
 
@@ -25,5 +26,6 @@ export default new Vuex.Store({
     Patient,
     medical_consultation,
     medical_record,
+    diagnosiDisease
   }
 })

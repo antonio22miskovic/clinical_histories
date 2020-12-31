@@ -18,7 +18,6 @@ class Medical_treatment extends JsonResource
             'id'          => $this->id,
             'description' => $this->description,
             'medicine'    => $this->medicine,
-            'diagnosi'    => $this->diagnosi_id,
             'disease'     => $this->disease_id,
 
         ];

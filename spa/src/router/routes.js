@@ -52,7 +52,7 @@ export default [
     },
 
     {
-        path: '/consulta/patient/:id',
+        path: '/consulta/patient/:id/:consulta',
         props: true,
         name: 'consultaPatient',
         components: {

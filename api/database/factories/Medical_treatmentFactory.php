@@ -26,7 +26,6 @@ class Medical_treatmentFactory extends Factory
         return [
             'description' => $this->faker->paragraph,
             'medicine' => $this->faker->name,
-            'diagnosi_id' => Diagnosi::all()->random()->id,
             'disease_id' => Disease::all()->random()->id,
         ];
     }

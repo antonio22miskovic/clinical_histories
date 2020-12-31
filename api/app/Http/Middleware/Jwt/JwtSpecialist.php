@@ -3,14 +3,16 @@
 namespace App\Http\Middleware\Jwt;
 use Closure;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
-
+use Tymon\JWTAuth\Manager;
 class JwtSpecialist extends BaseMiddleware
 {
+
 
     public function handle($request, Closure $next)
     {
@@ -26,8 +28,8 @@ class JwtSpecialist extends BaseMiddleware
         } catch (JWTException $e) {
             if ($e instanceof TokenExpiredException){
                 // refrescar eltoken si ya expiro
-                return response()->json(JWTAuth::setToken(JWTAuth::refresh()));
                 $newToken = JWTAuth::parseToken()->refresh();
+                $user = JWTAuth::setToken($newToken)->toUser();
                 $request->headers->set('Authorization', 'Bearer' . $newToken);
                 $response = $next($request);
                 $response->headers->set('Authorization', $newToken);

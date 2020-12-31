@@ -21,9 +21,8 @@ class DatabaseSeeder extends Seeder
             PatientSeeder::class,
             MedicalRecordSeeder::class,
             MedicalConsultationSeeder::class,
-            DiseaseSeeder::class,
             DiagnosiSeeder::class,
-            DiagnosiDiseasesPivotSeeder::class,
+            DiseaseSeeder::class,
             MedicalTreatmentSeeder::class,
             QuotaSeeder::class,
             WaitingListSeeder::class

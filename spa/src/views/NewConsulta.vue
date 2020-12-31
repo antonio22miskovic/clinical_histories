@@ -144,7 +144,11 @@
 
             ...mapActions({
                 store_p:'store_p',
-                show: 'show_wl'
+                show: 'show_wl',
+                store_mc:'store_mc',
+                store_mr:'store_mr',
+                setvalue_mr:'setvalue_mr',
+                setvalue_mc:'setvalue_mc',
             }),
 
             save (date) {
@@ -168,15 +172,18 @@
             async registrar(){
                 try{
                     this.form.birthdate = this.date
-                    this.store_p(this.form).then(res => {
+                    this.store_p(this.form).then(res => { // creacion del paciente
+                        console.log('dentro del create del paciente:',res)
+                        this.setvalue_mr(res.data.medical_record)
+                        this.setvalue_mc(res.consulta)
                         this.$swal({
                             icon: 'success',
                             title: '¡Paciente registrado con exito!',
                             text:'exito',
                             confirmButtonColor: '#3085d6',
-                         })
-                        console.log('la res',res)
-                        this.$router.push({name:'consultaPatient',params:{id:res.data.id}})
+                        })
+                        this.$router.push({name:'consultaPatient',params:{id:res.data.id,
+                                    consulta: res.consulta.id }})
                     })
 
                 }catch(e){
