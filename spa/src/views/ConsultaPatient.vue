@@ -133,6 +133,7 @@
                             <v-card-actions>
                                 <v-btn
                                     elevation="3"
+                                    color="primary"
                                     @click="diagnosticar">
                                     Diagnosticar
                                 </v-btn>
@@ -143,6 +144,7 @@
                                 </v-btn>
                                 <v-btn
                                     elevation="3"
+                                    color="success"
                                     :disabled="countDesease === 0"
                                     @click="registrar">
                                     registrar
@@ -183,7 +185,8 @@
                 store_mr:'store_mr',
                 setvalue_mr:'setvalue_mr',
                 setvalue_mc:'setvalue_mc',
-                store_dd:'store_dd'
+                store_dd:'store_dd',
+                destroy_wl:'destroy_wl',
             }),
 
             async verificar(){
@@ -247,8 +250,24 @@
             },
 
             registrar(){
-              this.store_dd({'array':this.dataArray,consulta:this.patient_consulta}).then(res => {
-                console.log(res)
+                this.store_dd({'array':this.dataArray,consulta:this.patient_consulta}).then(res => {
+                        this.destroy_wl(this.patient.ci).then(res=>{
+                            this.$swal({
+                                icon: 'success',
+                                title: '¡Registro de la consulta exitoso!',
+                                text:'exito',
+                                confirmButtonColor: '#3085d6',
+                            })
+                            this.$router.push({name:'home'})
+                        })
+
+                }).catch(err =>{
+                    this.$swal({
+                        icon: 'error',
+                        title: '¡hubo un problema por intente de neuvo!',
+                        text:'exito',
+                        confirmButtonColor: '#3085d6',
+                    })
               })
             },
 

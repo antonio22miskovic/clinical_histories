@@ -13,9 +13,28 @@ export default {
             birthdate:'',
             weight:0
         },
+        data:[],
+        paginate: {
+            total: 0,
+            current_page: 0,
+            per_page: 0,
+            last_page: 0,
+            from: 0,
+            to: 0
+        },
     },
 
     mutations: {
+
+        ALL_P(state, payload){
+            state.data = payload.data // la data a paginar
+            // datos de la paginacion
+            state.paginate.total = payload.paginate.total
+            state.paginate.current_page = payload.paginate.current_page
+            state.paginate.per_page = payload.paginate.per_page
+            state.paginate.last_page = payload.paginate.last_page
+            state.paginate.to = payload.paginate.to
+        },
 
         SET_PATIENT(state, payload){
 
@@ -81,10 +100,22 @@ export default {
         Getpatient: state => state.patient,
         newHistory: state => state.history,
         Getcomponet:state => state.componet,
+        getDataPatients:state => state.data,
+        getDataPaginate: state => state.paginate,
+        total_p: state => state.paginate.total,
 
     },
 
     actions: {
+
+         async all_p({commit},page){ // data de la paginación
+            try{
+                const {data} = await axios.get(`/api/doctor/patient?page=${page.page}`)
+                commit('ALL_P',data)
+            }catch(err){
+                return console.log(err)
+            }
+        },
 
         async store_p({commit},values){
             try{

@@ -50,5 +50,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(DiagnosiRepositoryInterface::class, DiagnosiRepository::class);
         $this->app->bind(DiseaseRepositoryInterface::class, DiseaseRepository::class);
         $this->app->bind(Medical_treatmentRepositoryInterface::class, Medical_treatmentRepository::class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
     }
 }

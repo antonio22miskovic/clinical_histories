@@ -29,7 +29,8 @@ class PatientController extends Controller
     public function index()
     {
         return response()->json(
-            new PatientCollection($this->repository->getAll()),
+            new PatientCollection($this->repository->getAllModels($this->user)),
+            // $this->repository->getAllModels($this->user),
             200 // state HTTP
         );
     }

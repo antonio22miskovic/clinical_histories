@@ -25,8 +25,8 @@
                         class="elevation-3"
                         locale="es-CL"
                     >
-                        <template v-slot:item.index="{ item }">
-                           <td>{{item.index}}</td>
+                        <template v-slot:item.index="{ index }">
+                                <td class="text-center">{{index}}</td>
                         </template>
                         <template v-slot:item.actions="{ item }">
                             <v-btn
@@ -41,7 +41,7 @@
                             <v-btn
                             color="red"
                             small
-                            @click="no_asistio(item.id)"
+                            @click="no_asistio(item.cedula)"
                             >
                                 <v-icon>mdi-account-off</v-icon>
                             </v-btn>
@@ -119,7 +119,7 @@ export default {
             get(){
                 return this.isloading
             }
-        }
+        },
     },
 
     methods: {
@@ -131,11 +131,20 @@ export default {
             detectPatient:'detectPatient',
             clearPatient: 'clearPatient',
             store_mc:'store_mc',
-            setvalue_mr:'setvalue_mr'
+            setvalue_mr:'setvalue_mr',
+            destroy_wl:'destroy_wl'
         }),
 
-        async no_asistio (id) {
-
+        async no_asistio (cedula) {
+            this.destroy_wl(cedula).then(res=>{
+                this.$swal({
+                    icon: 'success',
+                    title: '¡Eliminado de la lista de espera con exito!',
+                    text:'exito',
+                    confirmButtonColor: '#3085d6',
+                })
+                this.loadQuota()
+            })
         },
 
         async atender (item) {

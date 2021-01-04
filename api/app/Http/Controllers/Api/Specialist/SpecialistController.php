@@ -83,6 +83,7 @@ class SpecialistController extends Controller
         $quotaToday = Quota::where('specialist_id',$this->user->specialist->id)
                             ->where('date', Carbon::now()->toDateString())
                             ->first();
+
         return response()->json(
             [
                 'specialist'   => new SpecialistResource($this->user->specialist),

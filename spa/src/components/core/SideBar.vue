@@ -31,14 +31,14 @@
 
                     <v-list-item>
                         <v-list-item-icon>
-                            <v-icon>mdi-account-details</v-icon>
+                            <v-icon>mdi-account-box</v-icon>
                         </v-list-item-icon>
                         <v-list-item-title>Historias clinicas</v-list-item-title>
                     </v-list-item>
 
-                    <v-list-item>
+                    <v-list-item :to="{name:'patients'}" >
                         <v-list-item-icon>
-                            <v-icon>mdi-account</v-icon>
+                            <v-icon>mdi-account-multiple</v-icon>
                         </v-list-item-icon>
                         <v-list-item-title>Pacientes</v-list-item-title>
                     </v-list-item>

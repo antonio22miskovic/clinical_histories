@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Repository\BaseRepository;
 use App\Repository\User\UserRepositoryInterface;
 
-class SpecialistRepository extends BaseRepository implements UserRepositoryInterface
+class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
     protected $model = User::class;
 

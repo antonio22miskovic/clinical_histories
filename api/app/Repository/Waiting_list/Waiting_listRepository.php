@@ -30,5 +30,12 @@ class Waiting_listRepository extends BaseRepository implements Waiting_listRepos
     public function filterPatient($ci)
     {
        return Patient::where('ci', $ci)->first();
-    }   
+    }
+
+    public function deleteByCi($ci)
+    {
+        $patient = $this->model->where('identification_card',$ci)->first();
+        $patient->delete();
+        return true;
+    }
 }

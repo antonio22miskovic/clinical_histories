@@ -109,9 +109,9 @@ export default {
             }
         },
 
-        async destroy_wl({commit},id){
+        async destroy_wl({commit},ci){
             try{
-                const data = await axios.put(`/api/doctor/waiting_list/${id}`)
+                const data = await axios.delete(`/api/doctor/waiting_list/${ci}`)
                 commit('DESTROY_WL')
                 return data
             }catch(err){

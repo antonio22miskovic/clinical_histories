@@ -26,6 +26,10 @@ export default {
             localStorage.removeItem('key')
             state.user = null
             state.access_token = null
+        },
+
+        UPDATE_USER_AUTH(state, payload){
+            state.user = payload
         }
 
     },
@@ -51,6 +55,10 @@ export default {
             }
 
 
+        },
+
+        async update_user_auth({commit},value){
+            commit('UPDATE_USER_AUTH',value)
         },
 
         async getUserAuth({ commit }) {

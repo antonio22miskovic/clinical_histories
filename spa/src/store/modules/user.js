@@ -56,7 +56,7 @@ export default {
 
         // async show({commit},value){
         //     try{
-        //         const data = await axios.get(`/api/doctor/waiting_list/${value}`)
+        //         const data = await axios.get(`/api/doctor/user/${value}`)
         //         commit('SHOW_U',data)
         //         return data
         //     }catch(err){
@@ -66,7 +66,7 @@ export default {
 
         // async store({commit},value){
         //     try{
-        //         const data = await axios.put(`/api/doctor/waiting_list`,value)
+        //         const data = await axios.post(`/api/doctor/user`,value)
         //         commit('STORE_U',data)
         //         return data
         //     }catch(err){
@@ -74,19 +74,21 @@ export default {
         //     }
         // },
 
-        // async update({commit},value,id){
-        //     try{
-        //         const data = await axios.put(`/api/doctor/waiting_list/${id}`,value)
-        //         commit('UPDATE_U',data)
-        //         return data
-        //     }catch(err){
-        //         return console.log(err)
-        //     }
-        // },
+        async update_u({commit},value,id){
+            try{
+                console.log(value)
+                console.log(id)
+                const {data} = await axios.put(`/api/doctor/user/${id}`,value)
+                commit('UPDATE_U',data)
+                return data
+            }catch(err){
+                return console.log(err)
+            }
+        },
 
         // async destroy({commit},id){
         //     try{
-        //         const data = await axios.put(`/api/doctor/waiting_list/${id}`)
+        //         const data = await axios.delete(`/api/doctor/user/${id}`)
         //         commit('DESTROY_U')
         //         return data
         //     }catch(err){

@@ -66,12 +66,12 @@ class Waiting_listController extends Controller
         );
     }
 
-    public function destroy($id)
+    public function destroy($ci)
     {
-        $waiting_list = $this->repository->deleteByPrimary($id);
+        $waiting_list = $this->repository->deleteByCi($ci);
         return response()->json(
             [
-                'message' => 'el registro fue eliminado correctamente'
+                'message' => 'paciente eliminado de la lista de espera exitosamente'
             ],
             200
         );

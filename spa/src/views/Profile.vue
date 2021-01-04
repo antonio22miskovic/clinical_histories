@@ -5,7 +5,7 @@
         cols="12"
         md="8"
       >
-        <v-card   
+        <v-card
             elevation="10"
             outlined
             shaped
@@ -56,7 +56,7 @@
                     ></v-select>
                 </v-col>
 
-                <v-col 
+                <v-col
                     cols="12"
                     md="6"
                 >
@@ -129,7 +129,7 @@
         cols="12"
         md="4"
       >
-        <v-card 
+        <v-card
           class="v-card-profile text-center"
             elevation="10"
             outlined
@@ -164,15 +164,15 @@
     export default{
         name:'Profile',
         created(){
-            this.form.name = this.userAuth.name
-            this.nameImage = this.userAuth.avatar
-            this.form.email = this.userAuth.email
+            this.form.name       = this.userAuth.name
+            this.nameImage       = this.userAuth.avatar
+            this.form.email      = this.userAuth.email
             this.form.specialist = this.specialistAuth
 
             if (this.listSpecialists.length === 0) {
                 this.getSpecialist()
             }
-                      
+
         },
         data: () => ({
 
@@ -210,7 +210,8 @@
         methods:{
 
             ...mapActions({
-                getSpecialist: 'getSpecialist'
+                getSpecialist: 'getSpecialist',
+                update_u:'update_u',
             }),
 
 ///////////////////CARGA DE IMAGEN /////////////////////////
@@ -226,16 +227,20 @@
             cargarimagen(file){
                 let reader = new FileReader()
                 reader.onload = (e) =>{
-                this.form.avatar = e.target.result
+                    this.form.avatar = e.target.result
                 }
                 reader.readAsDataURL(file)
             },
 ////////////////// FIN DE CARGA DE IMAGEN ///////////////////////////
-         
+
             update(){
                 if (!this.$refs.up.validate()) {
                     return
                 }
+                console.log(this.userAuth.id)
+                this.update_u(this.form,this.userAuth.id).then(res => {
+                    console.log(res)
+                })
 
             }
 

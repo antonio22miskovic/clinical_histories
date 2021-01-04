@@ -11,4 +11,6 @@ interface Waiting_listRepositoryInterface
 
     public function filterPatient(int $ci);
 
+    public function deleteByCi($ci);
+
 }
