@@ -92,7 +92,10 @@
                             <v-btn
                                 color="primary"
                                 small
-                                @click="historial(item)"
+                                :to="{
+                                    name:'clinichistory',
+                                    params:{id:item.id}
+                                }"
                             >
                                 <v-icon>mdi-account-box</v-icon>
                             </v-btn>
@@ -169,10 +172,6 @@
                 this.patient.weight = item.weight
                 this.dialog = true
             },
-
-            async historial(item){
-                console.log(item)
-            }
 
 		},
 		 computed:{

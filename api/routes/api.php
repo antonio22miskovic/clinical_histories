@@ -28,8 +28,6 @@ use Illuminate\Support\Facades\Route;
 
         Route::apiresource('waiting_list', 'Api\Waiting_list\Waiting_listController');
 
-        Route::get('waiting_list/detect/{ci}', 'Api\Waiting_list\Waiting_listController@detectPatient');
-
         Route::apiresource('patient', 'Api\Patient\PatientController');
 
         Route::apiresource('medical/record', 'Api\Medical_record\Medical_recordController');
@@ -48,4 +46,8 @@ use Illuminate\Support\Facades\Route;
 
         Route::get('specialist/auth/user', 'Api\Specialist\SpecialistController@AuthUserSpecialist');
 
+        Route::get('waiting_list/detect/{ci}', 'Api\Waiting_list\Waiting_listController@detectPatient');
+
 	});
+
+       Route::get('document/cda/{id}', 'Api\Hl7\CdaController@show');

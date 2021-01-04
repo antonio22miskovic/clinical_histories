@@ -151,6 +151,15 @@ export default {
             }
         },
 
+        async documentXml_p({commit},id){
+            try{
+                const {data} = await axios.get(`/api/document/cda/${id}`)
+                return true
+            }catch(err){
+                return console.log(err)
+            }
+        },
+
         async clearPatient({commit}){
             commit('CLEAR_PATIENT')
         }

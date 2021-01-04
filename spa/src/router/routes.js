@@ -96,6 +96,21 @@ export default [
 
     },
 
+    {
+        path: '/clinic/history/:id',
+        name: 'clinichistory',
+        components: {
+                        default: page('ClinicHistory.vue'),
+                        header:  comp('core/AppBar.vue'),
+                        sidebar: comp('core/SideBar.vue'),
+                        footer:  comp('core/Footer.vue')
+                    },
+        meta: {
+            middleware: [middlewares.auth],
+        },
+
+    },
+
     /* Errors */
     {
         path: '*',
