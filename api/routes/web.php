@@ -16,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('document/cda/{id}', 'Api\Hl7\CdaController@show');
+Route::get('document/pdf/{id}', 'Api\Hl7\CdaController@pdfImport');

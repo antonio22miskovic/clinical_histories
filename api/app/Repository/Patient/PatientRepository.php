@@ -42,4 +42,10 @@ class PatientRepository extends BaseRepository implements PatientRepositoryInter
                 ];
     }
 
+    public function getByConsulta($consulta)
+    {
+        return Medical_consultation::find($consulta)->medical_record->patient;
+
+    }
+
 }

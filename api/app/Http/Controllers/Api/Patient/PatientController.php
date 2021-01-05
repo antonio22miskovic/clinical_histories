@@ -88,4 +88,12 @@ class PatientController extends Controller
                 200
         );
     }
+
+    public function getPatient($consulta)
+    {
+        return response()->json(
+           new PatientResource($this->repository->getByConsulta($consulta)),
+           200
+        );
+    }
 }

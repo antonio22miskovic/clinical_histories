@@ -111,6 +111,21 @@ export default [
 
     },
 
+    {
+        path: '/clinic/history/consulta/:id',
+        name: 'clinichistoryconsult',
+        components: {
+                        default: page('ClinicalHistoryConsult.vue'),
+                        header:  comp('core/AppBar.vue'),
+                        sidebar: comp('core/SideBar.vue'),
+                        footer:  comp('core/Footer.vue')
+                    },
+        meta: {
+            middleware: [middlewares.auth],
+        },
+
+    },
+
     /* Errors */
     {
         path: '*',

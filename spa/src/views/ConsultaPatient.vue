@@ -191,7 +191,7 @@
 
             async verificar(){
 
-                if (this.patient.id === null) {
+                if (this.patient.id !== this.patient_url) {
                     this.show_p(this.patient_url).then(res => {
                         this.setvalue_mr(res.medical_record)
                     }).catch(err =>{

@@ -100,6 +100,24 @@
                                 <v-icon>mdi-account-box</v-icon>
                             </v-btn>
                         </template>
+                        <template v-slot:item.xml="{ item }">
+                            <v-btn
+                                color="primary"
+                                small
+                                @click="CdaHL7(item.id)"
+                            >
+                                <v-icon>mdi-file-import</v-icon>
+                            </v-btn>
+                        </template>
+                        <template v-slot:item.pdf="{ item }">
+                            <v-btn
+                                color="primary"
+                                small
+                                @click="pdfImport(item.id)"
+                            >
+                                <v-icon>mdi-file-pdf</v-icon>
+                            </v-btn>
+                        </template>
                     </v-data-table>
                 </v-card>
             </v-col>
@@ -119,6 +137,8 @@
 	            { text: 'Genero', value: 'sex'},
                 { text: 'ver', value: 'ver', sortable: false },
                 { text: 'historial', value: 'historial', sortable: false },
+                { text: 'CDA', value: 'xml', sortable: false },
+                { text: 'PDF', value: 'pdf', sortable: false },
         	],
             patient:{
                 sex:'',
@@ -138,7 +158,7 @@
 		watch: {
        		options: {
             	handler() {
-                this.loadQuota();
+                this.loadQuota()
             	},
         	}
     	},
@@ -146,9 +166,11 @@
     	mounted () {
         	this.loadQuota()
     	},
+
 		methods:{
 			 ...mapActions({
 	            all_p: 'all_p',
+                documentXml_p:'documentXml_p'
         	}),
 
 			async loadQuota () {
@@ -160,6 +182,21 @@
 	                console.log(err)
            		}
         	},
+
+            async pdfImport(item){
+
+            },  
+
+            async CdaHL7(id){
+                this.documentXml_p(id).then(res => {
+                    this.$swal({
+                        icon: 'success',
+                        title: '¡Documento HL7/CDA generado con exito!',
+                        text:'exito',
+                        confirmButtonColor: '#3085d6',
+                    })
+                })
+            },
 
             async ver(item){
                 this.patient.first_name = item.first_name
@@ -176,7 +213,6 @@
 		},
 		 computed:{
 		 	...mapGetters({
-	            getquotas:'getquotas',
 	            getDataPatients:'getDataPatients',
 	            total_p:'total_p',
         	}),

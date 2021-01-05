@@ -42,12 +42,18 @@ use Illuminate\Support\Facades\Route;
 
 	 	Route::apiresource('specialist', 'Api\Specialist\SpecialistController');
 
+        Route::get('medical/consultation/clinical/consulta/{id}', 'Api\Medical_consultation\Medical_consultationController@getshow');
+
+        Route::get('medical/consultation/clinical/{id}', 'Api\Medical_consultation\Medical_consultationController@index');
+
         Route::get('specialist/auth/user', 'Api\Specialist\SpecialistController@AuthUserSpecialist');
 
         Route::get('specialist/auth/user', 'Api\Specialist\SpecialistController@AuthUserSpecialist');
 
         Route::get('waiting_list/detect/{ci}', 'Api\Waiting_list\Waiting_listController@detectPatient');
 
+        Route::get('patient/consulta/clinical/{consulta}', 'Api\Patient\PatientController@getPatient');
+
 	});
 
-       Route::get('document/cda/{id}', 'Api\Hl7\CdaController@show');
+       

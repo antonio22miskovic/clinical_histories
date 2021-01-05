@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Hl7;
 use App\Http\Controllers\Controller;
 use App\Models\Diagnosi;
 use App\Models\Patient;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 
 class CdaController extends Controller
@@ -40,24 +41,10 @@ class CdaController extends Controller
                 }
             }
 
-        $patologias=[
-            'patologia 1' => 'patologia 1',
-            'patologia 2' => 'patologia 2',
-            'patologia 3' => 'patologia 3',
-            'patologia 4' => 'patologia 4',
-        ];
-        $medicamentos=[
-            'medicamento 1' => 'medicamento 1',
-            'medicamento 2' => 'medicamento 2',
-            'medicamento 3' => 'medicamento 3',
-            'medicamento 4' => 'medicamento 4',
-        ];
-
-
         $xml = new \XMLWriter();
         $xml->openMemory();
         $xml->setIndent(true);
-        $xml->setIndentString('  '); 
+        $xml->setIndentString(''); 
         $xml->startDocument('1.0', 'UTF-8');
 
         $xml->startElement("clinicalDocument");//documento clinico
@@ -140,6 +127,43 @@ class CdaController extends Controller
         header('Cache-Control: private');
 
         return  $content;
-        // return response()->json(['diseases'=> $diseases, 'tratamientos' => $tratamientos]);
+       
+    }
+
+    public function pdfImport($id)
+    {
+        $patient = Patient::find($id);
+
+        $m_r = $patient->medical_record;
+
+        $consultas = $m_r->medical_consultations;
+
+        $diseases = [];
+
+        $tratamientos = [];
+
+            foreach ($consultas as $consulta) {
+                foreach ($consulta->diagnosis as $data) {
+                    foreach ($data->diseases as $dise) {
+                        $push['name'] = $dise->name;
+                        $push['description'] = $dise->description;
+                        $diseases[] = $push;    
+                    }                
+                    foreach ($data->diseases as $value) {
+                        foreach ($value->medical_treatments as $medicamentos) {
+                            $pushtratament['medicine'] = $medicamentos->medicine;
+                            $pushtratament['description'] = $medicamentos->description;
+                            $tratamientos[] = $pushtratament; 
+                        }
+                   }
+                }
+            }
+            $data = [
+                'paciente' => $patient,
+                'diseases' => $diseases,
+                'tratamientos' => $tratamientos
+            ];
+            $pdf = PDF::loadView('pdf/HistoryClinical',compact('data'));
+            return $pdf->stream();
     }
 }

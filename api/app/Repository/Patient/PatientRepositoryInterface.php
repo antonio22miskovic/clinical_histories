@@ -9,4 +9,5 @@ interface PatientRepositoryInterface
 {
     public function getAllModels($user);
      public function storePatientMedicalRecord($values, $user);
+     public function getByConsulta($consulta);
 }

@@ -34,6 +34,7 @@ export default {
             state.paginate.per_page = payload.paginate.per_page
             state.paginate.last_page = payload.paginate.last_page
             state.paginate.to = payload.paginate.to
+
         },
 
         SET_PATIENT(state, payload){
@@ -151,9 +152,20 @@ export default {
             }
         },
 
+        async show_clinical_p({commit},id){
+            try{// el id es el de la consulta
+                const {data} = await axios.get(`/api/doctor/patient/consulta/clinical/${id}`)
+                console.log('dentro del show',data)
+                commit('SHOW_P',data)
+                return data
+            }catch(err){
+                return console.log(err)
+            }
+        },
+
         async documentXml_p({commit},id){
             try{
-                const {data} = await axios.get(`/api/document/cda/${id}`)
+                window.location = `${process.env.VUE_APP_BASE_URL}/document/cda/${id}`
                 return true
             }catch(err){
                 return console.log(err)
