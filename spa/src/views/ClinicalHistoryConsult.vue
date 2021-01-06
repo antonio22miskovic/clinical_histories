@@ -40,6 +40,18 @@
 
         <v-card>
             <v-card-title>
+                   <v-btn
+                        text
+                        color="primary"
+                        :to="{
+                                name:'clinichistory',
+                                params:{id:Getpatient.id}
+                            }"
+                    >
+                        <v-icon>
+                            mdi-chevron-left
+                        </v-icon>
+                    </v-btn>
                         {{Getpatient.first_name}}
                         {{Getpatient.last_name}}
             </v-card-title>

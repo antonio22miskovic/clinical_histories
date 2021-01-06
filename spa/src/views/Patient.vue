@@ -1,5 +1,6 @@
 <template>
     <div>
+     <EditPatient></EditPatient>
     <template>
         <v-row justify="space-around">
             <v-col cols="auto">
@@ -118,6 +119,15 @@
                                 <v-icon>mdi-file-pdf</v-icon>
                             </v-btn>
                         </template>
+                        <template v-slot:item.edit="{ item }">
+                            <v-btn
+                                color="primary"
+                                small
+                                @click="editar(item)"
+                            >
+                                <v-icon>mdi-account-edit</v-icon>
+                            </v-btn>
+                        </template>
                     </v-data-table>
                 </v-card>
             </v-col>
@@ -127,8 +137,12 @@
 </template>
 <script>
 	import { mapGetters, mapActions} from 'vuex'
+    import EditPatient from '@/components/dialogs/EditPatient'
 	export default{
 		name:'Patient',
+        components:{
+           EditPatient
+        },
 		data:() => ({
 			headers: [
 	            { text: 'Nombre', value: 'first_name' },
@@ -139,6 +153,7 @@
                 { text: 'historial', value: 'historial', sortable: false },
                 { text: 'CDA', value: 'xml', sortable: false },
                 { text: 'PDF', value: 'pdf', sortable: false },
+                { text: 'Editar', value: 'edit', sortable: false },
         	],
             patient:{
                 sex:'',
@@ -168,9 +183,12 @@
     	},
 
 		methods:{
-			 ...mapActions({
+			...mapActions({
 	            all_p: 'all_p',
-                documentXml_p:'documentXml_p'
+                documentXml_p:'documentXml_p',
+                documentPdf_p:'documentPdf_p',
+                Ondialog:'Ondialog',
+                setDialog:'setDialog'
         	}),
 
 			async loadQuota () {
@@ -184,7 +202,14 @@
         	},
 
             async pdfImport(item){
-
+                this.documentPdf_p(item).then(res =>{
+                    this.$swal({
+                        icon: 'success',
+                        title: '¡Documento PDF generado con exito!',
+                        text:'exito',
+                        confirmButtonColor: '#3085d6',
+                    })
+                })
             },  
 
             async CdaHL7(id){
@@ -197,7 +222,12 @@
                     })
                 })
             },
+            async editar(item){
+                this.setDialog(item).then(res => {
+                    this.Ondialog(true)
+                })
 
+            },
             async ver(item){
                 this.patient.first_name = item.first_name
                 this.patient.sex = item.sex

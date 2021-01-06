@@ -65,7 +65,6 @@ export default {
         },
 
         SHOW_P(state,data){
-
             state.patient.id = data.id
             state.patient.sex = data.sex
             state.patient.first_name = data.first_name
@@ -75,7 +74,6 @@ export default {
             state.patient.civil_status = data.civil_status
             state.patient.birthdate = data.birthdate
             state.patient.weight = data.weight
-
         },
 
         CLEAR_PATIENT(state){
@@ -93,6 +91,20 @@ export default {
             state.consulta_medica = null
 
         },
+
+        UPDATE_P(state,data){
+
+            state.patient.id = data.id
+            state.patient.sex = data.sex
+            state.patient.first_name = data.first_name
+            state.patient.last_name = data.last_name
+            state.patient.phone = data.phone
+            state.patient.ci = data.ci
+            state.patient.civil_status = data.civil_status
+            state.patient.birthdate = data.birthdate
+            state.patient.weight = data.weight
+
+        }
 
     },
 
@@ -128,6 +140,17 @@ export default {
 
                 console.log(err)
 
+            }
+        },
+
+        async update_p({commit},{values,id}){
+            try{
+                console.log(values)
+                const {data} = await axios.put(`/api/doctor/patient/${id}`,values)
+                commit('UPDATE_P',data)
+                return data
+            }catch(err){
+                console.log(err)
             }
         },
 
@@ -171,9 +194,22 @@ export default {
                 return console.log(err)
             }
         },
+        async documentPdf_p({commit},id){
+            try{
+                window.location = `${process.env.VUE_APP_BASE_URL}/document/pdf/${id}`
+                return true
+            }catch(err){
+                return console.log(err)
+            }
+        },
 
         async clearPatient({commit}){
             commit('CLEAR_PATIENT')
+        },
+
+        setDialog({commit},value){
+            commit('SHOW_P', value)
+            return true
         }
 
     }

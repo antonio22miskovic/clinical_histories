@@ -4,9 +4,18 @@
             elevation="2"
         >
             <v-card-title> 
-                paciente {{Getpatient.first_name}}  {{Getpatient.last_name}}
+                <v-btn
+                    text
+                    color="primary"
+                    :to="{
+                        name:'patients'
+                    }"
+                >
+                <v-icon>
+                    mdi-chevron-left
+                </v-icon>
+              </v-btn>  paciente {{Getpatient.first_name}}  {{Getpatient.last_name}}
                 <v-btn  text>
-                    <v-icon>mdi-account-edit</v-icon>
                 </v-btn>
             </v-card-title>
 

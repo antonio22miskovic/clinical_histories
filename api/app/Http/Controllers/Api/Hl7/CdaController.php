@@ -158,12 +158,15 @@ class CdaController extends Controller
                    }
                 }
             }
-            $data = [
-                'paciente' => $patient,
-                'diseases' => $diseases,
-                'tratamientos' => $tratamientos
-            ];
-            $pdf = PDF::loadView('pdf/HistoryClinical',compact('data'));
-            return $pdf->stream();
+
+            $pdf = PDF::loadView('pdf/HistoryClinical', [
+                                                            'patient' => $patient,
+                                                            'diseases'=> $diseases,
+                                                            'tratamientos' => $tratamientos
+                                                        ]
+                                );
+
+            return $pdf->download('CI:'.$patient->ci.'.pdf');
+
     }
 }

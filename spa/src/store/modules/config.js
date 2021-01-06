@@ -3,6 +3,7 @@ export default {
     state: {
         overlay: false,
         drawer:true,
+        dialog:false,
     },
 
     mutations: {
@@ -11,12 +12,16 @@ export default {
         },
         DRAWER (state, payload) {
             state.drawer = payload
+        },
+        DIALOG(state, payload){
+            state.dialog = payload
         }
     },
 
     getters: {
         overlay: state => state.overlay,
         drawer : state => state.drawer,
+        getdialog: state => state.dialog,
     },
 
     actions: {
@@ -28,5 +33,9 @@ export default {
         setDrawer({ commit }, state) {
             commit('DRAWER', state)
         },
+
+        Ondialog({ commit }, value){
+            commit('DIALOG', value)
+        }
     }
 }

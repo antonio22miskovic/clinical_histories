@@ -26,6 +26,7 @@ class Patient extends JsonResource
             'civil_status'   => $this->civil_status,
             'birthdate'      => $this->birthdate,
             'weight'         => $this->weight,
+            'fecha'          => $this->created_at,
             // relaciones
             'medical_record' => new Medical_recordResource($this->medical_record)
         ];
