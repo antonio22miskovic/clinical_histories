@@ -22,6 +22,7 @@ export default {
             from: 0,
             to: 0
         },
+        pageUpdate:null
     },
 
     mutations: {
@@ -65,6 +66,7 @@ export default {
         },
 
         SHOW_P(state,data){
+
             state.patient.id = data.id
             state.patient.sex = data.sex
             state.patient.first_name = data.first_name
@@ -74,6 +76,22 @@ export default {
             state.patient.civil_status = data.civil_status
             state.patient.birthdate = data.birthdate
             state.patient.weight = data.weight
+
+        },
+
+        SHOW_P_Q(state,data){
+        
+            state.patient.id = data[0].id
+            state.patient.sex = data[0].sex
+            state.patient.first_name = data[0].first_name
+            state.patient.last_name = data[0].last_name
+            state.patient.phone = data[0].phone
+            state.patient.ci = data[0].ci
+            state.patient.civil_status = data[0].civil_status
+            state.patient.birthdate = data[0].birthdate
+            state.patient.weight = data[0].weight
+            state.pageUpdate = data[1]
+
         },
 
         CLEAR_PATIENT(state){
@@ -92,7 +110,7 @@ export default {
 
         },
 
-        UPDATE_P(state,data){
+        UPDATE_P(state,{data}){
 
             state.patient.id = data.id
             state.patient.sex = data.sex
@@ -116,6 +134,7 @@ export default {
         getDataPatients:state => state.data,
         getDataPaginate: state => state.paginate,
         total_p: state => state.paginate.total,
+        pageUpdate_p: state => state.pageUpdate
 
     },
 
@@ -134,6 +153,9 @@ export default {
             try{
                 console.log(values)
                 const {data} = await axios.post('/api/doctor/patient',values)
+                if (data.validation !== undefined) {
+                    return data
+                }
                 commit('SOTRE_P',data)
                 return data
             }catch(err){
@@ -143,10 +165,12 @@ export default {
             }
         },
 
-        async update_p({commit},{values,id}){
+        async update_p({commit},values){
             try{
-                console.log(values)
-                const {data} = await axios.put(`/api/doctor/patient/${id}`,values)
+                const {data} = await axios.put(`/api/doctor/patient/${values[0]}`,values[1])
+                if (data.validation !== undefined) {
+                    return data
+                }
                 commit('UPDATE_P',data)
                 return data
             }catch(err){
@@ -208,7 +232,8 @@ export default {
         },
 
         setDialog({commit},value){
-            commit('SHOW_P', value)
+            console.log(value)
+            commit('SHOW_P_Q', value)
             return true
         }
 

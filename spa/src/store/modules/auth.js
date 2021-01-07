@@ -15,6 +15,12 @@ export default {
             state.user = payload.user
         },
 
+        SET_USER_UPDATE(state,payload){
+            state.user = payload
+            localStorage.setItem('user',JSON.stringify(payload))
+            console.log('dentro de la mutacion',state.user)
+        },
+
         LOGIN(state, payload){
             state.access_token = payload.access_token
             localStorage.setItem('key',JSON.stringify(state.access_token))
@@ -69,5 +75,9 @@ export default {
                 commit('SET_USER', null)
             }
         },
+
+        async SetUser({commit},value){
+           commit('SET_USER_UPDATE',value.data)
+        }
     }
 }

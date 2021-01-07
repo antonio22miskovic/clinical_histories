@@ -9,6 +9,10 @@ export default {
 
         SET_SPECIALISTS(state, payload){
             state.specialists = payload
+        },
+
+        SHOW_SP(state, payload){
+
         }
 
     },

@@ -74,11 +74,13 @@ export default {
         //     }
         // },
 
-        async update_u({commit},value,id){
+        async update_u({commit},value){
             try{
                 console.log(value)
-                console.log(id)
-                const {data} = await axios.put(`/api/doctor/user/${id}`,value)
+                const {data} = await axios.put(`/api/doctor/user/${value[0]}`,value[1])
+                if (data.validation !== undefined) {
+                    return data
+                }
                 commit('UPDATE_U',data)
                 return data
             }catch(err){

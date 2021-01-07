@@ -28,14 +28,6 @@
                         </v-list-item-icon>
                         <v-list-item-title>Sala de Espera</v-list-item-title>
                     </v-list-item>
-
-                    <v-list-item>
-                        <v-list-item-icon>
-                            <v-icon>mdi-account-box</v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-title>Historias clinicas</v-list-item-title>
-                    </v-list-item>
-
                     <v-list-item :to="{name:'patients'}" >
                         <v-list-item-icon>
                             <v-icon>mdi-account-multiple</v-icon>

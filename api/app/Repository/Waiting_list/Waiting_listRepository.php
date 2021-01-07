@@ -20,7 +20,9 @@ class Waiting_listRepository extends BaseRepository implements Waiting_listRepos
         $quotaToday = Quota::where('specialist_id',$user->specialist->id)
                             ->where('date', Carbon::now()->toDateString())
                             ->first();
-
+        if (is_null($quotaToday)) {
+            return null;
+        }
         return $this->model::where('quota_id',$quotaToday->id)
                     ->paginate(
                         $this->request->query('per_page', 10)

@@ -8,7 +8,7 @@
             cols="12"
             class="mx-auto"
             >
-                <v-card>
+                <v-card v-if="alert === false">
                     <v-card-title>
                         Pacientes del dia:{{getquotas.quota}}
                         <v-spacer />
@@ -27,6 +27,9 @@
                     >
                         <template v-slot:item.index="{ index }">
                                 <td class="text-center">{{index}}</td>
+                        </template>
+                        <template v-slot:item.FormatoCi="{ item }">
+                           {{parseInt(item.cedula).toLocaleString('es-ES')}}
                         </template>
                         <template v-slot:item.actions="{ item }">
                             <v-btn
@@ -48,12 +51,22 @@
                         </template>
                     </v-data-table>
                 </v-card>
+                <v-alert
+                    v-else
+                    border="bottom"
+                    colored-border
+                    type="warning"
+                    elevation="2"
+                >
+                   Hoy no se encuentran pacientes en espera !Feliz Dia¡         
+                </v-alert>
             </v-col>
         </v-row>
     </v-container>
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 import { mapGetters, mapActions} from 'vuex'
 import axios from 'axios'
 export default {
@@ -64,7 +77,7 @@ export default {
 
         headers: [
             { text: 'N° ', value: 'index' },
-            { text: 'Cedula', value: 'cedula' },
+            { text: 'Cedula', value: 'FormatoCi' },
             { text: 'Atender', value: 'actions', sortable: false },
             { text: 'No atendido', value: 'no_asistio', sortable: false },
         ],
@@ -92,7 +105,8 @@ export default {
             total:'total',
             isloading:'isloading',
             componet:'Getcomponet',
-            patient:'Getpatient'
+            patient:'Getpatient',
+            alert:'alert'
 
         }),
 
@@ -136,15 +150,30 @@ export default {
         }),
 
         async no_asistio (cedula) {
-            this.destroy_wl(cedula).then(res=>{
-                this.$swal({
-                    icon: 'success',
-                    title: '¡Eliminado de la lista de espera con exito!',
-                    text:'exito',
-                    confirmButtonColor: '#3085d6',
+            Swal.fire({
+                    title: 'Seguro que desea descartar a este Paciente?',
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: `Descartar`,
+                    denyButtonText: `No`,
+                    icon: 'warning',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.destroy_wl(cedula).then(res=>{
+                            this.$swal({
+                                icon: 'success',
+                                title: '¡Eliminado de la lista de espera con exito!',
+                                text:'exito',
+                                confirmButtonColor: '#3085d6',
+                            })
+                            this.loadQuota()
+                        })
+                    }else if (result.isDenied) {
+                         Swal.fire('Por favor Tenga Cuidado', '', 'info')
+                         
+                    }
                 })
-                this.loadQuota()
-            })
+            
         },
 
         async atender (item) {

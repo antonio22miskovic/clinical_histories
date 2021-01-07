@@ -91,14 +91,16 @@
                 </v-list-item-subtitle>
                 <v-card-text>
                     <v-container class="">
-                        <v-form>
+                        <v-form ref="patologias">
                             <v-text-field
                                 label="nombre del diagnostico"
                                 auto-grow
                                 outlined
+                                 prepend-icon="mdi-hospital"
                                 rows="1"
                                 row-height="15"
                                 v-model="diagnostico"
+                                :rules="[rules.sintoma]"
                             ></v-text-field>
                             <v-textarea
                                 label="Descripcion"
@@ -108,6 +110,7 @@
                                 row-height="25"
                                 prepend-icon="mdi-comment"
                                 v-model="description"
+                                :rules="[rules.descriptionSintoma]"
                             ></v-textarea>
                             <v-container v-if="diagnostico !== '' && description !== ''">
                                 <v-textarea
@@ -116,8 +119,9 @@
                                     outlined
                                     rows="3"
                                     row-height="25"
-                                    prepend-icon="mdi-comment"
+                                    prepend-icon="mdi-needle"
                                     v-model="medicamentos"
+                                    :rules="[rules.medicamento]"
                                 ></v-textarea>
                                 <v-textarea
                                     label="Describa el uso de los medicamento"
@@ -127,6 +131,7 @@
                                     row-height="25"
                                     prepend-icon="mdi-comment"
                                     v-model="usoMedicamentos"
+                                    :rules="[rules.usomedicamento]"
                                 ></v-textarea>
                             </v-container>
 
@@ -136,11 +141,14 @@
                                     color="primary"
                                     @click="diagnosticar">
                                     Diagnosticar
+                                    <v-icon>mdi-plus</v-icon>
                                 </v-btn>
                                 <v-btn
                                     elevation="3"
+                                    color="warning"
                                     @click="clear">
                                     limpiar
+                                    <v-icon>mdi-broom</v-icon>
                                 </v-btn>
                                 <v-btn
                                     elevation="3"
@@ -148,6 +156,7 @@
                                     :disabled="countDesease === 0"
                                     @click="registrar">
                                     registrar
+                                    <v-icon>mdi-gavel</v-icon>
                                 </v-btn>
                             </v-card-actions>
 
@@ -171,7 +180,13 @@
             referenciaIndex:null,
             usoMedicamentos:'',
             medicamentos:'',
-            dialog:false
+            dialog:false,
+             rules: {
+                sintoma: value => !!value || 'Introduzca el nombre del sintoma',
+                descriptionSintoma: value => !!value || 'Introduzca la descripcion de sintoma',
+                medicamento: value => !!value || 'Introduzca el medicamento a suministrar',
+                usomedicamento: value => !!value || 'Describa el uso del medicamento',
+            }
         }),
         mounted(){
             this.verificar()
@@ -202,6 +217,9 @@
             },
 
             async diagnosticar(){
+                if (!this.$refs.patologias.validate()) {
+                        return
+                    }
                 if (!this.editando) {
                     let set = {name:this.diagnostico, description:this.description ,medicina: this.medicamentos, descriptionMedicina: this.usoMedicamentos}
                     this.dataArray.push(set)

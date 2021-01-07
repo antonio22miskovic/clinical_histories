@@ -87,7 +87,7 @@ class SpecialistController extends Controller
         return response()->json(
             [
                 'specialist'   => new SpecialistResource($this->user->specialist),
-                'quota'        => new QuotaResource($quotaToday)
+                'quota'        => $quotaToday ? new QuotaResource($quotaToday) : null
             ],
             200
         );

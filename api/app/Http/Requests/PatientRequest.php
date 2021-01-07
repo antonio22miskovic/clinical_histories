@@ -28,11 +28,11 @@ class PatientRequest extends FormRequest
             'sex'          => "required",
             'first_name'   => "required|string|min:1|max:30",
             'last_name'    => "required|string|min:1|max:30",
-            'ci'           => "required|unique:patients",
+            'ci'           => "required|unique:patients".$this->id,
             'civil_status' => "required",
             'birthdate'    => "required",
             'weight'       => "required"
-
+// Rule::unique('clients')->ignore($this->id)
         ];
     }
 

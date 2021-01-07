@@ -26,8 +26,12 @@ class Waiting_listController extends Controller
 
     public function index()
     {
+        $data = $this->repository->getAllModels($this->user);
+        if (is_null($data)) {
+            return null;
+        }
         return response()->json(
-            new Waiting_listCollection($this->repository->getAllModels($this->user)),
+            new Waiting_listCollection($data),
             200
         );
     }

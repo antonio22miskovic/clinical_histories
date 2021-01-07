@@ -1,6 +1,6 @@
 <template>
     <div>
-     <EditPatient></EditPatient>
+     <EditPatient v-if="getdialog"></EditPatient>
     <template>
         <v-row justify="space-around">
             <v-col cols="auto">
@@ -27,7 +27,7 @@
                                 </v-row>
                                 <v-row>
                                     <v-col>
-                                        <p>Cedula:{{patient.ci}}</p>
+                                        <p>Cedula:{{parseInt(patient.ci).toLocaleString('es-ES')}}</p>
                                     </v-col>
                                     <v-col>
                                         <p>Estado Civil:{{patient.civil_status}}</p>
@@ -89,6 +89,9 @@
                                 <v-icon>mdi-account-search</v-icon>
                             </v-btn>
                         </template>
+                        <template v-slot:item.ciFormato="{ item }">
+                           {{parseInt(item.ci).toLocaleString('es-ES')}}
+                        </template>
                         <template v-slot:item.historial="{ item }">
                             <v-btn
                                 color="primary"
@@ -146,7 +149,7 @@
 		data:() => ({
 			headers: [
 	            { text: 'Nombre', value: 'first_name' },
-	            { text: 'Cedula', value: 'ci' },
+	            { text: 'Cedula', value: 'ciFormato'},
 	            { text: 'Telefono', value: 'phone'},
 	            { text: 'Genero', value: 'sex'},
                 { text: 'ver', value: 'ver', sortable: false },
@@ -223,7 +226,8 @@
                 })
             },
             async editar(item){
-                this.setDialog(item).then(res => {
+
+                this.setDialog([item,this.page]).then(res => {
                     this.Ondialog(true)
                 })
 
@@ -245,6 +249,7 @@
 		 	...mapGetters({
 	            getDataPatients:'getDataPatients',
 	            total_p:'total_p',
+                getdialog:'getdialog'
         	}),
 
         paginate:{

@@ -212,6 +212,8 @@
             ...mapActions({
                 getSpecialist: 'getSpecialist',
                 update_u:'update_u',
+                SetUser:'SetUser',
+                specialistSet:'specialistSet'
             }),
 
 ///////////////////CARGA DE IMAGEN /////////////////////////
@@ -237,9 +239,15 @@
                 if (!this.$refs.up.validate()) {
                     return
                 }
-                console.log(this.userAuth.id)
-                this.update_u(this.form,this.userAuth.id).then(res => {
-                    console.log(res)
+                if (this.form.avatar === '') {
+                    this.form.avatar = this.nameImage
+                }
+                this.form.specialist = this.form.specialist.id
+                this.update_u([this.userAuth.id,this.form]).then(res => {
+                    this.SetUser(res)
+                    this.specialistSet()
+                }).catch(err => {
+                return console.log(err)
                 })
 
             }

@@ -2,25 +2,27 @@
     <v-container>
         <v-card>
             <v-container>
-                <v-card-title>
-                    Paciente en turno: {{patient_shift.cedula}}
+                <v-card-title> 
+                    Paciente en turno: {{parseInt(this.form.ci).toLocaleString('es-ES')}}
                 </v-card-title>
                 <v-list-item-subtitle class="text-center">
                     debe registrar los datos de paciente
                 </v-list-item-subtitle>
                 <v-card-text>
-                    <v-form>
+                    <v-form ref="reg">
                         <v-row>
                             <v-col>
                                 <v-text-field
                                     label="Nombres"
                                     v-model="form.first_name"
+                                    :rules="[rules.first_name, rules.FormatString]"
                                 ></v-text-field>
                             </v-col>
                             <v-col>
                                 <v-text-field
                                     label="Apellidos"
                                     v-model="form.last_name"
+                                    :rules="[rules.last_name, rules.FormatString]"
                                 ></v-text-field>
                             </v-col>
                         </v-row>
@@ -30,12 +32,16 @@
                                     :items="generos"
                                     v-model="form.sex"
                                     label="Genero"
+                                    :rules="[rules.sex]"
                                 ></v-select>
                             </v-col>
                             <v-col>
                                 <v-text-field
                                     label="Cedula"
                                     v-model="form.ci"
+                                    :error="errorCi"
+                                    :error-messages="errorCi ? mensajeErrorCI : ''"
+                                    :rules="[rules.ci, rules.FormatCI]"
                                 ></v-text-field>
                             </v-col>
                         </v-row>
@@ -44,6 +50,8 @@
                                 <v-text-field
                                     label="Telefono"
                                     v-model="form.phone"
+                                    hint="Formato permitido: 0000-000-0000"
+                                    :rules="[rules.FormatPhone]"
                                 ></v-text-field>
                             </v-col>
                             <v-col>
@@ -51,6 +59,7 @@
                                     :items="civil_status"
                                     v-model="form.civil_status"
                                     label="Estado Civil"
+                                    :rules="[rules.civil_status]"
                                 ></v-select>
                             </v-col>
                         </v-row>
@@ -59,6 +68,7 @@
                                 <v-text-field
                                     label="Peso Kg"
                                     v-model="form.weight"
+                                    :rules="[rules.weight, rules.FormatFloat]"
                                 ></v-text-field>
                             </v-col>
                             <v-col>
@@ -78,6 +88,7 @@
                                                 prepend-icon="mdi-calendar"
                                                 readonly
                                                 v-bind="attrs"
+                                                :rules="[rules.date]"
                                                 v-on="on"
                                             ></v-text-field>
                                         </template>
@@ -118,6 +129,8 @@
             civil_status:['casado','soltero'],
             date: null,
             menu: false,
+            errorCi:false,
+            mensajeErrorCI:null,
             form:{
                 sex:'',
                 first_name:'',
@@ -127,7 +140,36 @@
                 civil_status:'',
                 birthdate:'',
                 weight: 0.00
-            }
+            },
+            rules: {
+                sex: value => !!value || 'Introduzca el genero',
+                first_name: value => !!value || 'Por Favor introduzca el nombre',
+                last_name: value => !!value || 'Por Favor introduzca el apellido',
+                ci: value => !!value || 'Debe introducir el numero de cedula',
+                FormatString: value => {
+                    let letters = /^[A-Za-z]+$/
+                    return letters.test(value) || 'formato invalido'
+                },
+                FormatNumber: value => {
+                    let letters = /^[0-9]+$/
+                    return letters.test(value) || 'formato invalido'
+                },
+                FormatCI: value => {
+                    let letters = /^\d*(\.\d{8})?\d{0,8}$/
+                    return letters.test(value) || 'formato invalido'
+                },
+                FormatPhone: value => {
+                    let letters = /^(\([0-9]{4}\)\s*|[0-9]{4}\-)[0-9]{3}-[0-9]{4}$/ 
+                    return letters.test(value) || 'formato invalido'
+                },
+                FormatFloat: value => {
+                    let letters = /^\d*(\.\d{1})?\d{0,1}$/
+                    return letters.test(value) || 'formato invalido'
+                },
+                civil_status: value => !!value || 'Debe introducir el status civil',
+                date: value => !!value || 'Debe introducir la fecha de nacimiento',
+                weight: value => !!value || 'Debe introducir el peso actual del paciente',
+            },
         }),
 
         mounted(){
@@ -171,9 +213,18 @@
 
             async registrar(){
                 try{
+                    if (!this.$refs.reg.validate()) {
+                        return
+                    }
+
                     this.form.birthdate = this.date
                     this.store_p(this.form).then(res => { // creacion del paciente
-                        console.log('dentro del create del paciente:',res)
+                         if (res.validation !== undefined) {
+                            let validaciones = res.validation
+                               this.mensajeErrorCI = validaciones.ci[0]
+                               this.errorCi = true
+                               return
+                        }
                         this.setvalue_mr(res.data.medical_record)
                         this.setvalue_mc(res.consulta)
                         this.$swal({

@@ -13,6 +13,7 @@ export default {
         },
         componet:true,
         loading:false,
+        alert:false
     },
 
     mutations: {
@@ -24,6 +25,7 @@ export default {
             state.paginate.per_page = payload.paginate.per_page
             state.paginate.last_page = payload.paginate.last_page
             state.paginate.to = payload.paginate.to
+            state.alert = false
         },
 
         SET_OPTIONS_WL(state, payload){
@@ -33,6 +35,7 @@ export default {
             state.paginate.per_page = payload.per_page
             state.paginate.last_page = payload.last_page
             state.paginate.to = payload.to
+            state.alert = false
 
         },
 
@@ -56,12 +59,17 @@ export default {
 
         },
 
+        ALERT_NULL(state,payload){
+            state.alert = payload
+        }
+
     },
     getters: {
         isloading:     (state) => state.loading,
         total:         (state) => state.paginate.total,
         getDateItems : (state) => state.data,
         options:       (state) => state.paginate,
+        alert:         (state) => state.alert,
     },
 
     actions: {
@@ -69,6 +77,9 @@ export default {
         async all_wl({commit},page){ // data de la paginación
             try{
                 const {data} = await axios.get(`/api/doctor/waiting_list?page=${page.page}`)
+               if (data === '') {
+                  return  commit('ALERT_NULL',true)
+               }
                 commit('ALL_WL',data)
             }catch(err){
                 return console.log(err)

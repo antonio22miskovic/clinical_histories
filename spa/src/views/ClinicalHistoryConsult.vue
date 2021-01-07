@@ -61,7 +61,7 @@
                         Genero: {{Getpatient.sex}}
                     </v-col>
                     <v-col>
-                        Cedula: {{Getpatient.ci}}
+                        Cedula: {{parseInt(Getpatient.ci).toLocaleString('es-ES')}}
                     </v-col>
                     <v-col>
                         Telefono: {{Getpatient.phone}}
