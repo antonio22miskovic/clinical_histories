@@ -10,7 +10,11 @@
                     max-width="600"
                 >
                     <template>
-                        <v-card>
+                        <v-card
+                            outlined
+                            shaped
+                            elevation="24"
+                        >
                             <v-toolbar
                                 color="primary"
                                 dark
@@ -46,7 +50,10 @@
                                 <v-btn
                                 text
                                 @click="dialog=false"
-                                >Close</v-btn>
+                                color="error"
+                                >cerrar
+                                    <v-icon>mdi-close-octagon-outline</v-icon>
+                            </v-btn>
                             </v-card-actions>
                         </v-card>
                     </template>
@@ -65,10 +72,14 @@
             cols="12"
             class="mx-auto"
             >
-                <v-card>
+                <v-card
+                    outlined
+                    shaped
+                    elevation="24"
+                >
                     <v-card-title>
-                      	Pacientes
-                        <v-spacer />
+                      	Pacientes Atendidos
+                        <v-spacer/>
                     </v-card-title>
                     <v-data-table
                         :page="page"
@@ -140,6 +151,7 @@
 </template>
 <script>
 	import { mapGetters, mapActions} from 'vuex'
+    import Swal from 'sweetalert2'
     import EditPatient from '@/components/dialogs/EditPatient'
 	export default{
 		name:'Patient',
@@ -191,42 +203,75 @@
                 documentXml_p:'documentXml_p',
                 documentPdf_p:'documentPdf_p',
                 Ondialog:'Ondialog',
-                setDialog:'setDialog'
+                setDialog:'setDialog',
+                setOverlay:'setOverlay'
         	}),
 
 			async loadQuota () {
            		try{
+                    this.setOverlay(true)
 	                const { page, itemsPerPage } = this.options
 	                let pageNumber = page - 1
-	                this.all_p(pageNumber)
+	                this.all_p(pageNumber).then(res =>{
+                        this.setOverlay(false)
+                    })
            		}catch(err){
+                    this.setOverlay(false)
 	                console.log(err)
            		}
         	},
 
             async pdfImport(item){
-                this.documentPdf_p(item).then(res =>{
-                    this.$swal({
-                        icon: 'success',
-                        title: '¡Documento PDF generado con exito!',
-                        text:'exito',
-                        confirmButtonColor: '#3085d6',
-                    })
+                Swal.fire({
+                    title: 'Desea Generar Documento PDF del pacinete?',
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: `Generar`,
+                    denyButtonText: `No`,
+                    icon: 'warning',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.documentPdf_p(item).then(res =>{
+                            this.$swal({
+                                icon: 'success',
+                                title: '¡Documento PDF generado con exito!',
+                                text:'exito',
+                                confirmButtonColor: '#3085d6',
+                            })
+                        })
+                    } else if (result.isDenied) {
+                        Swal.fire('Por favor Tenga Cuidado', '', 'info')
+                    }
                 })
-            },  
 
+            },  
             async CdaHL7(id){
-                this.documentXml_p(id).then(res => {
-                    this.$swal({
-                        icon: 'success',
-                        title: '¡Documento HL7/CDA generado con exito!',
-                        text:'exito',
-                        confirmButtonColor: '#3085d6',
-                    })
-                })
+                 Swal.fire({
+                    title: 'Desea Generar Documento HL7/CDA del pacinete?',
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: `Generar`,
+                    denyButtonText: `No`,
+                    icon: 'warning',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.setOverlay(true)
+                        this.documentXml_p(id).then(res => {
+                            this.setOverlay(false)
+                            this.$swal({
+                                icon: 'success',
+                                title: '¡Documento HL7/CDA generado con exito!',
+                                text:'exito',
+                                confirmButtonColor: '#3085d6',
+                            })
+                        })
+                    } else if (result.isDenied) {
+                        Swal.fire('Por favor Tenga Cuidado', '', 'info')
+                }
+            })
+
             },
             async editar(item){
-
                 this.setDialog([item,this.page]).then(res => {
                     this.Ondialog(true)
                 })

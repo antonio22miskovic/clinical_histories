@@ -1,14 +1,16 @@
 <template>
     <v-footer
       app
-    >
-        <v-col
-        class="text-center"
-        cols="12"
-        color="deep-purple lighten-2"
-        >
-            {{ new Date().getFullYear() }} — <strong>DR. TULIO PINEDA</strong>
-        </v-col>
+    >   
+        <v-row>
+            <v-col
+            class="text-center"
+            cols="12"
+            color="deep-purple lighten-2"
+            >
+                {{ new Date().getFullYear() }} — <strong>DR. TULIO PINEDA</strong>
+            </v-col>
+        </v-row>
     </v-footer>
 </template>
 

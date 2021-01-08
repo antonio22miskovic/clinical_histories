@@ -1,69 +1,73 @@
 <template>
-	<v-container >
-        <v-row  no-gutters>
-            <v-col cols="6">
-                <template>
-					<v-carousel
-						cycle
-						hide-delimiter-background
-						show-arrows-on-hover
-					>
-						<v-carousel-item
-							v-for="(item, i) in items"
-							:key="i"
-							:src="item.src"
-						>
-						</v-carousel-item>
-					</v-carousel>
-				</template>
-            </v-col>
-            <v-col cols="6">
-                <v-container>
-                            <div class="layout column align-center">
-                                <img src="/logos/bicentenario.jpg" alt="DR. tulio pineda" width="100" height="100">
-                                <h1 class=" text-center font-italic"> DR. TULIO PINEDA </h1>
-                            </div>
-                            <v-container>
-                                <div>
-                                        <v-form ref="login">
-
-                                            <v-text-field
-                                                append-icon="mdi-email"
-                                                name="login"
-                                                label="E-mail"
-                                                type="text"
-                                                v-model="form.email"
-                                                :rules="[rulesUser.required]"
-                                            />
-
-                                            <v-text-field
-                                                :type="hidePassword ? 'password' : 'text'"
-                                                :append-icon="hidePassword ? 'mdi-eye' : 'mdi-eye-off'"
-                                                name="password"
-                                                label="Contraseña"
-                                                id="password"
-                                                :rules="[rulesPassword.required]"
-                                                v-model="form.password"
-                                                @click:append="hidePassword = !hidePassword"
-                                            />
-
-                                            <v-card-actions>
-                                                <v-btn block color="blue darken-2" @click="login">Login</v-btn>
-                                                <br>
-                                            </v-card-actions>
-                                        </v-form>
-                                    <div class="text-center">
-                                        <v-btn text color="secondary"> Forgot your Password? </v-btn>
-                                    </div>
+    <div>
+    	<v-container  mt-15 >
+            <v-row  no-gutters>
+                <v-col md7 xs12>
+                    <template>
+    					<v-carousel
+                            style="max-width:550px;"
+    						cycle
+    						hide-delimiter-background
+    						show-arrows-on-hover
+    					>
+    						<v-carousel-item
+    							v-for="(item, i) in items"
+    							:key="i"
+                                height="50%"
+    							:src="item.src"
+    						>
+    						</v-carousel-item>
+    					</v-carousel>
+    				</template>
+                </v-col>
+                <v-col md5 xs12>
+                    <v-container>
+                                <div class="layout column align-center">
+                                    <img src="/logos/bicentenario.jpg" alt="DR. tulio pineda" width="100" height="100">
+                                    <h1 class=" text-center font-italic"> DR. TULIO PINEDA </h1>
                                 </div>
-                            </v-container>
-                            <div class="text-center font-italic">
-                                <strong> Ministerio del Poder Popular para la Salud</strong>
-                            </div>
-                </v-container>
-            </v-col>
-        </v-row>
-	</v-container>
+                                <v-container>
+                                    <div>
+                                            <v-form ref="login">
+
+                                                <v-text-field
+                                                    append-icon="mdi-email"
+                                                    name="login"
+                                                    label="E-mail"
+                                                    type="text"
+                                                    v-model="form.email"
+                                                    :rules="[rulesUser.required]"
+                                                />
+
+                                                <v-text-field
+                                                    :type="hidePassword ? 'password' : 'text'"
+                                                    :append-icon="hidePassword ? 'mdi-eye' : 'mdi-eye-off'"
+                                                    name="password"
+                                                    label="Contraseña"
+                                                    id="password"
+                                                    :rules="[rulesPassword.required]"
+                                                    v-model="form.password"
+                                                    @click:append="hidePassword = !hidePassword"
+                                                />
+
+                                                <v-card-actions>
+                                                    <v-btn block color="blue darken-2" @click="login">Login</v-btn>
+                                                    <br>
+                                                </v-card-actions>
+                                            </v-form>
+                                        <div class="text-center">
+                                            <v-btn text color="secondary"> Forgot your Password? </v-btn>
+                                        </div>
+                                    </div>
+                                </v-container>
+                                <div class="text-center font-italic">
+                                    <strong> Ministerio del Poder Popular para la Salud</strong>
+                                </div>
+                    </v-container>
+                </v-col>
+            </v-row>
+    	</v-container>
+    </div>
 </template>
 <script>
 import { mapActions } from 'vuex'
@@ -133,14 +137,4 @@ export default {
 }
 </script>
 <style type="text/css">
-    #fondo:{
-        height: 100%;
-        width: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        content: "";
-        z-index: 0;
-        background-image:url(/logos/imagen1.jpg);
-    }
 </style>

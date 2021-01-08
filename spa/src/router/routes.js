@@ -47,7 +47,7 @@ export default [
                         footer:  comp('core/Footer.vue')
                     },
         meta: {
-            middleware: [middlewares.auth],
+            middleware: [middlewares.analista],
         },
     },
 
@@ -62,7 +62,7 @@ export default [
                         footer:  comp('core/Footer.vue')
                     },
         meta: {
-            middleware: [middlewares.auth],
+            middleware: [middlewares.analista],
         },
     },
 
@@ -91,7 +91,7 @@ export default [
                         footer:  comp('core/Footer.vue')
                     },
         meta: {
-            middleware: [middlewares.auth],
+            middleware: [middlewares.analista],
         },
 
     },
@@ -106,7 +106,7 @@ export default [
                         footer:  comp('core/Footer.vue')
                     },
         meta: {
-            middleware: [middlewares.auth],
+            middleware: [middlewares.analista],
         },
 
     },
@@ -121,7 +121,7 @@ export default [
                         footer:  comp('core/Footer.vue')
                     },
         meta: {
-            middleware: [middlewares.auth],
+            middleware: [middlewares.analista],
         },
 
     },

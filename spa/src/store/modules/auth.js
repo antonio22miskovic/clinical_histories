@@ -18,7 +18,6 @@ export default {
         SET_USER_UPDATE(state,payload){
             state.user = payload
             localStorage.setItem('user',JSON.stringify(payload))
-            console.log('dentro de la mutacion',state.user)
         },
 
         LOGIN(state, payload){

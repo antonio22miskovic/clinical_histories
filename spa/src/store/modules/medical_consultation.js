@@ -42,7 +42,6 @@ export default {
         SHOW_MC(state,payload){
             state.medical_consultation.id = payload.id
             state.medical_consultation.medical_record = payload.medical_record
-            console.log('data de la consulta medica:',state.medical_consultation)
         },
 
         SHOW_CLINICAL_MC(state,{consulta,diseases,medicamentos}){

@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class PatientRequest extends FormRequest
+class PatientRequest extends FormRequest 
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,11 +29,10 @@ class PatientRequest extends FormRequest
             'sex'          => "required",
             'first_name'   => "required|string|min:1|max:30",
             'last_name'    => "required|string|min:1|max:30",
-            'ci'           => "required|unique:patients".$this->id,
+            'ci'           => 'required|unique:patients',
             'civil_status' => "required",
             'birthdate'    => "required",
             'weight'       => "required"
-// Rule::unique('clients')->ignore($this->id)
         ];
     }
 

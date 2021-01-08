@@ -6,7 +6,11 @@
               v-model="dialog"
               width="500"
             >
-              <v-card>
+              <v-card 
+                outlined
+                shaped
+                elevation="24"
+              >
                 <v-card-title class="headline grey lighten-2">
                     Detalles
                 </v-card-title>
@@ -38,7 +42,11 @@
 
 
 
-        <v-card>
+        <v-card
+            outlined
+            shaped
+            elevation="24"
+        >
             <v-card-title>
                    <v-btn
                         text

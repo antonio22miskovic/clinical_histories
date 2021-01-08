@@ -26,7 +26,6 @@ export default {
 
             state.medical_consultation.id = payload.id
             state.medical_consultation.medical_record = payload.medical_record
-            console.log('data de la consulta medica:',state.medical_consultation)
         },
 
         STORE_DD(state,payload){
@@ -80,7 +79,6 @@ export default {
         async store_dd({commit},value){
             try{
                 const {data} = await axios.post(`/api/doctor/disease`,value)
-                console.log('la respuesta de la data',data)
                 // commit('STORE_DD',data)
                 return data
             }catch(err){

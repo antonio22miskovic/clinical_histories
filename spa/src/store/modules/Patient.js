@@ -181,7 +181,6 @@ export default {
         async detectPatient({commit},ci){
             try{
                 const {data} = await axios.get(`/api/doctor/waiting_list/detect/${ci}`)
-                console.log('dentro de el detector del paciente:', data)
                 commit('SET_PATIENT',data)
                 return data
             }catch(err){
@@ -191,7 +190,6 @@ export default {
         async show_p({commit},id){
             try{
                 const {data} = await axios.get(`/api/doctor/patient/${id}`)
-                console.log('dentro del show',data)
                 commit('SHOW_P',data)
                 return data
             }catch(err){
@@ -202,7 +200,6 @@ export default {
         async show_clinical_p({commit},id){
             try{// el id es el de la consulta
                 const {data} = await axios.get(`/api/doctor/patient/consulta/clinical/${id}`)
-                console.log('dentro del show',data)
                 commit('SHOW_P',data)
                 return data
             }catch(err){
@@ -232,7 +229,6 @@ export default {
         },
 
         setDialog({commit},value){
-            console.log(value)
             commit('SHOW_P_Q', value)
             return true
         }

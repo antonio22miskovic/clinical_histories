@@ -6,7 +6,11 @@
               persistent
               max-width="600px"
             >
-                <v-card>
+                <v-card
+                    outlined
+                    shaped
+                    elevation="24"
+                >
                     <v-container>
                         <v-card-title>
                            Actualizar Datos del Paciente
@@ -110,14 +114,18 @@
                                     <v-btn
                                         elevation="3"
                                         @click="actualizar"
+                                        color="success"
                                     >
                                         Actualizar
+                                         <v-icon>mdi-account-convert</v-icon>
                                     </v-btn>
                                     <v-btn
                                         elevation="3"
                                         @click="dialogOn=false"
+                                        color="error"
                                     >
-                                        Cerrar
+                                        Cerrar 
+                                        <v-icon>mdi-close-octagon-outline</v-icon>
                                     </v-btn>
                                 </v-card-actions>
                             </v-form>
@@ -193,6 +201,7 @@
                 update_p:'update_p',
                 dialogForm:'Ondialog',
                 all_p:'all_p',
+                setOverlay:'setOverlay'
 
             }),
             save (date) {
@@ -209,6 +218,7 @@
                 this.date = this.getPatient.birthdate
             },
             actualizar(){
+                this.setOverlay(true)
                 this.errorCi = false
                 this.form.birthdate = this.date
                 if (!this.$refs.up.validate()) {
@@ -245,12 +255,14 @@
                 }).then((result) => {
                 if (result.isConfirmed) {
                     this.update_p(data).then(res => {
+                         this.setOverlay(false)
                         if (res.validation !== undefined) {
                             let validaciones = res.validation
                                this.mensajeErrorCI = validaciones.ci[0]
                                this.errorCi = true
                         }else{
                             this.all_p(this.pageUpdate_p)
+                             this.setOverlay(false)
                                 Swal.fire('Datps Actualizados', '', 'success')
                             this.dialogOn = false
                         }

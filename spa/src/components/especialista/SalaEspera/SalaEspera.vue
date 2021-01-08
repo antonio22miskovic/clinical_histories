@@ -8,7 +8,11 @@
             cols="12"
             class="mx-auto"
             >
-                <v-card v-if="alert === false">
+                <v-card v-if="alert === false"
+                    outlined
+                    shaped
+                    elevation="24"
+                >
                     <v-card-title>
                         Pacientes del dia:{{getquotas.quota}}
                         <v-spacer />
@@ -146,7 +150,8 @@ export default {
             clearPatient: 'clearPatient',
             store_mc:'store_mc',
             setvalue_mr:'setvalue_mr',
-            destroy_wl:'destroy_wl'
+            destroy_wl:'destroy_wl',
+            setOverlay:'setOverlay,'
         }),
 
         async no_asistio (cedula) {
@@ -159,7 +164,9 @@ export default {
                     icon: 'warning',
                 }).then((result) => {
                     if (result.isConfirmed) {
+                            this.setOverlay(true)
                         this.destroy_wl(cedula).then(res=>{
+                            this.setOverlay(false)
                             this.$swal({
                                 icon: 'success',
                                 title: '¡Eliminado de la lista de espera con exito!',
@@ -177,17 +184,16 @@ export default {
         },
 
         async atender (item) {
+            this.setOverlay(true)
             this.clearPatient() // formatear datos de pacientes antereores
-            // let array = this.data.filter(item => item.id === id)
-            //     for (var i = 0; i <= array.length; i++) {
-            //         this.patient_shift = array[0]
-            //     }
             this.detectPatient(item.cedula).then(res =>{
                 if (Object.keys(res).length === 0) {
+                    this.setOverlay(false)
                     this.$router.push({name:'consulta', params:{id: item.id}})// montamos el componente de nuevo paciente
                 }else{
                     this.setvalue_mr(res.medical_record)
                     this.store_mc(res.medical_record.id).then(response => {
+                        this.setOverlay(false)
                         this.$router.push({name:'consultaPatient',params:{
                                 id:res.id,
                                 consulta:response.id
@@ -202,13 +208,15 @@ export default {
 
         async loadQuota () {
            try{
-                this.loading = true
+                this.setOverlay(true)
                 const { page, itemsPerPage } = this.options;
                 let pageNumber = page - 1;
-                this.all_wl(pageNumber)
-                this.loading = false
+                this.all_wl(pageNumber).then(res =>{
+                    this.setOverlay(false)
+                })
+               
            }catch(err){
-                this.loading = false
+               this.setOverlay(false)
                 console.log(err)
            }
         },

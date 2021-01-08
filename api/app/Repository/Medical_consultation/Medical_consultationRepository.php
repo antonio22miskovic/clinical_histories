@@ -3,9 +3,11 @@
 namespace App\Repository\Medical_consultation;
 
 use App\Models\Medical_consultation;
+use App\Models\Medical_record;
 use App\Models\Patient;
 use App\Repository\BaseRepository;
 use App\Repository\Medical_consultation\Medical_consultationRepositoryInterface;
+use Carbon\Carbon;
 
 class Medical_consultationRepository extends BaseRepository implements Medical_consultationRepositoryInterface
 {
@@ -13,7 +15,16 @@ class Medical_consultationRepository extends BaseRepository implements Medical_c
 
     public function CreateConstultation($request)
     {
+       $medical_record = Medical_record::find($request['medical_record']);
 
+       foreach ($medical_record->medical_consultations as $value) { // buscamos en las consultas
+           if (date_format($value->created_at,'Y-m-d') === Carbon::now()->toDateString()){ //si hay una consulta con la fecha 
+               if ($value->user_id === $request['user']) {
+                    return $value;
+               }
+           }
+       }
+        
     	$result = $this->model::create([
             'user_id'           => $request['user'],
             'medical_record_id' => $request['medical_record'],

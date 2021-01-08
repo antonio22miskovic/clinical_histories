@@ -1,15 +1,15 @@
 <template>
     <v-container>
         <v-card
-            elevation="2"
+            outlined
+            shaped
+            elevation="24"
         >
             <v-card-title> 
                 <v-btn
                     text
                     color="primary"
-                    :to="{
-                        name:'patients'
-                    }"
+                    @click="NexRouter"
                 >
                 <v-icon>
                     mdi-chevron-left
@@ -151,17 +151,26 @@
             ...mapActions({
                 show_p:'show_p',
                 setvalue_mr:'setvalue_mr',
-                all_mc:'all_mc'
+                all_mc:'all_mc',
+                setOverlay:'setOverlay'
             }),
 
             async loadQuota () {
                 try{
+                    this.setOverlay(true)
                     const { page, itemsPerPage } = this.options
                     let pageNumber = page - 1
-                    this.all_mc({page:pageNumber, id:this.patient_url})
+                    this.all_mc({page:pageNumber, id:this.patient_url}).then(res => {
+                        this.setOverlay(false)
+                    })
                 }catch(err){
+                    this.setOverlay(false)
                     console.log(err)
                 }
+            },
+
+            async NexRouter(){
+                this.$router.go(-1)
             },
 
             async verificar(){

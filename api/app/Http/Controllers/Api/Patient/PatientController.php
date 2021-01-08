@@ -30,7 +30,6 @@ class PatientController extends Controller
     {
         return response()->json(
             new PatientCollection($this->repository->getAllModels($this->user)),
-            // $this->repository->getAllModels($this->user),
             200 // state HTTP
         );
     }

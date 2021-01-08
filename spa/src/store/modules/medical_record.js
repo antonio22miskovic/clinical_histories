@@ -26,7 +26,6 @@ export default {
 
             state.medical_record.id = payload.id,
             state.medical_record.patient = payload.patient
-            console.log('dentro del show del medical record:', state.medical_record)
         },
 
         STORE_MR(state,payload){

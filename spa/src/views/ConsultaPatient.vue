@@ -1,14 +1,19 @@
 <template>
     <v-container>
-
+        <EditPatient v-if="getdialog"></EditPatient>
         <template>
             <v-row justify="space-around">
                 <v-col>
                     <v-dialog
+                    max-width="600"
                     transition="dialog-top-transition"
                     v-model="dialog"
                     >
-                        <v-card>
+                        <v-card
+                            outlined
+                            shaped
+                            elevation="24"
+                        >
                             <v-toolbar
                             color="primary"
                             dark
@@ -17,21 +22,26 @@
                                 <div class="text-center" v-for="(item, index) in dataArray">
                                     <v-row>
                                         <v-col>
-                                            <p>{{index + 1}}</p>
+                                            <p><strong>{{index + 1}}</strong></p>
                                         </v-col>
                                         <v-col>
-                                            <p>{{item.name}}</p>
+                                            <p><strong>{{item.name}}</strong></p>
                                         </v-col>
                                         <v-col>
-                                            <v-btn
-                                                elevation="3"
-                                                @click="editaritem(item, index)">
-                                                Editar
+                                            <v-btn                                      
+                                                icon
+                                                @click="editaritem(item, index)"
+                                            >
+                                               
+                                                 <v-icon color="warning">mdi-grease-pencil</v-icon>
                                             </v-btn>
                                             <v-btn
-                                                elevation="3"
-                                                @click="eliminarItem(index)">
-                                                eliminar
+                                                icon
+                                                @click="eliminarItem(index)"
+                                                
+                                            >
+                                               
+                                            <v-icon color="error">mdi-delete-forever</v-icon>
                                             </v-btn>
                                         </v-col>
                                     </v-row>
@@ -40,8 +50,11 @@
                             <v-card-actions class="justify-end">
                                 <v-btn
                                     text
+                                    color="error"
                                     @click="dialog = false"
-                                    >cerrar
+                                >
+                                    cerrar
+                                    <v-icon>mdi-close-octagon-outline</v-icon>
                                 </v-btn>
                             </v-card-actions>
                         </v-card>
@@ -52,7 +65,11 @@
 
 
 
-        <v-card>
+        <v-card 
+            outlined
+            shaped
+            elevation="24"
+        >
             <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
                   <v-fab-transition>
@@ -77,12 +94,33 @@
             <v-container>
                 <v-card-title>
                     {{patient.first_name}}  {{patient.last_name }}
-                    <v-btn  text>
-                        <v-icon>mdi-account-edit</v-icon>
-                    </v-btn>
-                    <v-btn  text>
-                        <v-icon>mdi-account-box</v-icon>
-                    </v-btn>
+
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-btn icon
+                                @click="editarPatient"
+                            >
+                                <v-icon
+                                v-bind="attrs"
+                                v-on="on"
+                                >mdi-account-edit</v-icon>
+                            </v-btn>
+                        </template>
+                        <span>editar usuario</span>
+                    </v-tooltip>
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-btn  icon
+                            :to="{name:'clinichistory', params:{id: patient.id}}"
+                            >
+                                <v-icon
+                                v-bind="attrs"
+                                v-on="on"
+                                >mdi-account-box</v-icon>
+                            </v-btn>
+                        </template>
+                        <span>Historial clinico</span>
+                    </v-tooltip>
                     <v-spacer/>
                     {{patient.sex}}
                 </v-card-title>
@@ -169,8 +207,12 @@
 </template>
 <script>
     import { mapGetters, mapActions} from 'vuex'
+    import EditPatient from '@/components/dialogs/EditPatient'
     export default{
         name:'ConsultaPatient',
+        components:{
+           EditPatient
+        },
         data:()=>({
             diagnostico:'',
             description:'',
@@ -202,6 +244,8 @@
                 setvalue_mc:'setvalue_mc',
                 store_dd:'store_dd',
                 destroy_wl:'destroy_wl',
+                Ondialog:'Ondialog',
+                setOverlay:'setOverlay',
             }),
 
             async verificar(){
@@ -229,6 +273,7 @@
                     this.usoMedicamentos =''
                     this.referenciaIndex=null
                     this.editando = false
+                    this.$refs.patologias.resetValidation()
                 }else{/// si va a editar
                     for (var i=0; i <= this.dataArray.length; i++) {
                         if (i === this.referenciaIndex) {
@@ -246,6 +291,9 @@
                     this.referenciaIndex=null
                 }
 
+            },
+            async editarPatient(){
+                    this.Ondialog(true)
             },
 
             async editaritem(item, index){
@@ -265,10 +313,13 @@
                 this.usoMedicamentos =''
                 this.editando = false
                 this.referenciaIndex=null
+                this.$refs.patologias.resetValidation()
             },
 
             registrar(){
+                this.setOverlay(true)
                 this.store_dd({'array':this.dataArray,consulta:this.patient_consulta}).then(res => {
+                        this.setOverlay(false)
                         this.destroy_wl(this.patient.ci).then(res=>{
                             this.$swal({
                                 icon: 'success',
@@ -280,6 +331,7 @@
                         })
 
                 }).catch(err =>{
+                    this.setOverlay(false)
                     this.$swal({
                         icon: 'error',
                         title: '¡hubo un problema por intente de neuvo!',
@@ -288,7 +340,6 @@
                     })
               })
             },
-
             eliminarItem(index){
                 this.dataArray.splice(index, 1);
                 this.diagnostico = ''
@@ -309,7 +360,8 @@
 
             ...mapGetters({
                 Getpatient:'Getpatient',
-                getMedical_record:'getMedical_record'
+                getMedical_record:'getMedical_record',
+                getdialog:'getdialog'
             }),
 
             patient(){

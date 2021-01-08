@@ -6,7 +6,7 @@
         md="8"
       >
         <v-card
-            elevation="10"
+            elevation="24"
             outlined
             shaped
         >
@@ -213,7 +213,8 @@
                 getSpecialist: 'getSpecialist',
                 update_u:'update_u',
                 SetUser:'SetUser',
-                specialistSet:'specialistSet'
+                specialistSet:'specialistSet',
+                setOverlay:'setOverlay'
             }),
 
 ///////////////////CARGA DE IMAGEN /////////////////////////
@@ -239,13 +240,21 @@
                 if (!this.$refs.up.validate()) {
                     return
                 }
+                this.setOverlay(true)
                 if (this.form.avatar === '') {
                     this.form.avatar = this.nameImage
                 }
                 this.form.specialist = this.form.specialist.id
                 this.update_u([this.userAuth.id,this.form]).then(res => {
+                    this.setOverlay(false)
                     this.SetUser(res)
                     this.specialistSet()
+                    this.$swal({
+                                icon: 'success',
+                                title: '¡Usuario actualizado con exito!',
+                                text:'exito',
+                                confirmButtonColor: '#3085d6',
+                            })
                 }).catch(err => {
                 return console.log(err)
                 })

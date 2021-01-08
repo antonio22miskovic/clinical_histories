@@ -1,6 +1,10 @@
 <template>
     <v-container>
-        <v-card>
+        <v-card 
+            outlined
+            shaped
+            elevation="24"
+        >
             <v-container>
                 <v-card-title> 
                     Paciente en turno: {{parseInt(this.form.ci).toLocaleString('es-ES')}}
@@ -107,8 +111,12 @@
                             <v-btn
                                 elevation="3"
                                 @click="registrar"
+                                color="success"
                             >
                                 Registrar
+                                <v-icon>
+                                    mdi-account-plus
+                                </v-icon>
                             </v-btn>
                         </v-card-actions>
                     </v-form>
@@ -191,6 +199,7 @@
                 store_mr:'store_mr',
                 setvalue_mr:'setvalue_mr',
                 setvalue_mc:'setvalue_mc',
+                setOverlay:'setOverlay',
             }),
 
             save (date) {
@@ -216,7 +225,7 @@
                     if (!this.$refs.reg.validate()) {
                         return
                     }
-
+                    this.setOverlay(true)
                     this.form.birthdate = this.date
                     this.store_p(this.form).then(res => { // creacion del paciente
                          if (res.validation !== undefined) {
@@ -227,6 +236,7 @@
                         }
                         this.setvalue_mr(res.data.medical_record)
                         this.setvalue_mc(res.consulta)
+                        this.setOverlay(false)
                         this.$swal({
                             icon: 'success',
                             title: '¡Paciente registrado con exito!',
