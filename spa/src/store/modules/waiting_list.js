@@ -102,8 +102,9 @@ export default {
 
         async store_wl({commit},value){
             try{
-                const data = await axios.put(`/api/doctor/waiting_list`,value)
-                commit('STORE_WL',data)
+                console.log('dentro del vuex',value)
+                const {data} = await axios.post(`/api/doctor/waiting_list`,value)
+                console.log(data)
                 return data
             }catch(err){
                 return console.log(err)

@@ -14,9 +14,10 @@
                     elevation="24"
                 >
                     <v-card-title>
-                        Pacientes del dia:{{getquotas.quota}}
+                        Pacientes
+                       <!--  Pacientes del dia:{{getquotas.quota}}
                         <v-spacer />
-                        {{getquotas.date}}
+                        {{getquotas.date}} -->
                     </v-card-title>
                     <v-data-table
                         :page="page"

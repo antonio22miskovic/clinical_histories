@@ -9,10 +9,30 @@ export default {
         quota:{
             quota:null,
             date: null,
-        }
+        },
+        data:[],
+        paginate: {
+            total: 0,
+            current_page: 0,
+            per_page: 0,
+            last_page: 0,
+            from: 0,
+            to: 0
+        },
     },
 
     mutations: {
+
+        ALL_U(state, payload){
+            state.data = payload.data // la data a paginar
+            // datos de la paginacion
+            state.paginate.total = payload.paginate.total
+            state.paginate.current_page = payload.paginate.current_page
+            state.paginate.per_page = payload.paginate.per_page
+            state.paginate.last_page = payload.paginate.last_page
+            state.paginate.to = payload.paginate.to
+        },
+
         SET_SPECIALIST(state, payload){
            state.specialist.id = payload.specialist.id
            state.specialist.name = payload.specialist.name
@@ -40,10 +60,23 @@ export default {
     },
     getters: {
         specialistAuth: state => state.specialist,
-        getquotas:      state => state.quota
+        getquotas:      state => state.quota,
+        getDataUser: state => state.data,
+        total_u: state => state.paginate.total,
     },
 
     actions: {
+
+        async all_u({commit},page){ // data de la paginación
+            try{
+                const {data} = await axios.get(`/api/doctor/user?page=${page.page}`)
+                console.log(data)
+                commit('ALL_U',data)
+            }catch(err){
+                return console.log(err)
+            }
+        },
+
        async specialistSet({commit}){
             try {
                 const res = await axios.get('api/doctor/specialist/auth/user')

@@ -13,4 +13,6 @@ interface Waiting_listRepositoryInterface
 
     public function deleteByCi($ci);
 
+    public function StoreList($value);
+
 }

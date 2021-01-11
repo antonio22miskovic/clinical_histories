@@ -8,9 +8,9 @@ export function handler(store, router){
 		switch (error.response.status){
 
 			case 401:
-                    localStorage.removeItem('user')
-                    localStorage.removeItem('key')
-				router.push('/')
+   //                  localStorage.removeItem('user')
+   //                  localStorage.removeItem('key')
+			// 	router.push('/')
 			break
 
 			case 500:

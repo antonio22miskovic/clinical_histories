@@ -40,4 +40,23 @@ class Waiting_listRepository extends BaseRepository implements Waiting_listRepos
         $patient->delete();
         return true;
     }
+
+    public function StoreList($value)
+    {
+        $quota = Quota::where('specialist_id',$value['specialist_id'])
+                ->first();
+        if (is_null($quota)) {
+              return ['quota_is_null' => 'quota no disponible para ese dia'];      
+        } 
+        // if ($quota->quota > 0) {
+        //     $resta = $quota->quota - 1;
+        //     $quota->quota = $resta;
+        //     $quota->save();
+        // }
+        $wl = $this->model::create([
+            'identification_card' => $value['identification_card'],
+            'quota_id' => $quota->id
+        ]);
+        return ['quota' => $quota,  'wl' => $wl];
+    }
 }

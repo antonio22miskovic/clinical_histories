@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Waiting_list;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Waiting_listRequest;
 use App\Http\Resources\Patient as PatientResource;
+use App\Http\Resources\Quota as QuotaResource;
 use App\Http\Resources\Waiting_list as Waiting_listResource;
 use App\Http\Resources\Waiting_listCollection;
 use App\Repository\Waiting_list\Waiting_listRepository;
@@ -20,7 +21,7 @@ class Waiting_listController extends Controller
     public function __construct(Waiting_listRepository $repository)
     {
         $this->repository = $repository;
-        $this->middleware(['jwt.specialist']);
+        $this->middleware('jwt.specialist', ['except' => ['store']]);
         $this->user = Auth::guard('api')->user();
     }
 
@@ -39,11 +40,15 @@ class Waiting_listController extends Controller
     public function store(Waiting_listRequest $request)
     {
 
-        $waiting_list = $this->repository->createOrUpdateFromRequest();
+        $waiting_list = $this->repository->StoreList($request);
+        if (isset($waiting_list['quota_is_null'])) {
+            return response()->json(['quota_is_null' => true],200);
+        }
         return response()->json(
             [
-                'message' => 'waiting_list registrada exitosamente',
-                'data' => new Waiting_listResource($waiting_list)
+                'message' => 'su fecha para la consulta es correcta',
+                'wl' => new Waiting_listResource($waiting_list['wl']),
+                'quota' => new QuotaResource($waiting_list['quota'])
             ],
              200 // state HTTP
          );

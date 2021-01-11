@@ -10,6 +10,13 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
     protected $model = User::class;
 
+    public function getAllModels(){
+        return $this->model::orderByDesc('id')
+                ->paginate(
+                        $this->request->query('per_page', 10)
+                    );
+    }
+
     public function getDataUserAuth($id)
     {
         $user = User::find($id);

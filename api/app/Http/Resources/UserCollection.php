@@ -14,6 +14,16 @@ class UserCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return[
+            'paginate' => [
+                    'total' => $this->total(),
+                    'current_page' => $this->currentPage(),
+                    'per_page' => $this->perPage(),
+                    'last_page' => $this->lastPage(),
+                    'from' => $this->firstItem(),
+                    'to' => $this->lastPage(),
+                ],
+                'data' => $this->collection,
+        ];
     }
 }

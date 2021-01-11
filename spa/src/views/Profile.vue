@@ -44,6 +44,7 @@
                 <v-col
                   cols="12"
                   md="6"
+                  v-if="isAdmin === false"
                 >
                     <v-select
                         :items="listSpecialists"
@@ -141,7 +142,7 @@
               :src="'/img/avatars/'+ userAuth.avatar"
             ></v-img>
         </v-avatar>
-          <v-card-text class="text-center">
+          <v-card-text class="text-center" v-if="isAdmin === false">
             <h6 class="display-1 mb-1 grey--text">
               {{specialistAuth.name}}
             </h6>
@@ -153,6 +154,9 @@
             <p class="font-weight-light grey--text">
                 {{specialistAuth.description}}
             </p>
+          </v-card-text>
+          <v-card-text class="text-center">
+            <h4 class="display-1 mb-1 grey--text">Administrador</h4>
           </v-card-text>
         </v-card>
       </v-col>
@@ -204,7 +208,8 @@
             ...mapGetters({
                 userAuth:'userAuth',
                 specialistAuth:'specialistAuth',
-                listSpecialists: 'listSpecialists'
+                listSpecialists: 'listSpecialists',
+                isAdmin:'isAdmin'
             }),
         },
         methods:{

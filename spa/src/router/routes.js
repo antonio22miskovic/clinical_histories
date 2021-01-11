@@ -15,8 +15,22 @@ import middlewares from './middleware/index'
 export default [
     {
         path: '/',
-        name: 'auth-login',
-        component: page('auth/Login.vue'),
+        component: page('Init.vue'),
+        children:[
+
+            { 
+                path: '/',
+                name: 'witing_list',
+                component: comp('core/WitingList.vue')
+            },
+
+            {  
+                path: 'login',
+                name: 'auth-login',
+                component: comp('core/Login.vue')
+            }
+
+        ],
         meta:{
             middleware: [middlewares.guest],
         }
@@ -91,13 +105,14 @@ export default [
                         footer:  comp('core/Footer.vue')
                     },
         meta: {
-            middleware: [middlewares.analista],
+            middleware: [middlewares.auth],
         },
 
     },
 
     {
         path: '/clinic/history/:id',
+        props: true,
         name: 'clinichistory',
         components: {
                         default: page('ClinicHistory.vue'),
@@ -113,6 +128,7 @@ export default [
 
     {
         path: '/clinic/history/consulta/:id',
+        props: true,
         name: 'clinichistoryconsult',
         components: {
                         default: page('ClinicalHistoryConsult.vue'),

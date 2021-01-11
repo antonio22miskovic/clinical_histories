@@ -17,12 +17,15 @@ class Medical_consultationRepository extends BaseRepository implements Medical_c
     {
        $medical_record = Medical_record::find($request['medical_record']);
 
-       foreach ($medical_record->medical_consultations as $value) { // buscamos en las consultas
-           if (date_format($value->created_at,'Y-m-d') === Carbon::now()->toDateString()){ //si hay una consulta con la fecha 
-               if ($value->user_id === $request['user']) {
-                    return $value;
+       if (isset($medical_record->medical_consultations)) {
+           foreach ($medical_record->medical_consultations as $value) { // buscamos en las consultas
+               if (date_format($value->created_at,'Y-m-d') === Carbon::now()->toDateString()){ //si hay una consulta con la fecha 
+                   if ($value->user_id === $request['user']) {
+                        return $value;
+                   }
                }
            }
+
        }
         
     	$result = $this->model::create([

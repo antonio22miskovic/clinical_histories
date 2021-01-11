@@ -18,14 +18,16 @@ class UserController extends Controller
     public function __construct(UserRepository $repository)
     {
         $this->repository = $repository;
-        $this->middleware(['jwt.specialist']);
+        $this->middleware('jwt.admin',['only' => ['index']]);
+        // $this->middleware('jwt.init');
         $this->user = Auth::guard('api')->user();
     }
 
     public function index()
     {
+
         return response()->json(
-            new UserCollection($this->repository->getAllModels($this->user)),
+            new UserCollection($this->repository->getAllModels()),
             200
         );
     }

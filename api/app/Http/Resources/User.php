@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\Specialist as SpecialistResourse;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class User extends JsonResource
@@ -20,7 +21,8 @@ class User extends JsonResource
             'email'  => $this->email,
             'avatar' => $this->avatar,
             'rol'    => $this->rol_id,
-            'specialist' => $this->specialist_id
+            // 'specialist' => $this->specialist_id,
+            'specialist' => new SpecialistResourse($this->specialist) 
         ];
     }
 }

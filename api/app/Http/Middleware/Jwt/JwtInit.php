@@ -44,6 +44,7 @@ class JwtInit
                 return response()->json(['mensaje' => 'token no found'],$e->getStatusCode());
 
             }
-        return $next($request);
+            return $next($request);
+        }
     }
 }
