@@ -7,7 +7,7 @@ export default function analista({next,router}){
 
     } else if(store.state.auth.user.rol !== 2){
 
-        return   Swal.fire('Permiso Denegado', '', 'error')
+        return Swal.fire('Permiso Denegado', '', 'error')
 
     }else{
 

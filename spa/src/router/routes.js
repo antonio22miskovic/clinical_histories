@@ -18,13 +18,13 @@ export default [
         component: page('Init.vue'),
         children:[
 
-            { 
+            {
                 path: '/',
                 name: 'witing_list',
                 component: comp('core/WitingList.vue')
             },
 
-            {  
+            {
                 path: 'login',
                 name: 'auth-login',
                 component: comp('core/Login.vue')
@@ -76,7 +76,7 @@ export default [
                         footer:  comp('core/Footer.vue')
                     },
         meta: {
-            middleware: [middlewares.analista],
+            middleware: [middlewares.auth],
         },
     },
 
@@ -121,7 +121,7 @@ export default [
                         footer:  comp('core/Footer.vue')
                     },
         meta: {
-            middleware: [middlewares.analista],
+            middleware: [middlewares.auth],
         },
 
     },
@@ -137,7 +137,7 @@ export default [
                         footer:  comp('core/Footer.vue')
                     },
         meta: {
-            middleware: [middlewares.analista],
+            middleware: [middlewares.auth],
         },
 
     },
