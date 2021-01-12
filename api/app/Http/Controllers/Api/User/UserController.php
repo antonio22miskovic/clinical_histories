@@ -15,10 +15,10 @@ class UserController extends Controller
     private $repository;
     private $user;
 
-    public function __construct(UserRepository $repository)
+    public function __construct(UserRepositoryInterface $repository)
     {
         $this->repository = $repository;
-        $this->middleware('jwt.admin',['only' => ['index']]);
+        $this->middleware('jwt.admin',['only' => ['index', 'store','destroy']]);
         // $this->middleware('jwt.init');
         $this->user = Auth::guard('api')->user();
     }
@@ -67,11 +67,28 @@ class UserController extends Controller
     }
 
     public function destroy($ci)
-    {
-        $user = $this->repository->deleteByCi($ci);
+    {   
+        $user = $this->repository->deleteByPrimary($ci);
         return response()->json(
             [
                 'message' => 'paciente eliminado de la lista de espera exitosamente'
+            ],
+            200
+        );
+    }
+
+    public function UpdateBySpecialist(Request $request, int $id)
+    {   
+
+        $data = [
+                'specialist' => $request['specialist_id'],
+                'id' => $id
+            ];
+        $user = $this->repository->UpdateBySpecialistUser($data);
+        return response()->json(
+            [
+                'message' => 'se actualizo exitosamente la especialidad de usuario',
+                'data' =>  new UserResource($user)
             ],
             200
         );

@@ -19,6 +19,8 @@ use App\Repository\Quota\QuotaRepository;
 use App\Repository\Quota\QuotaRepositoryInterface;
 use App\Repository\Specialist\SpecialistRepository;
 use App\Repository\Specialist\SpecialistRepositoryInterface;
+use App\Repository\User\UserRepository;
+use App\Repository\User\UserRepositoryInterface;
 use App\Repository\Waiting_list\Waiting_listRepository;
 use App\Repository\Waiting_list\Waiting_listRepositoryInterface;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;

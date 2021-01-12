@@ -231,6 +231,7 @@
                     icon: 'warning',
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        this.setOverlay(true)
                         this.documentPdf_p(item).then(res =>{
                             this.$swal({
                                 icon: 'success',
@@ -238,8 +239,10 @@
                                 text:'exito',
                                 confirmButtonColor: '#3085d6',
                             })
+                            this.setOverlay(false)
                         })
                     } else if (result.isDenied) {
+                        this.setOverlay(false)
                         Swal.fire('Por favor Tenga Cuidado', '', 'info')
                     }
                 })

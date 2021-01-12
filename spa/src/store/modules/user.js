@@ -10,6 +10,11 @@ export default {
             quota:null,
             date: null,
         },
+        userSpecialist:{
+            name:'',
+            email:'',
+            specialist_id:null
+        },
         data:[],
         paginate: {
             total: 0,
@@ -63,6 +68,7 @@ export default {
         getquotas:      state => state.quota,
         getDataUser: state => state.data,
         total_u: state => state.paginate.total,
+        getUser: state => state.userSpecialist
     },
 
     actions: {
@@ -70,7 +76,6 @@ export default {
         async all_u({commit},page){ // data de la paginación
             try{
                 const {data} = await axios.get(`/api/doctor/user?page=${page.page}`)
-                console.log(data)
                 commit('ALL_U',data)
             }catch(err){
                 return console.log(err)
@@ -97,19 +102,19 @@ export default {
         //     }
         // },
 
-        // async store({commit},value){
-        //     try{
-        //         const data = await axios.post(`/api/doctor/user`,value)
-        //         commit('STORE_U',data)
-        //         return data
-        //     }catch(err){
-        //         return console.log(err)
-        //     }
-        // },
+        async store_u({commit},value){
+            try{
+                console.log('el value',value)
+                const {data} = await axios.post(`/api/doctor/user`,value)
+                commit('STORE_U',data)
+                return data
+            }catch(err){
+                return console.log(err)
+            }
+        },
 
         async update_u({commit},value){
             try{
-                console.log(value)
                 const {data} = await axios.put(`/api/doctor/user/${value[0]}`,value[1])
                 if (data.validation !== undefined) {
                     return data
@@ -120,15 +125,28 @@ export default {
                 return console.log(err)
             }
         },
+        async update_u_specialist({commit},value){
+            try{
+                const {data} = await axios.post(`/api/doctor/user/specialist/${value[0]}`,value[1])
+                return data
+            }catch(err){
+                return console.log(err)
+            }
+        },
 
-        // async destroy({commit},id){
-        //     try{
-        //         const data = await axios.delete(`/api/doctor/user/${id}`)
-        //         commit('DESTROY_U')
-        //         return data
-        //     }catch(err){
-        //         return console.log(err)
-        //     }
-        // },
+        // async setDialogUser ({commit}, value){
+        //     console.log('el value',value)
+        //     commit('SetUser',value)
+        // }
+
+        async destroy_u({commit},id){
+            try{
+                const data = await axios.delete(`/api/doctor/user/${id}`)
+                commit('DESTROY_U')
+                return data
+            }catch(err){
+                return console.log(err)
+            }
+        },
    }
 }

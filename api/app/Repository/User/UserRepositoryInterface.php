@@ -8,4 +8,5 @@ interface UserRepositoryInterface
 {
     public function getAllModels();
     public function getDataUserAuth(int $id);
+    public function UpdateBySpecialistUser($data);
 }

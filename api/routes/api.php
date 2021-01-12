@@ -54,6 +54,8 @@ use Illuminate\Support\Facades\Route;
 
         Route::get('patient/consulta/clinical/{consulta}', 'Api\Patient\PatientController@getPatient');
 
+        Route::post('user/specialist/{id}', 'Api\User\UserController@UpdateBySpecialist');
+
 	});
 
        

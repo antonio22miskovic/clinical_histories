@@ -12,6 +12,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
     public function getAllModels(){
         return $this->model::orderByDesc('id')
+                    ->where('rol_id','>', 1)
                 ->paginate(
                         $this->request->query('per_page', 10)
                     );
@@ -24,4 +25,12 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $user->specialists;
         return response()->json($user);
     }
+
+     public function UpdateBySpecialistUser($data)
+     {  
+        $user = $this->model::find($data['id']);
+        $user->specialist_id = $data['specialist'];
+        $user->save();
+        return $user;
+     }
 }
