@@ -56,6 +56,8 @@ use Illuminate\Support\Facades\Route;
 
         Route::post('user/specialist/{id}', 'Api\User\UserController@UpdateBySpecialist');
 
+        Route::get('user/patients/{id}', 'Api\User\UserController@showPatientsByUser');
+
 	});
 
        

@@ -193,7 +193,7 @@
                         <v-btn
                             color="teal"
                             small
-                            @click="seguimiento(item)"
+                           :to="{name:'seguimiento', params:{id:item.id}}"
                         >
                             <v-icon>mdi-account-search</v-icon>
                         </v-btn>

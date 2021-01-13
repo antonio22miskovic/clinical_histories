@@ -22,7 +22,7 @@ class PatientController extends Controller
     public function __construct(PatientRepositoryInterface $repository)
     {
         $this->repository = $repository;
-        $this->middleware(['jwt.specialist']);
+        $this->middleware('jwt.specialist');
         $this->user = Auth::guard('api')->user();
     }
 

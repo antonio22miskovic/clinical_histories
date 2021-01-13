@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PatientCollection;
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\UserCollection;
 use App\Repository\User\UserRepository;
@@ -92,5 +93,14 @@ class UserController extends Controller
             ],
             200
         );
+    }
+
+    public function showPatientsByUser(int $id)
+    {
+        return response()->json(
+            new PatientCollection($this->repository->showByPatientsByIdUser($id)),
+            200
+        );
+
     }
 }

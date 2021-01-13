@@ -20,10 +20,10 @@ class JwtSpecialist extends BaseMiddleware
         try {
 
             $user = JWTAuth::parseToken()->authenticate();
-            if ($user->rol_id !== 2) {
-                // verifica que el usuario sea admin
-                return response()->json('usuario no autorizado',401);
-            }
+            // if ($user->rol_id !== 2) {
+            //     // verifica que el usuario sea admin
+            //     return response()->json('usuario no autorizado',401);
+            // }
 
         } catch (JWTException $e) {
             if ($e instanceof TokenExpiredException){

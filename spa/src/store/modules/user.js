@@ -11,6 +11,7 @@ export default {
             date: null,
         },
         userSpecialist:{
+            id:'',
             name:'',
             email:'',
             specialist_id:null
@@ -29,6 +30,7 @@ export default {
     mutations: {
 
         ALL_U(state, payload){
+
             state.data = payload.data // la data a paginar
             // datos de la paginacion
             state.paginate.total = payload.paginate.total
@@ -36,17 +38,25 @@ export default {
             state.paginate.per_page = payload.paginate.per_page
             state.paginate.last_page = payload.paginate.last_page
             state.paginate.to = payload.paginate.to
+
         },
 
         SET_SPECIALIST(state, payload){
+
            state.specialist.id = payload.specialist.id
            state.specialist.name = payload.specialist.name
            state.specialist.description = payload.specialist.description
            state.quota.quota = payload.quota.quota
            state.quota.date = payload.quota.date
+
         },
 
-        SET_SHOW_U(state,paylaod){
+        SHOW_U(state,payload){
+
+            state.userSpecialist.id = payload.id
+            state.userSpecialist.name = payload.name
+            state.userSpecialist.email = payload.email
+            state.userSpecialist.specialist_id = payload.specialist
 
         },
 
@@ -64,11 +74,13 @@ export default {
 
     },
     getters: {
+
         specialistAuth: state => state.specialist,
         getquotas:      state => state.quota,
         getDataUser: state => state.data,
         total_u: state => state.paginate.total,
         getUser: state => state.userSpecialist
+
     },
 
     actions: {
@@ -92,19 +104,28 @@ export default {
             }
        },
 
-        // async show({commit},value){
-        //     try{
-        //         const data = await axios.get(`/api/doctor/user/${value}`)
-        //         commit('SHOW_U',data)
-        //         return data
-        //     }catch(err){
-        //         return console.log(err)
-        //     }
-        // },
+        async show_u({commit},value){
+            try{
+                const {data} = await axios.get(`/api/doctor/user/${value}`)
+                commit('SHOW_U',data)
+                return data
+            }catch(err){
+                return console.log(err)
+            }
+        },
+
+        async show_u_patients({commit},value){
+            try{
+                const {data} = await axios.get(`/api/doctor/user/patients/${value[0]}?page=${value[1].page}`)
+                commit('ALL_P',data)
+                return data
+            }catch(err){
+                return console.log(err)
+            }
+        },
 
         async store_u({commit},value){
             try{
-                console.log('el value',value)
                 const {data} = await axios.post(`/api/doctor/user`,value)
                 commit('STORE_U',data)
                 return data
@@ -134,10 +155,7 @@ export default {
             }
         },
 
-        // async setDialogUser ({commit}, value){
-        //     console.log('el value',value)
-        //     commit('SetUser',value)
-        // }
+        
 
         async destroy_u({commit},id){
             try{

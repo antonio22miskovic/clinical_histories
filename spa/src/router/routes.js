@@ -61,7 +61,7 @@ export default [
                         footer:  comp('core/Footer.vue')
                     },
         meta: {
-            middleware: [middlewares.analista],
+            middleware: [middlewares.auth],
         },
     },
 
@@ -132,6 +132,22 @@ export default [
         name: 'clinichistoryconsult',
         components: {
                         default: page('ClinicalHistoryConsult.vue'),
+                        header:  comp('core/AppBar.vue'),
+                        sidebar: comp('core/SideBar.vue'),
+                        footer:  comp('core/Footer.vue')
+                    },
+        meta: {
+            middleware: [middlewares.auth],
+        },
+
+    },
+
+    {
+        path: '/seguimiento/user/:id',
+        props: true,
+        name: 'seguimiento',
+        components: {
+                        default: page('Seguimiento.vue'),
                         header:  comp('core/AppBar.vue'),
                         sidebar: comp('core/SideBar.vue'),
                         footer:  comp('core/Footer.vue')
