@@ -22,7 +22,7 @@ class SpecialistController extends Controller
     public function __construct(SpecialistRepository $repository)
     {
         $this->repository = $repository;
-        $this->middleware('jwt.specialist', ['except' => ['index']]);
+        $this->middleware('jwt.specialist');
         $this->user = Auth::guard('api')->user();
     }
 
@@ -92,5 +92,13 @@ class SpecialistController extends Controller
             200
         );
 
+    }
+
+    public function indexByCreate()
+    {
+        return response()->json(
+            new SpecialistCollection($this->repository->getSpecialistByCreateQuota()),
+            200 // state HTTP
+        );
     }
 }

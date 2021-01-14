@@ -15,8 +15,9 @@ class Quota extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'quota' => $this->quota,
-            'specialist' => $this->specialist_id,
+            'specialist' => $this->specialist,
             'date' => $this->date
         ];
     }

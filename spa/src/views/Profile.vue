@@ -155,7 +155,7 @@
                 {{specialistAuth.description}}
             </p>
           </v-card-text>
-          <v-card-text class="text-center">
+          <v-card-text class="text-center" v-else>
             <h4 class="display-1 mb-1 grey--text">Administrador</h4>
           </v-card-text>
         </v-card>

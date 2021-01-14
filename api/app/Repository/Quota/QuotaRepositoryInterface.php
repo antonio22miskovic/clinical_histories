@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 interface QuotaRepositoryInterface
 {
-
+    public function getAllModels();
+    public function UpdateQuota($request);
 }

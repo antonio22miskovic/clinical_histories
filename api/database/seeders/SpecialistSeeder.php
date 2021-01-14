@@ -48,5 +48,10 @@ class SpecialistSeeder extends Seeder
         	'name' => 'especialidad-7',
         	'description' => 'la especialidad numero 7 escargada de tal cosa, para atender x pacientes, esto es una descripcion de las especialidades '
         ]);
+
+        Specialist::create([
+            'name' => 'especialidad-8',
+            'description' => 'la especialidad numero 8 escargada de tal cosa, para atender x pacientes, esto es una descripcion de las especialidades '
+        ]);
     }
 }

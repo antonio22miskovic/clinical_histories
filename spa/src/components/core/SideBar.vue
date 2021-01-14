@@ -31,7 +31,7 @@
                         </v-list-item-icon>
                         <v-list-item-title>Usuarios</v-list-item-title>
                     </v-list-item>
-                    <v-list-item :to="{name:'patients'}" >
+                    <v-list-item :to="{name:'quotas'}" >
                         <v-list-item-icon>
                             <v-icon>mdi-account-multiple</v-icon>
                         </v-list-item-icon>

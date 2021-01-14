@@ -158,6 +158,21 @@ export default [
 
     },
 
+    {
+        path: '/quota',
+        name: 'quotas',
+        components: {
+                        default: page('Quota.vue'),
+                        header:  comp('core/AppBar.vue'),
+                        sidebar: comp('core/SideBar.vue'),
+                        footer:  comp('core/Footer.vue')
+                    },
+        meta: {
+            middleware: [middlewares.auth],
+        },
+
+    },
+
     /* Errors */
     {
         path: '*',

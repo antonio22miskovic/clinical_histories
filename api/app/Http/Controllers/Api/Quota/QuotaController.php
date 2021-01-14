@@ -25,8 +25,9 @@ class QuotaController extends Controller
 
     public function index()
     {
+
         return response()->json(
-            new QuotaCollection($this->repository->getAll()),
+            new QuotaCollection($this->repository->getAllModels()),
             200 // state HTTP
         );
     }
@@ -43,10 +44,13 @@ class QuotaController extends Controller
          );
     }
 
-    public function update(QuotaRequest $request, int $id)
+    public function update(Request $request, int $id)
     {
-
-        $quota = $this->repository->createOrUpdateFromRequest($id);
+        $values = [
+            'quota' => $request->quota,
+            'id' => $id,
+        ];
+        $quota = $this->repository->UpdateQuota($values);
         return response()->json(
             [
                 'message' => 'la quota se actualizo correctamente',
