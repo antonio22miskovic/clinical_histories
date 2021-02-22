@@ -21,7 +21,7 @@ export default {
 
     mutations: {
         ALL_Q (state, payload) {
-            
+
             state.data = payload.data // la data a paginar
             // datos de la paginacion
             state.paginate.total = payload.paginate.total
@@ -33,7 +33,7 @@ export default {
         },
 
         UPDATE_Q (state, payload) {
-          
+
         },
 
         SHOW_Q(state, payload){
@@ -42,7 +42,7 @@ export default {
         },
 
         STORE_Q(state, payload){
-         
+
         }
 
     },
@@ -79,10 +79,12 @@ export default {
 
         async store_q({commit},values){
             try{
+                console.log('values',values)
                 const {data} = await axios.post('/api/doctor/quota',values)
                 if (data.validation !== undefined) {
                     return data
                 }
+                console.log('despues del value:',data)
                 commit('SOTRE_P',data)
                 return data
             }catch(err){
@@ -105,13 +107,13 @@ export default {
         },
 
         async setData_q({commit}){
-            try{  
+            try{
                 commit('SHOW_Q',data)
                 return data
             }catch(err){
                 return console.log(err)
             }
         },
-       
+
     }
 }

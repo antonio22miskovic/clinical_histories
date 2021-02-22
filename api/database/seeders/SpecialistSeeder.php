@@ -15,43 +15,43 @@ class SpecialistSeeder extends Seeder
     public function run()
     {
         Specialist::create([
-        	'name' => 'especialidad-1',
+        	'name' => 'Medicina General',
         	'description' => 'la especialidad numero 1 escargada de tal cosa, para atender x pacientes, esto es una descripcion de las especialidades '
         ]);
 
         Specialist::create([
-        	'name' => 'especialidad-2',
+        	'name' => 'Pediatria',
         	'description' => 'la especialidad numero 2 escargada de tal cosa, para atender x pacientes, esto es una descripcion de las especialidades '
         ]);
 
         Specialist::create([
-        	'name' => 'especialidad-3',
+        	'name' => 'Odontologia',
         	'description' => 'la especialidad numero 3 escargada de tal cosa, para atender x pacientes, esto es una descripcion de las especialidades '
         ]);
 
         Specialist::create([
-        	'name' => 'especialidad-4',
+        	'name' => 'Ginecologia',
         	'description' => 'la especialidad numero 4 escargada de tal cosa, para atender x pacientes, esto es una descripcion de las especialidades '
         ]);
 
-        Specialist::create([
-        	'name' => 'especialidad-5',
-        	'description' => 'la especialidad numero 5 escargada de tal cosa, para atender x pacientes, esto es una descripcion de las especialidades '
-        ]);
+        // Specialist::create([
+        // 	'name' => 'especialidad-5',
+        // 	'description' => 'la especialidad numero 5 escargada de tal cosa, para atender x pacientes, esto es una descripcion de las especialidades '
+        // ]);
 
-        Specialist::create([
-        	'name' => 'especialidad-6',
-        	'description' => 'la especialidad numero 6 escargada de tal cosa, para atender x pacientes, esto es una descripcion de las especialidades '
-        ]);
+        // Specialist::create([
+        // 	'name' => 'especialidad-6',
+        // 	'description' => 'la especialidad numero 6 escargada de tal cosa, para atender x pacientes, esto es una descripcion de las especialidades '
+        // ]);
 
-        Specialist::create([
-        	'name' => 'especialidad-7',
-        	'description' => 'la especialidad numero 7 escargada de tal cosa, para atender x pacientes, esto es una descripcion de las especialidades '
-        ]);
+        // Specialist::create([
+        // 	'name' => 'especialidad-7',
+        // 	'description' => 'la especialidad numero 7 escargada de tal cosa, para atender x pacientes, esto es una descripcion de las especialidades '
+        // ]);
 
-        Specialist::create([
-            'name' => 'especialidad-8',
-            'description' => 'la especialidad numero 8 escargada de tal cosa, para atender x pacientes, esto es una descripcion de las especialidades '
-        ]);
+        // Specialist::create([
+        //     'name' => 'especialidad-8',
+        //     'description' => 'la especialidad numero 8 escargada de tal cosa, para atender x pacientes, esto es una descripcion de las especialidades '
+        // ]);
     }
 }

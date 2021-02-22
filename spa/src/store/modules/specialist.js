@@ -24,12 +24,13 @@ export default {
 
     getters: {
         listSpecialists: (state) => state.specialists,
-        listSpecialistsCreate: (state) => state.specialistsCreate,
+        listSpecialistsCreate: (state) => state.specialists,
     },
 
     actions: {
         async getSpecialist({commit}){
             try{
+                console.log('cargando la especialidad')
                 const resp = await axios.get('/api/doctor/specialist/')
                 commit('SET_SPECIALISTS',resp.data)
                 return res

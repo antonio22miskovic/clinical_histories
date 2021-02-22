@@ -6,7 +6,7 @@
               v-model="dialog"
               width="500"
             >
-              <v-card 
+              <v-card
                 outlined
                 shaped
                 elevation="24"
@@ -95,13 +95,13 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center">
-                                        Name
+                                        Diagnóstico
                                         </th>
                                         <th class="text-center">
-                                        description
+                                        Descripción
                                         </th>
                                         <th class="text-center">
-                                            detalles
+                                            Detalles
                                         </th>
                                     </tr>
                                 </thead>
@@ -109,18 +109,18 @@
                                     <tr
                                     v-for="item in getdiseases"
                                     :key="item.name"
-                                    >   
+                                    >
                                         <td class="text-center"> {{item.name}}</td>
                                         <td class="text-center">  {{item.description}}</td>
                                         <td class="text-center">
-                                            <v-btn 
+                                            <v-btn
                                                 @click="modal(item)"
                                                 color="primary"
                                             >
                                                <v-icon>mdi-eye</v-icon>
                                             </v-btn>
                                         </td>
-                                          
+
                                     </tr>
                                 </tbody>
                             </template>
@@ -165,12 +165,12 @@
                 show_clinical_p:'show_clinical_p'
             }),
             async modal(item){
- 
+
                 this.filtroArray(item).then(res => {
                     this.medicamentos = res.medicine
                     this.descriptionMedicamentos = res.description
                 })
-            
+
                 this.dialog = true
             },
 
@@ -180,21 +180,21 @@
                     if (this.getmedicamentos[i].disease === item.id) {
                        return this.getmedicamentos[i]
                     }
-                }   
+                }
 
             },
             async verificar(){
                 if (this.Getpatient !== null) {
                     this.show_clinical_p(this.consulta).then(res =>{
                         this.show_clinical_mc(this.consulta)
-                    })                  
+                    })
                 }
-                
-               
+
+
             },
 
             async infoData(){
-                
+
             }
         }
     }

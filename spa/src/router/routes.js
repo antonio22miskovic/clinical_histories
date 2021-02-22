@@ -51,6 +51,36 @@ export default [
     },
 
     {
+        path: '/antecedentes/:id',
+        name: 'antecedente',
+        components: {
+                        default: page('Antecedente.vue'),
+                        header:  comp('core/AppBar.vue'),
+                        sidebar: comp('core/SideBar.vue'),
+                        footer:  comp('core/Footer.vue')
+                    },
+        meta: {
+            middleware: [middlewares.auth],
+        },
+
+    },
+
+    {
+        path: '/antecedentes/list/:id',
+        name: 'antecedente_list',
+        components: {
+                        default: page('AntecedenteTable.vue'),
+                        header:  comp('core/AppBar.vue'),
+                        sidebar: comp('core/SideBar.vue'),
+                        footer:  comp('core/Footer.vue')
+                    },
+        meta: {
+            middleware: [middlewares.auth],
+        },
+
+    },
+
+    {
         path: '/consulta/:id',
         props: true,
         name: 'consulta',

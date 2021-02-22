@@ -7,7 +7,7 @@
                     :items="listSpecialists"
                     item-value="id"
                     item-text="name"
-                    label="Especialidad"
+                    label="Especialidades"
                      :rules="[rules.requiredSpecialist]"
                     v-model="form.specialist_id"
                     append-icon="mdi-clipboard-account-outline"
@@ -30,9 +30,9 @@
             <div class="text-center font-italic">
                 <v-btn  text color="blue darken-2" :to="{name:'auth-login'}">iniciar session  <v-icon>mdi-arrow-right-bold-circle</v-icon> </v-btn>
             </div>
-            
+
         </v-container>
-    </div> 
+    </div>
 </template>
 <script>
 
@@ -42,29 +42,29 @@
 
         name:'WitingList',
 
-        created(){
+        mounted(){
 
             this.getSpecialist()
-            
+
         },
 
         data: () => ({
             form:{
-                specialist_id:null,
-                identification_card:null,
+                specialist_id:'',
+                identification_card:'',
             },
-            rules:{ 
-                    requiredSpecialist: value => !!value || 'Debe Elegir una Especialidad.',
-                    requiredCedula: value => !!value || 'Debe Introducir una Cedula.',
+            rules:{
+                    requiredSpecialist: value => !!value || 'Debe seleccionar una especialidad.',
+                    requiredCedula: value => !!value || 'Debe introducir cédula de identidad.',
                     FormatCI: value => {
                         let letters = /^\d*(\.\d{8})?\d{0,8}$/
-                        return letters.test(value) || 'formato invalido'
+                        return letters.test(value) || 'formato inválido'
                     },
-                  
+
             },
-            menu: false,  
+            menu: false,
         }),
-    
+
         methods:{
 
             ...mapActions({
@@ -79,20 +79,32 @@
                 if (!this.$refs.wl.validate()) {
                     return
                 }
-    
-                this.store_wl(this.form).then(res => {
-                    this.$swal({
-                            icon: 'success',
-                            title: '¡Se ah Añadido a la lista de espera con exito!',
-                            text:'exito',
+                let value ={identification_card:this.form.identification_card,specialist_id: this.form.specialist_id}
+                this.store_wl(value).then(res => {
+                    if (res.comfirmacion === false) {
+                        this.$swal({
+                            icon: 'warning',
+                            title: '¡No hay cupos Disponibles pontro se liberara mas cupos!',
+                            text:'lo sentimos',
                             confirmButtonColor: '#3085d6',
                         })
-                    this.form.specialist_id = null
-                    this.form.identification_card = null
-                    this.$refs.wl.resetValidation()
-                    console.log(res)
+                        this.form.specialist_id = null
+                        this.form.identification_card = null
+                        this.$refs.wl.resetValidation()
+                    }else{
+                        console.log('la fecha',res.data.quota.date)
+                        this.$swal({
+                                icon: 'success',
+                                title: `¡Se ha Añadido a la lista de espera con exito para la fecha: ${res.data.quota.date}!`,
+                                text:'exito',
+                                confirmButtonColor: '#3085d6',
+                            })
+                        this.form.specialist_id = null
+                        this.form.identification_card = null
+                        this.$refs.wl.resetValidation()
+                    }
                 })
-                
+
             }
 
         },

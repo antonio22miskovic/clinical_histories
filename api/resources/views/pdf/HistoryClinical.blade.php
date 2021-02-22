@@ -70,8 +70,8 @@
             }
 
             .logo-img {
-            width: 50px;
-            margin:0px 10px;
+                width: 50px;
+                margin:0px 10px;
             }
             .logo-img {
                 width: 80px;
@@ -103,7 +103,7 @@
                 margin-left: 70px;
             }
             .row1{
-              
+
             }
             .col1{
                 display: inline-block;
@@ -132,26 +132,26 @@
                     <div class="col1">
                         <img src="icon/bicentenario.jpg" alt="logo ministerio" class="logo-img">
                     </div>
-                    <div class="col2">  
+                    <div class="col2">
                         <img src="icon/icon2.jpg" alt="logo gobernación" class="logo-img2">
                     </div>
                 </div>
         </div>
         <h1 class="header-title">
-            Ministerio Del Poder Popular Para la Salud<br/>
+            Ministerio del Poder Popular para la Salud<br/>
             <br/>
-            Centro de Diagnostico Integral Tulio Pineda
+            Centro de Diagnóstico Integral Tulio Pineda
         </h1>
-        <div>  
+        <div>
             <div class="datos">
                 <p> Datos del Paciente </p>
                 <table>
-                    <tr>   
-                        <th class="center-text">Informacion</th>
+                    <tr>
+                        <th class="center-text">Información</th>
                         <th class="center-text">Datos</th>
                     </tr>
                     <tr>
-                        <td class="center-text">Nmobre</td>
+                        <td class="center-text">Nombre</td>
                         <td class="center-text">{{$patient->first_name}}</td>
                     </tr>
                     <tr>
@@ -159,15 +159,15 @@
                         <td class="center-text">{{$patient->last_name}}</td>
                     </tr>
                     <tr>
-                        <td class="center-text">Cedula</td>
+                        <td class="center-text">Cédula</td>
                         <td class="center-text">{{$patient->ci}}</td>
                     </tr>
                     <tr>
-                        <td class="center-text">Genero</td>
+                        <td class="center-text">Género</td>
                         <td class="center-text">{{$patient->sex}}</td>
                     </tr>
                     <tr>
-                        <td class="center-text">Telefono</td>
+                        <td class="center-text">Teléfono</td>
                         <td class="center-text">{{$patient->phone}}</td>
                     </tr>
                     <tr>
@@ -187,11 +187,11 @@
                         <td class="center-text">{{Carbon\Carbon::parse($patient->created_a)->format('Y-m-d')}}</td>
                     </tr>
                 </table>
- 
+
             </div>
         </div>
         <div class="title m-b-md">
-            Datos Clinicos
+            Datos Clínicos
         </div>
         <div class="margin">
             <div>
@@ -199,15 +199,33 @@
             </div>
           <table>
               <tr>
-                <th style="text-align: center;">nombre</th>
-                <th style="text-align: center;">description</th>
+                <th style="text-align: center;">Nombre</th>
+                <th style="text-align: center;">Descriptión</th>
 
               </tr>
               @foreach($diseases as $item)
+                  <tr>
+                    <td style="text-align: center;">{{$item['name']}}</td>
+                    <td style="text-align: center;">{{$item['description']}}</td>
+                  </tr>
+              @endforeach
+          </table>
+        </div>
+
+         <div class="margin" style="padding-top: 100px;">
+            <div>
+                <h3> Antecedentes </h3>
+             </div>
+          <table>
               <tr>
-                <td style="text-align: center;">{{$item['name']}}</td>
-                <td style="text-align: center;">{{$item['description']}}</td>
+                <th style="text-align: center;">Antecedente</th>
+                <th style="text-align: center;">Descriptión</th>
               </tr>
+              @foreach($antecedentes as $antecedente)
+                  <tr>
+                    <td style="text-align: center;">{{$antecedente['name']}}</td>
+                    <td style="text-align: center;">{{$antecedente['description']}}</td>
+                  </tr>
               @endforeach
           </table>
         </div>
@@ -218,14 +236,14 @@
              </div>
           <table>
               <tr>
-                <th style="text-align: center;">medicamento</th>
-                <th style="text-align: center;">description</th>
+                <th style="text-align: center;">Medicamento</th>
+                <th style="text-align: center;">Descriptión</th>
               </tr>
               @foreach($tratamientos as $medicina)
-              <tr>
-                <td style="text-align: center;">{{$medicina['medicine']}}</td>
-                <td style="text-align: center;">{{$medicina['description']}}</td>
-              </tr>
+                  <tr>
+                    <td style="text-align: center;">{{$medicina['medicine']}}</td>
+                    <td style="text-align: center;">{{$medicina['description']}}</td>
+                  </tr>
               @endforeach
           </table>
         </div>

@@ -1,30 +1,30 @@
 <template>
     <v-container>
-        <v-card 
+        <v-card
             outlined
             shaped
             elevation="24"
         >
             <v-container>
-                <v-card-title> 
+                <v-card-title>
                     Paciente en turno: {{parseInt(this.form.ci).toLocaleString('es-ES')}}
                 </v-card-title>
                 <v-list-item-subtitle class="text-center">
-                    debe registrar los datos de paciente
+                    debe registrar los datos del paciente
                 </v-list-item-subtitle>
                 <v-card-text>
                     <v-form ref="reg">
                         <v-row>
                             <v-col>
                                 <v-text-field
-                                    label="Nombres"
+                                    label="Nombre"
                                     v-model="form.first_name"
                                     :rules="[rules.first_name, rules.FormatString]"
                                 ></v-text-field>
                             </v-col>
                             <v-col>
                                 <v-text-field
-                                    label="Apellidos"
+                                    label="Apellido"
                                     v-model="form.last_name"
                                     :rules="[rules.last_name, rules.FormatString]"
                                 ></v-text-field>
@@ -35,13 +35,13 @@
                                 <v-select
                                     :items="generos"
                                     v-model="form.sex"
-                                    label="Genero"
+                                    label="Género"
                                     :rules="[rules.sex]"
                                 ></v-select>
                             </v-col>
                             <v-col>
                                 <v-text-field
-                                    label="Cedula"
+                                    label="Cédula"
                                     v-model="form.ci"
                                     :error="errorCi"
                                     :error-messages="errorCi ? mensajeErrorCI : ''"
@@ -52,7 +52,7 @@
                         <v-row>
                             <v-col>
                                 <v-text-field
-                                    label="Telefono"
+                                    label="Teléfono"
                                     v-model="form.phone"
                                     hint="Formato permitido: 0000-000-0000"
                                     :rules="[rules.FormatPhone]"
@@ -88,7 +88,7 @@
                                         <template v-slot:activator="{ on, attrs }">
                                             <v-text-field
                                                 v-model="date"
-                                                label="Birthday date"
+                                                label="Fecha de Nacimiento"
                                                 prepend-icon="mdi-calendar"
                                                 readonly
                                                 v-bind="attrs"
@@ -133,8 +133,8 @@
 
         data:()=>({
             patient_shift:'',
-            generos:['femenino', 'masculino'],
-            civil_status:['casado','soltero'],
+            generos:['Femenina', 'Masculino'],
+            civil_status:['Casado','Soltero',],
             date: null,
             menu: false,
             errorCi:false,
@@ -150,29 +150,29 @@
                 weight: 0.00
             },
             rules: {
-                sex: value => !!value || 'Introduzca el genero',
-                first_name: value => !!value || 'Por Favor introduzca el nombre',
-                last_name: value => !!value || 'Por Favor introduzca el apellido',
+                sex: value => !!value || 'Introduzca el género',
+                first_name: value => !!value || 'Por favor introduzca el nombre',
+                last_name: value => !!value || 'Por favor introduzca el apellido',
                 ci: value => !!value || 'Debe introducir el numero de cedula',
                 FormatString: value => {
                     let letters = /^[A-Za-z]+$/
-                    return letters.test(value) || 'formato invalido'
+                    return letters.test(value) || 'formato inválido'
                 },
                 FormatNumber: value => {
                     let letters = /^[0-9]+$/
-                    return letters.test(value) || 'formato invalido'
+                    return letters.test(value) || 'formato inválido'
                 },
                 FormatCI: value => {
                     let letters = /^\d*(\.\d{8})?\d{0,8}$/
-                    return letters.test(value) || 'formato invalido'
+                    return letters.test(value) || 'formato inválido'
                 },
                 FormatPhone: value => {
-                    let letters = /^(\([0-9]{4}\)\s*|[0-9]{4}\-)[0-9]{3}-[0-9]{4}$/ 
-                    return letters.test(value) || 'formato invalido'
+                    let letters = /^(\([0-9]{4}\)\s*|[0-9]{4}\-)[0-9]{3}-[0-9]{4}$/
+                    return letters.test(value) || 'formato inválido'
                 },
                 FormatFloat: value => {
                     let letters = /^\d*(\.\d{1})?\d{0,1}$/
-                    return letters.test(value) || 'formato invalido'
+                    return letters.test(value) || 'formato inválido'
                 },
                 civil_status: value => !!value || 'Debe introducir el status civil',
                 date: value => !!value || 'Debe introducir la fecha de nacimiento',
@@ -235,7 +235,7 @@
                                return
                         }
                         this.setvalue_mr(res.data.medical_record)
-                        this.setvalue_mc(res.consulta)
+                        // this.setvalue_mc(res.consulta)
                         this.setOverlay(false)
                         this.$swal({
                             icon: 'success',
@@ -243,8 +243,11 @@
                             text:'exito',
                             confirmButtonColor: '#3085d6',
                         })
-                        this.$router.push({name:'consultaPatient',params:{id:res.data.id,
-                                    consulta: res.consulta.id }})
+                        // this.$router.push({name:'consultaPatient',params:{id:res.data.id,
+                        //             consulta: res.consulta.id }})
+
+                        this.$router.push({name:'antecedente',params:{id:res.data.id }
+                         })
                     })
 
                 }catch(e){

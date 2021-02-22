@@ -63,7 +63,7 @@
                     type="warning"
                     elevation="2"
                 >
-                   Hoy no se encuentran pacientes en espera !Feliz Dia¡         
+                   Hoy no se encuentran pacientes en espera ¡Feliz Dia!
                 </v-alert>
             </v-col>
         </v-row>
@@ -152,7 +152,7 @@ export default {
             store_mc:'store_mc',
             setvalue_mr:'setvalue_mr',
             destroy_wl:'destroy_wl',
-            setOverlay:'setOverlay,'
+            setOverlay:'setOverlay'
         }),
 
         async no_asistio (cedula) {
@@ -178,10 +178,10 @@ export default {
                         })
                     }else if (result.isDenied) {
                          Swal.fire('Por favor Tenga Cuidado', '', 'info')
-                         
+
                     }
                 })
-            
+
         },
 
         async atender (item) {
@@ -215,7 +215,7 @@ export default {
                 this.all_wl(pageNumber).then(res =>{
                     this.setOverlay(false)
                 })
-               
+
            }catch(err){
                this.setOverlay(false)
                 console.log(err)

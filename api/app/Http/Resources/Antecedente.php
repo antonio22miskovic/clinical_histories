@@ -2,10 +2,9 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Resources\Specialist as SpecialistResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class Quota extends JsonResource
+class Antecedente extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +15,11 @@ class Quota extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'quota' => $this->quota,
-            'specialist' => new SpecialistResource($this->specialist),
-            'date' => $this->date
+            'id'          => $this->id,
+            'name'        => $this->name,
+            'description' => $this->description,
+            'patient'     => $this->patient_id
+
         ];
     }
 }

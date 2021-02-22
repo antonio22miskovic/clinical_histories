@@ -23,7 +23,7 @@ class PatientRepository extends BaseRepository implements PatientRepositoryInter
                 ->join('patients', 'medical_records.patient_id', '=' ,'patients.id')
                 ->select('patients.*')
                 ->paginate($this->request->query('per_page', 10));
-    
+
     }
 
     public function storePatientMedicalRecord($value, $user)
@@ -32,15 +32,15 @@ class PatientRepository extends BaseRepository implements PatientRepositoryInter
             'patient_id' => $value->id
         ]);
 
-        $consulta = Medical_consultation::create([
-                'user_id' => $user->id,
-                'medical_record_id' => $record->id,
-        ]);
+        // $consulta = Medical_consultation::create([
+        //         'user_id' => $user->id,
+        //         'medical_record_id' => $record->id,
+        // ]);
 
         return
                 [
                     'record'   =>  $record,
-                    'consulta' =>  $consulta
+                    // 'consulta' =>  $consulta
                 ];
     }
 

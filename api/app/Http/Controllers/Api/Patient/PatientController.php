@@ -38,12 +38,12 @@ class PatientController extends Controller
         try {
 
                 $patient = $this->repository->createOrUpdateFromRequest();//creamos el pacient
-                $result = $this->repository->storePatientMedicalRecord($patient, $this->user);
+                $result  = $this->repository->storePatientMedicalRecord($patient, $this->user);
                 return response()->json(
                     [
                         'message' => 'patient registrada exitosamente',
                         'data'    => new PatientResource($patient),
-                        'consulta'=> new Medical_consultationResource($result['consulta'])
+                        // 'consulta'=> new Medical_consultationResource($result['consulta'])
                     ],
                     200 // state HTTP
              );

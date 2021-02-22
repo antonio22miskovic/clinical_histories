@@ -39,11 +39,11 @@ class Waiting_listController extends Controller
 
     public function store(Waiting_listRequest $request)
     {
-
         $waiting_list = $this->repository->StoreList($request);
         if (isset($waiting_list['quota_is_null'])) {
             return response()->json(['quota_is_null' => true],200);
         }
+        // return $waiting_list;
         return response()->json(
             [
                 'message' => 'su fecha para la consulta es correcta',
@@ -89,7 +89,7 @@ class Waiting_listController extends Controller
     public function detectPatient($ci)
     {
         $validate = $this->repository->filterPatient($ci);
-        
+
         if (is_null($validate)) {
             return response()->json(null,200);
         }

@@ -25,7 +25,8 @@ class DatabaseSeeder extends Seeder
             DiseaseSeeder::class,
             MedicalTreatmentSeeder::class,
             QuotaSeeder::class,
-            WaitingListSeeder::class
+            WaitingListSeeder::class,
+            AntecedenteSeeder::class
 
         ]);
     }

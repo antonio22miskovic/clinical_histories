@@ -9,4 +9,5 @@ interface QuotaRepositoryInterface
 {
     public function getAllModels();
     public function UpdateQuota($request);
+
 }

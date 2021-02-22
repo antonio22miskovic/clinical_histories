@@ -5,7 +5,7 @@
             shaped
             elevation="24"
         >
-            <v-card-title> 
+            <v-card-title>
                 <v-btn
                     text
                     color="primary"
@@ -15,8 +15,20 @@
                     mdi-chevron-left
                 </v-icon>
               </v-btn>  paciente {{Getpatient.first_name}}  {{Getpatient.last_name}}
-                <v-btn  text>
-                </v-btn>
+              <v-spacer/>
+             <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn icon
+                            :to="{name:'antecedente_list', params:{id: patient.id}}"
+                        >
+                            <v-icon
+                            v-bind="attrs"
+                            v-on="on"
+                            >mdi-content-paste</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>Antecedentes</span>
+                </v-tooltip>
             </v-card-title>
 
             <v-card-subtitle>
@@ -145,7 +157,7 @@
                     return this.options
                 }
             }
-        }, 
+        },
         methods:{
 
             ...mapActions({
@@ -179,8 +191,8 @@
                         this.setvalue_mr(res.medical_record)
                     }).catch(err =>{
                         console.log(err)
-                    })   
-                }         
+                    })
+                }
             },
         }
     }

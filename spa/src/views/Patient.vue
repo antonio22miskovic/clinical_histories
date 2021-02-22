@@ -161,11 +161,11 @@
 		data:() => ({
 			headers: [
 	            { text: 'Nombre', value: 'first_name' },
-	            { text: 'Cedula', value: 'ciFormato'},
-	            { text: 'Telefono', value: 'phone'},
-	            { text: 'Genero', value: 'sex'},
-                { text: 'ver', value: 'ver', sortable: false },
-                { text: 'historial', value: 'historial', sortable: false },
+	            { text: 'Cédula', value: 'ciFormato'},
+	            { text: 'Teléfono', value: 'phone'},
+	            { text: 'Género', value: 'sex'},
+                { text: 'Ver', value: 'ver', sortable: false },
+                { text: 'Historial', value: 'historial', sortable: false },
                 { text: 'CDA', value: 'xml', sortable: false },
                 { text: 'PDF', value: 'pdf', sortable: false },
                 { text: 'Editar', value: 'edit', sortable: false },
@@ -247,7 +247,7 @@
                     }
                 })
 
-            },  
+            },
             async CdaHL7(id){
                  Swal.fire({
                     title: 'Desea Generar Documento HL7/CDA del pacinete?',

@@ -29,4 +29,10 @@ class Patient extends Model
         return $this->hasOne('App\Models\Medical_record');
     }
 
+        public function antecedentes()
+    {
+        return $this->hasMany('App\Models\Antecedente');
+    }
+
+
 }

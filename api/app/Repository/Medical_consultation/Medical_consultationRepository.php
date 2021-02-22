@@ -18,16 +18,16 @@ class Medical_consultationRepository extends BaseRepository implements Medical_c
        $medical_record = Medical_record::find($request['medical_record']);
 
        if (isset($medical_record->medical_consultations)) {
-           foreach ($medical_record->medical_consultations as $value) { // buscamos en las consultas
-               if (date_format($value->created_at,'Y-m-d') === Carbon::now()->toDateString()){ //si hay una consulta con la fecha 
+          foreach ($medical_record->medical_consultations as $value) { // buscamos en las consultas
+               if (date_format($value->created_at,'Y-m-d') === Carbon::now()->toDateString()){ //si hay una consulta con la fecha
                    if ($value->user_id === $request['user']) {
                         return $value;
                    }
                }
-           }
+          }
 
        }
-        
+
     	$result = $this->model::create([
             'user_id'           => $request['user'],
             'medical_record_id' => $request['medical_record'],
@@ -46,17 +46,17 @@ class Medical_consultationRepository extends BaseRepository implements Medical_c
     public function getIdConsulta($id)
     {
         $consulta = $this->model::find($id);
-        $diseases = []; 
+        $diseases = [];
         $medical_treatments = [];
         foreach ($consulta->diagnosis as $value) {
             foreach ($value->diseases as $val) {
-                $diseases[] = $val; 
+                $diseases[] = $val;
                 foreach ($val->medical_treatments as $va) {
                     $medical_treatments[] = $va;
                 }
             }
         }
-        return [ 
+        return [
             'consulta' => $consulta,
             'diseases' => $diseases,
             'medicamentos' => $medical_treatments

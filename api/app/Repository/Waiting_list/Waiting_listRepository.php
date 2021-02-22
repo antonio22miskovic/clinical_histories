@@ -43,20 +43,44 @@ class Waiting_listRepository extends BaseRepository implements Waiting_listRepos
 
     public function StoreList($value)
     {
-        $quota = Quota::where('specialist_id',$value['specialist_id'])
-                ->first();
-        if (is_null($quota)) {
-              return ['quota_is_null' => 'quota no disponible para ese dia'];      
-        } 
-        // if ($quota->quota > 0) {
-        //     $resta = $quota->quota - 1;
-        //     $quota->quota = $resta;
-        //     $quota->save();
-        // }
-        $wl = $this->model::create([
-            'identification_card' => $value['identification_card'],
-            'quota_id' => $quota->id
-        ]);
-        return ['quota' => $quota,  'wl' => $wl];
+        // return $value;
+        try {
+            $fecha_actual = new \DateTime('NOW');
+            $horas_minutes = $fecha_actual->format('H:i:s');
+            $dias_evaluar = 14;
+            for ($i=0; $i < $dias_evaluar; $i++) {
+                if ($i >= 1) {// evaluar primera vuelta
+                    $fecha_actual = $fecha_actual.' '.$horas_minutes;
+                    $fecha_actual = new \DateTime($fecha_actual);
+                    $fecha_actual = $fecha_actual->modify('+24 hours');
+                    $fecha_actual = $fecha_actual->format('Y-m-d');
+                }else{
+                    $fecha_actual = $fecha_actual->format('Y-m-d');
+                }
+
+                $quota = Quota::where('specialist_id',intval($value['specialist_id']))
+                              ->where('date',$fecha_actual)
+                                ->first();
+                if (is_null($quota)) {
+                    if (($i + 1) === $dias_evaluar) {
+                        return ['quota_is_null' => 'quotas no disponibles'];
+                    }
+                }else{
+                    if ($quota->quota > 0) { // resto de la quota
+                        $resta = $quota->quota - 1;
+                        $quota->quota = $resta;
+                        $quota->save();
+                        $wl = $this->model::create([
+                            'identification_card' => $value['identification_card'],
+                            'quota_id' => $quota->id
+                        ]);
+                        return ['quota' => $quota,  'wl' => $wl];
+                    }
+                }
+            }
+
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 }

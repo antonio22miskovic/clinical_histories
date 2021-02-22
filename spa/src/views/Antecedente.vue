@@ -1,7 +1,7 @@
 <template>
-    <v-container>
-        <EditPatient v-if="getdialog"></EditPatient>
-        <template>
+	<v-container>
+
+		 <template>
             <v-row justify="space-around">
                 <v-col>
                     <v-dialog
@@ -17,7 +17,17 @@
                             <v-toolbar
                             color="primary"
                             dark
-                            >Patologias Presente: {{countDesease}}</v-toolbar>
+                            >
+								<v-btn
+									text
+									color="primary"
+									@click="NexRouter"
+								>
+									<v-icon>
+										mdi-chevron-left
+									</v-icon>
+								</v-btn>
+                        	Antecedentes Presentes: {{countAntecendente}}</v-toolbar>
                             <v-card-text>
                                 <div class="text-center" v-for="(item, index) in dataArray">
                                     <v-row>
@@ -65,7 +75,7 @@
 
 
 
-        <v-card
+		 <v-card
             outlined
             shaped
             elevation="24"
@@ -76,7 +86,7 @@
 
                         <v-btn
                             color="primary"
-                            v-show="countDesease >= 1"
+                            v-show="countAntecendente >= 1"
                             v-bind="attrs"
                             v-on="on"
                             fab
@@ -85,17 +95,17 @@
                             top
                             right
                             @click="activarDialog"
-                        >{{countDesease}}
+                        >{{countAntecendente}}
                         </v-btn>
                   </v-fab-transition>
                 </template>
-                    <span>Patologias Registradas</span>
+                    <span>Antecendentes</span>
             </v-tooltip>
             <v-container>
                 <v-card-title>
                     {{patient.first_name}}  {{patient.last_name }}
 
-                    <v-tooltip bottom>
+                   <!--  <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn icon
                                 @click="editarPatient"
@@ -106,7 +116,7 @@
                                 >mdi-account-edit</v-icon>
                             </v-btn>
                         </template>
-                        <span>Editar Usuario</span>
+                        <span>editar usuario</span>
                     </v-tooltip>
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
@@ -121,64 +131,41 @@
                         </template>
                         <span>Historial clinico</span>
                     </v-tooltip>
-                    <v-spacer/>
+ -->                    <v-spacer/>
                     {{patient.sex}}
                 </v-card-title>
                 <v-list-item-subtitle class="text-center">
-                    Describa el diagnóstico del paciente
+                    Describa los Antecedentes del Paciente
                 </v-list-item-subtitle>
                 <v-card-text>
                     <v-container class="">
-                        <v-form ref="patologias">
+                        <v-form ref="form">
                             <v-text-field
-                                label="Diagnóstico"
+                                label="Antecedente"
                                 auto-grow
                                 outlined
                                  prepend-icon="mdi-hospital"
                                 rows="1"
                                 row-height="15"
-                                v-model="diagnostico"
-                                :rules="[rules.sintoma]"
+                                v-model="antecedente"
+                                :rules="[rules.antecedente]"
                             ></v-text-field>
                             <v-textarea
-                                label="Descripción"
+                                label="Descripcion"
                                 auto-grow
                                 outlined
                                 rows="3"
                                 row-height="25"
                                 prepend-icon="mdi-comment"
                                 v-model="description"
-                                :rules="[rules.descriptionSintoma]"
+                                :rules="[rules.descriptionAntecedente]"
                             ></v-textarea>
-                            <v-container v-if="diagnostico !== '' && description !== ''">
-                                <v-textarea
-                                    label="Especifique los medicamentos a utilizar"
-                                    auto-grow
-                                    outlined
-                                    rows="3"
-                                    row-height="25"
-                                    prepend-icon="mdi-needle"
-                                    v-model="medicamentos"
-                                    :rules="[rules.medicamento]"
-                                ></v-textarea>
-                                <v-textarea
-                                    label="Describa el uso de los medicamento"
-                                    auto-grow
-                                    outlined
-                                    rows="3"
-                                    row-height="25"
-                                    prepend-icon="mdi-comment"
-                                    v-model="usoMedicamentos"
-                                    :rules="[rules.usomedicamento]"
-                                ></v-textarea>
-                            </v-container>
-
                             <v-card-actions>
                                 <v-btn
                                     elevation="3"
                                     color="primary"
-                                    @click="diagnosticar">
-                                    Diagnosticar
+                                    @click="Antecedente">
+                                    Antecedente
                                     <v-icon>mdi-plus</v-icon>
                                 </v-btn>
                                 <v-btn
@@ -191,9 +178,17 @@
                                 <v-btn
                                     elevation="3"
                                     color="success"
-                                    :disabled="countDesease === 0"
+                                    :disabled="countAntecendente === 0"
                                     @click="registrar">
                                     registrar
+                                    <v-icon>mdi-gavel</v-icon>
+                                </v-btn>
+                                 <v-btn
+                                    elevation="3"
+                                    color="success"
+                                    :disabled="countAntecendente > 0"
+                                    @click="registrar">
+                                    Sin antecendetes
                                     <v-icon>mdi-gavel</v-icon>
                                 </v-btn>
                             </v-card-actions>
@@ -203,50 +198,127 @@
                 </v-card-text>
             </v-container>
         </v-card>
-    </v-container>
+	</v-container>
 </template>
 <script>
-    import { mapGetters, mapActions} from 'vuex'
-    import EditPatient from '@/components/dialogs/EditPatient'
-    export default{
-        name:'ConsultaPatient',
-        components:{
-           EditPatient
-        },
-        data:()=>({
-            diagnostico:'',
-            description:'',
-            enabled: false,
-            dataArray:[],
-            editando:false,
-            referenciaIndex:null,
-            usoMedicamentos:'',
-            medicamentos:'',
-            dialog:false,
-             rules: {
-                sintoma: value => !!value || 'Introduzca el nombre del sintoma',
-                descriptionSintoma: value => !!value || 'Introduzca la descripcion de sintoma',
-                medicamento: value => !!value || 'Introduzca el medicamento a suministrar',
-                usomedicamento: value => !!value || 'Describa el uso del medicamento',
-            }
-        }),
-        mounted(){
+	import { mapGetters, mapActions} from 'vuex'
+	export default{
+
+		name:'Antecedente',
+
+		mounted(){
             this.verificar()
         },
-        methods:{
 
-            ...mapActions({
+		data:() => ({
+			antecedente:'',
+			description:'',
+			editando:'',
+			referenciaIndex:'',
+			dataArray:[],
+			dialog:'',
+			rules: {
+                antecedente: value => !!value || 'Introduzca el Antecedente',
+                descriptionAntecedente: value => !!value || 'Introduzca la descripción del antecedente',
+            }
+        }),
+
+		computed:{
+			...mapGetters({
+                Getpatient:'Getpatient',
+                getMedical_record:'getMedical_record',
+                getdialog:'getdialog',
+                getMedical_record:'getMedical_record'
+            }),
+			patient(){
+                return this.Getpatient
+            },
+            patient_url(){
+                return this.$route.params.id
+            },
+
+            countAntecendente(){
+                return this.dataArray.length
+            }
+
+		},
+
+		methods:{
+
+			...mapActions({
                 store_mc:'store_mc',
                 show_mc:'show_mc',
                 show_p:'show_p',
                 store_mr:'store_mr',
                 setvalue_mr:'setvalue_mr',
                 setvalue_mc:'setvalue_mc',
-                store_dd:'store_dd',
+                store_ant:'store_ant',
                 destroy_wl:'destroy_wl',
                 Ondialog:'Ondialog',
-                setOverlay:'setOverlay',
+                setOverlay:'setOverlay'
             }),
+
+            activarDialog(){
+                this.dialog = true
+            },
+
+            registrar(){
+
+                this.setOverlay(true)
+                if (this.dataArray.length === 0) {
+
+                    this.store_mc(this.getMedical_record.id).then(response => {
+                         this.setOverlay(false)
+                            this.$swal({
+                                icon: 'success',
+                                title: '¡Paciente sin Antecedentes!',
+                                text:'exito',
+                                confirmButtonColor: '#3085d6',
+                            })
+                            this.$router.push({name:'consultaPatient',params:{
+                                id:this.patient_url,
+                                consulta:response.id
+                                }
+                            })
+                        })// montamos el componente del paciente ya registrado
+
+                }else{
+                    this.store_ant({'array':this.dataArray,patient:this.patient_url}).then(res => {
+                        if (res.data === true) {
+                            this.setOverlay(false)
+                            this.store_mc(this.getMedical_record.id).then(response => {
+                                this.$swal({
+                                    icon: 'success',
+                                    title: '¡Registro de la consulta exitoso!',
+                                    text:'exito',
+                                    confirmButtonColor: '#3085d6',
+                                })
+                                this.$router.push({name:'consultaPatient',params:{
+                                    id:this.patient_url,
+                                    consulta:response.id
+                                    }
+                                })
+                            })// montamos el componente del paciente ya registrado
+                        }else{
+                            this.setOverlay(false)
+                            this.$swal({
+                                icon: 'error',
+                                title:'¡Ha ocurrido un error!',
+                                text: 'error de la consulta',
+                                confirmButtonColor: '#3085d6',
+                            })
+                        }
+                    }).catch(err =>{
+                        this.setOverlay(false)
+                        this.$swal({
+                            icon: 'error',
+                            title: '¡hubo un problema por intente de nuevo!',
+                            text:'error',
+                            confirmButtonColor: '#3085d6',
+                        })
+                  })
+                }
+            },
 
             async verificar(){
 
@@ -256,128 +328,70 @@
                     }).catch(err =>{
                         console.log(err)
                     })
-                    this.show_mc(this.patient_consulta)
+                    // this.show_mc(this.patient_consulta)
                 }
-            },
-
-            async diagnosticar(){
-                if (!this.$refs.patologias.validate()) {
-                        return
-                    }
-                if (!this.editando) {
-                    let set = {name:this.diagnostico, description:this.description ,medicina: this.medicamentos, descriptionMedicina: this.usoMedicamentos}
-                    this.dataArray.push(set)
-                    this.diagnostico = ''
-                    this.description = ''
-                    this.medicamentos = ''
-                    this.usoMedicamentos =''
-                    this.referenciaIndex=null
-                    this.editando = false
-                    this.$refs.patologias.resetValidation()
-                }else{/// si va a editar
-                    for (var i=0; i <= this.dataArray.length; i++) {
-                        if (i === this.referenciaIndex) {
-                            this.dataArray[i].name=this.diagnostico
-                            this.dataArray[i].description=this.description
-                            this.dataArray[i].medicina=this.medicamentos
-                            this.dataArray[i].descriptionMedicina=this.usoMedicamentos
-                        }
-                    }
-                    this.diagnostico = ''
-                    this.description = ''
-                    this.medicamentos = ''
-                    this.usoMedicamentos =''
-                    this.editando = false
-                    this.referenciaIndex=null
-                }
-
-            },
-            async editarPatient(){
-                    this.Ondialog(true)
             },
 
             async editaritem(item, index){
                 this.referenciaIndex = index
                 this.dialog = false
                 this.editando = true
-                this.diagnostico = item.name
+                this.antecedente = item.name
                 this.description = item.description
-                this.medicamentos = item.medicina
-                this.usoMedicamentos = item.descriptionMedicina
+            },
+
+            async NexRouter(){
+                this.$router.go(-1)
+            },
+
+            async Antecedente(){
+
+                if (!this.$refs.form.validate()) {
+
+                        return
+                    }
+
+
+                if (!this.editando) {
+                    let set = { name:this.antecedente,  description:this.description }
+                    this.dataArray.push(set)
+                    this.antecedente = ''
+                    this.description = ''
+                    this.referenciaIndex=null
+                    this.editando = false
+                    this.$refs.form.resetValidation()
+                }else{/// si va a editar
+                    for (var i=0; i <= this.dataArray.length; i++) {
+                        if (i === this.referenciaIndex) {
+                            this.dataArray[i].name=this.antecedente
+                            this.dataArray[i].description=this.description
+                        }
+                    }
+                    this.antecedente = ''
+                    this.description = ''
+                    this.editando = false
+                    this.referenciaIndex=null
+                }
+
             },
 
             clear(){
-                this.diagnostico = ''
+                this.antecedente = ''
                 this.description = ''
-                this.medicamentos = ''
-                this.usoMedicamentos =''
                 this.editando = false
                 this.referenciaIndex=null
-                this.$refs.patologias.resetValidation()
+                this.$refs.form.resetValidation()
             },
 
-            registrar(){
-                this.setOverlay(true)
-                this.store_dd({'array':this.dataArray,consulta:this.patient_consulta}).then(res => {
-                        this.setOverlay(false)
-                        this.destroy_wl(this.patient.ci).then(res=>{
-                            this.$swal({
-                                icon: 'success',
-                                title: '¡Registro de la consulta exitoso!',
-                                text:'exito',
-                                confirmButtonColor: '#3085d6',
-                            })
-                            this.$router.push({name:'home'})
-                        })
-
-                }).catch(err =>{
-                    this.setOverlay(false)
-                    this.$swal({
-                        icon: 'error',
-                        title: '¡hubo un problema por intente de neuvo!',
-                        text:'exito',
-                        confirmButtonColor: '#3085d6',
-                    })
-              })
-            },
             eliminarItem(index){
                 this.dataArray.splice(index, 1);
-                this.diagnostico = ''
+                this.antecedente = ''
                 this.description = ''
-                this.medicamentos = ''
-                this.usoMedicamentos =''
                 this.referenciaIndex=null
                 this.editando = false
                 this.dialog = false
             },
+		}
+	}
 
-            activarDialog(){
-                this.dialog = true
-            }
-
-        },
-        computed:{
-
-            ...mapGetters({
-                Getpatient:'Getpatient',
-                getMedical_record:'getMedical_record',
-                getdialog:'getdialog'
-            }),
-
-            patient(){
-                return this.Getpatient
-            },
-            patient_url(){
-                return this.$route.params.id
-            },
-
-            patient_consulta(){
-                return this.$route.params.consulta
-            },
-
-            countDesease(){
-                return this.dataArray.length
-            }
-        }
-    }
 </script>

@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Providers;
+use App\Repository\Antecedente\AntecedenteRepository;
+use App\Repository\Antecedente\AntecedenteRepositoryInterface;
 use App\Repository\BaseRepository;
 use App\Repository\BaseRepositoryInterface;
 use App\Repository\Diagnosi\DiagnosiRepository;
@@ -53,5 +55,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(DiseaseRepositoryInterface::class, DiseaseRepository::class);
         $this->app->bind(Medical_treatmentRepositoryInterface::class, Medical_treatmentRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(AntecedenteRepositoryInterface::class, AntecedenteRepository::class);
     }
 }

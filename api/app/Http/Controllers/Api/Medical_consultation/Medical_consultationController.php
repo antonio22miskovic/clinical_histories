@@ -71,7 +71,7 @@ class Medical_consultationController extends Controller
     }
 
     public function show($id)
-    {   
+    {
         return response()->json(
             new Medical_consultationResource($this->repository->findOneByPrimary($id)),
             200 // state HTTP
@@ -96,7 +96,7 @@ class Medical_consultationController extends Controller
     public function getshow($id)
     {
         $datos = $this->repository->getIdConsulta($id);
-        return response()->json([ 
+        return response()->json([
          'consulta'     => new Medical_consultationResource($datos['consulta']),
          'diseases'     => new DiseaseCollection($datos['diseases']),
          'medicamentos' => new Medical_treatmentCollection($datos['medicamentos'])

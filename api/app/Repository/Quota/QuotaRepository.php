@@ -14,7 +14,7 @@ class QuotaRepository extends BaseRepository implements QuotaRepositoryInterface
 
     public function getAllModels()
     {
-        return $this->model::paginate($this->request->query('per_page', 10));
+        return $this->model::orderBy('date', 'desc')->paginate($this->request->query('per_page', 10));
     }
 
     public function GetUserQuotas($id){
@@ -28,4 +28,5 @@ class QuotaRepository extends BaseRepository implements QuotaRepositoryInterface
          $quota->save();
         return $quota;
     }
+
 }

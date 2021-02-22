@@ -42,6 +42,10 @@ use Illuminate\Support\Facades\Route;
 
 	 	Route::apiresource('specialist', 'Api\Specialist\SpecialistController');
 
+        Route::apiresource('antecedente', 'Api\Antecedente\AntecedenteController');
+
+        Route::get('antecedente/list/{id}', 'Api\Antecedente\AntecedenteController@Index');
+
         Route::get('medical/consultation/clinical/consulta/{id}', 'Api\Medical_consultation\Medical_consultationController@getshow');
 
         Route::get('medical/consultation/clinical/{id}', 'Api\Medical_consultation\Medical_consultationController@index');
@@ -57,9 +61,8 @@ use Illuminate\Support\Facades\Route;
         Route::post('user/specialist/{id}', 'Api\User\UserController@UpdateBySpecialist');
 
         Route::get('user/patients/{id}', 'Api\User\UserController@showPatientsByUser');
-        
+
         Route::get('specialist/by/create', 'Api\Specialist\SpecialistController@indexByCreate');
 
 	});
 
-       
