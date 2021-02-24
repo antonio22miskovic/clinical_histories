@@ -7,6 +7,7 @@ use App\Models\Diagnosi;
 use App\Models\Patient;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CdaController extends Controller
 {
@@ -15,6 +16,12 @@ class CdaController extends Controller
     public function show(int $id)
     {
        try {
+
+            $fecha_actual = new \DateTime('NOW');
+            $fecha_actual = $fecha_actual->format('Y-m-d');
+
+            $code = Str::random(4);
+            $ConfidiatityCode = Str::random(7);
 
             $patient = Patient::find($id);
             $m_r = $patient->medical_record;
@@ -41,6 +48,7 @@ class CdaController extends Controller
                     }
                 }
 
+
             $xml = new \XMLWriter();
             $xml->openMemory();
             $xml->setIndent(true);
@@ -51,9 +59,9 @@ class CdaController extends Controller
 
                 $xml->startElement("Header"); // header
                     $xml->writeElement('id',$m_r->id);
-                    $xml->writeElement('Code','1233424');
-                    $xml->writeElement('ConfidiatityCode','1233');
-                    $xml->writeElement('fecha','12-12-1234');
+                    $xml->writeElement('Code', $code);
+                    $xml->writeElement('ConfidiatityCode', $ConfidiatityCode);
+                    $xml->writeElement('fecha', $fecha_actual);
                 $xml->endElement();// fin header
 
                 $xml->startElement("component"); // componente padre
@@ -151,6 +159,8 @@ class CdaController extends Controller
     {
         try {
 
+            $fecha_actual = new \DateTime('NOW');
+            $fecha_actual = $fecha_actual->format('Y-m-d');
             $patient = Patient::find($id);
 
             $m_r = $patient->medical_record;
@@ -179,6 +189,7 @@ class CdaController extends Controller
                 }
 
                 $pdf = PDF::loadView('pdf/HistoryClinical', [
+                                                                'fecha' => $fecha_actual,
                                                                 'patient' => $patient,
                                                                 'diseases'=> $diseases,
                                                                 'tratamientos' => $tratamientos,

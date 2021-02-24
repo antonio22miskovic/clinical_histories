@@ -30,9 +30,9 @@
                         class="elevation-3"
                         locale="es-CL"
                     >
-                        <template v-slot:item.index="{ index }">
+                      <!--   <template v-slot:item.index="{ index }">
                                 <td class="text-center">{{index}}</td>
-                        </template>
+                        </template> -->
                         <template v-slot:item.FormatoCi="{ item }">
                            {{parseInt(item.cedula).toLocaleString('es-ES')}}
                         </template>
@@ -81,7 +81,7 @@ export default {
     data: () => ({
 
         headers: [
-            { text: 'N° ', value: 'index' },
+            // { text: 'N° ', value: 'index' },
             { text: 'Cedula', value: 'FormatoCi' },
             { text: 'Atender', value: 'actions', sortable: false },
             { text: 'No atendido', value: 'no_asistio', sortable: false },

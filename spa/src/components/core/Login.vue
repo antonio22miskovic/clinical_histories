@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-container>
-     
+
             <v-container>
                 <div>
                     <v-form ref="login">
@@ -34,13 +34,13 @@
                     <div class="text-center font-italic">
                         <v-btn  text color="blue darken-2" :to="{name:'witing_list'}">solicitar <v-icon>mdi-send</v-icon></v-btn>
                     </div>
-                    <div class="text-center">
+                    <!-- <div class="text-center">
                         <v-btn text color="secondary"> Forgot your Password <v-icon>mdi-key-change</v-icon> </v-btn>
-                    </div>
+                    </div> -->
                     <br>
                 </div>
             </v-container>
-        </v-container> 
+        </v-container>
     </div>
 </template>
 <script>

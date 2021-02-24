@@ -145,6 +145,7 @@
         <div>
             <div class="datos">
                 <p> Datos del Paciente </p>
+                <p> fecha de impresion: {{$fecha}}</p>
                 <table>
                     <tr>
                         <th class="center-text">Información</th>
@@ -184,7 +185,7 @@
                     </tr>
                     <tr>
                         <td class="center-text">Fecha de Registro</td>
-                        <td class="center-text">{{Carbon\Carbon::parse($patient->created_a)->format('Y-m-d')}}</td>
+                        <td class="center-text">{{Carbon\Carbon::parse($patient->created_at)->format('Y-m-d')}}</td>
                     </tr>
                 </table>
 

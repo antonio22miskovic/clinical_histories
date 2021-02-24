@@ -22,6 +22,7 @@ class PatientRepository extends BaseRepository implements PatientRepositoryInter
                 ->join('medical_records', 'medical_consultations.medical_record_id', '=' ,'medical_records.id')
                 ->join('patients', 'medical_records.patient_id', '=' ,'patients.id')
                 ->select('patients.*')
+                ->orderByDesc('id')
                 ->paginate($this->request->query('per_page', 10));
 
     }

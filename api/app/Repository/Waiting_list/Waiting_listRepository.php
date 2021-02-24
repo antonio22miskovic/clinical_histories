@@ -47,7 +47,7 @@ class Waiting_listRepository extends BaseRepository implements Waiting_listRepos
         try {
             $fecha_actual = new \DateTime('NOW');
             $horas_minutes = $fecha_actual->format('H:i:s');
-            $dias_evaluar = 14;
+            $dias_evaluar = 30;
             for ($i=0; $i < $dias_evaluar; $i++) {
                 if ($i >= 1) {// evaluar primera vuelta
                     $fecha_actual = $fecha_actual.' '.$horas_minutes;

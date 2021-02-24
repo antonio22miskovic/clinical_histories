@@ -50,6 +50,7 @@
                         :items="listSpecialists"
                         item-value="id"
                         item-text="name"
+                        disabled
                         prepend-icon="mdi-clipboard-account-outline"
                         label="Especialidad"
                         v-model="form.specialist"

@@ -124,14 +124,14 @@
                                         @click="dialogOn=false"
                                         color="error"
                                     >
-                                        Cerrar 
+                                        Cerrar
                                         <v-icon>mdi-close-octagon-outline</v-icon>
                                     </v-btn>
                                 </v-card-actions>
                             </v-form>
                         </v-card-text>
                     </v-container>
-                </v-card>        
+                </v-card>
             </v-dialog>
         </v-row>
     </div>
@@ -178,7 +178,7 @@
                     return letters.test(value) || 'formato invalido'
                 },
                 FormatPhone: value => {
-                    let letters = /^(\([0-9]{4}\)\s*|[0-9]{4}\-)[0-9]{3}-[0-9]{4}$/ 
+                    let letters = /^(\([0-9]{4}\)\s*|[0-9]{4}\-)[0-9]{3}-[0-9]{4}$/
                     return letters.test(value) || 'formato invalido'
                 },
                 FormatFloat: value => {
@@ -234,12 +234,12 @@
                     this.form.ci === this.getPatient.ci &&
                     this.form.civil_status === this.getPatient.civil_status &&
                     this.form.weight === this.getPatient.weight &&
-                    this.date === this.getPatient.birthdate 
+                    this.date === this.getPatient.birthdate
 
                 ){
                     this.$swal({
                         icon: 'error',
-                        title: '¡UPss no ah modificado ningun dato por favor!',
+                        title: '¡UPss no a modificado ningun dato por favor!',
                         text:'exito',
                         confirmButtonColor: '#3085d6',
                     })
@@ -263,17 +263,17 @@
                         }else{
                             this.all_p(this.pageUpdate_p)
                              this.setOverlay(false)
-                                Swal.fire('Datps Actualizados', '', 'success')
+                                Swal.fire('Datos Actualizados', '', 'success')
                             this.dialogOn = false
                         }
                     })
-                
+
                 } else if (result.isDenied) {
                      Swal.fire('Por favor Tenga Cuidado', '', 'info')
                      this.dialogOn = false
                 }
                 })
-     
+
             }
 
         },
@@ -292,6 +292,6 @@
                 }
             }
         },
-       
+
     }
 </script>
